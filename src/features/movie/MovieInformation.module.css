@@ -1,0 +1,15 @@
+.synopsis_group{
+    min-height: 10vw;
+}
+
+.synopsis_title{
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: gold;
+    margin-bottom: 1vw;
+}
+
+.synopsis{
+    font-size: 1rem;
+    color: #ffffff;
+}

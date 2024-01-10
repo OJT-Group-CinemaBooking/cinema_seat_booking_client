@@ -1,0 +1,54 @@
+:root{
+    --text-color : rgba(202, 207, 210, 0.5);
+}
+
+.navbar{
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0, 0.4);
+    backdrop-filter: blur(40px);
+    box-shadow: 1px 1px 25px var(--text-color);
+    transition: 0.1s linear;
+    top: 0;
+}
+
+.navbar_hide{
+    top: -80px;
+}
+
+.nav_logo{
+    width: 13rem;
+    height: 2.5rem;
+    margin: 0 3rem;
+}
+
+.nav_link{
+    position: relative;
+    font-weight: bold;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: var(--text-color);
+    text-decoration: none;
+    text-align: center;
+    line-height: 2rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    top: 0.5rem;
+}
+
+.nav_link:hover{
+    color: #7F8C8D;
+}
+
+@media screen and (min : 991) {
+    .nav_logo{
+        width: 10vw;
+        height: 5vw;
+    }
+
+    .nav_link_holder{
+        position: relative;
+        top: 0;
+        display: flex;
+        justify-content: center;
+    }
+}
+
