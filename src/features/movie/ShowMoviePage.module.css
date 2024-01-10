@@ -1,0 +1,46 @@
+:root{
+    --font-size : 2rem;
+    --font-color : #AEB6BF;
+    --font-color-hover : #FDFEFE;
+    --font-family : serif;
+}
+
+.btn{
+    height: 5vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #AEB6BF;
+    font-family: var(--font-family);
+    font-size: var(--font-size);
+    text-shadow: 1px 1px black;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.btn:hover{
+    color: var(--font-color-hover);
+}
+
+.active{
+    color: var(--font-color-hover);
+    text-shadow: 1px 1px white;
+}
+
+@media(max-width : 991px) {
+    :root{
+        --font-size : 1.5rem;
+    }
+}
+
+@media(max-width : 780px) {
+    :root{
+        --font-size : 1rem;
+    }
+}
+
+@media(max-width : 540px) {
+    :root{
+        --font-size : 0.5rem;
+    }
+}
