@@ -1,0 +1,16 @@
+.seat img{
+    width: 2rem;
+    cursor: pointer;
+}
+
+.seat{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+@media (max-width: 991px) and (min-width: 768px){
+    .seat img{
+        width: 1.5rem;
+    }
+}
