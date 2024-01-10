@@ -1,0 +1,124 @@
+.container{
+    color: whitesmoke;
+    display: inline-block;
+    background-color: rgb(130, 12, 12);
+    vertical-align: top;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    width: 30rem;
+    border-radius: 15px;
+}
+
+.container h3{
+    text-align: center;
+}
+
+.container hr{
+    opacity: 1;
+}
+
+.movie_details img{
+    width: 108px; /*27*/
+    height: 160px; /*40*/
+    margin-left: 2rem;
+}
+
+.movie_title{
+    display: inline-block;
+    vertical-align: top;
+    margin-left: 1rem;
+}
+
+.movie_title h4{
+    width: 19rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.language{
+    margin-bottom: 5px;
+}
+
+/* volumn up icon */
+.language svg{
+    font-size: 24px;
+    vertical-align: -7px;
+    margin-right: 10px;
+}
+
+.duration{
+    margin: 0;
+    margin-bottom: 10px;
+}
+
+/* clock icon */
+.duration svg{
+    font-size: 18px;
+    vertical-align: -4px;
+    margin-right: 15px;
+}
+
+.cinema{
+    margin: 0;
+}
+
+.showtime{
+    margin: 1rem 1rem 0 1rem;
+}
+
+.showtime hr{
+    opacity: 0.7;
+}
+
+.showtime span{
+    margin-left: 1rem;
+    color: #D4AF37;
+}
+
+.seatName{
+    margin-bottom: 0.5rem;
+}
+
+.accordion div{
+    border: none;
+}
+
+.accordion_header{
+    border-top: 1px solid whitesmoke;
+    border-bottom: 1px solid whitesmoke;
+}
+
+.accordion_body {
+    background-color: rgb(130, 12, 12);
+}
+
+.accordion_header button:not(.collapsed) {
+    color: whitesmoke;
+    background-color: rgb(130, 12, 12);
+    box-shadow: inset 0 -1px 0 rgb(0 0 0 / 13%);
+}
+
+.accordion_item div:first-child{
+    border-bottom: 1px solid whitesmoke;
+}
+
+.cuponForm input,
+.cuponForm input:focus{
+    background-color: transparent;
+    color: whitesmoke;
+    margin-bottom: 1rem;
+}
+
+.cuponForm input::placeholder{
+    color: rgba(245, 245, 245, 0.801);
+}
+
+.totalPrice{
+    margin-top: 1rem;
+}
+
+.totalPrice span{
+    float: right;
+    margin-right: 3rem;
+}

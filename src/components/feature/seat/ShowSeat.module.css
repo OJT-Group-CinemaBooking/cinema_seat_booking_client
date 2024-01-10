@@ -1,0 +1,53 @@
+.wapper{
+    width: 60rem;
+    display: inline-block;
+    margin-left: 2rem;
+    margin-top: 1rem;
+}
+
+.screen{
+    width: 100%;
+    height: 40px;
+    margin: auto;
+    margin-bottom: 30px;
+    padding: auto;
+    text-align: center;
+    border: 1px solid whitesmoke;
+    color: whitesmoke;
+    font-size: x-large;
+}
+
+.alphabet_left{
+    position: absolute;
+    float: left;
+    color: whitesmoke;
+}
+
+.alphabet_right{
+    float: right;
+    color: whitesmoke;
+}
+
+.alphabet_right p,
+.alphabet_left p{
+    height: 32px;
+    margin: 0;
+    margin-bottom: 10px;
+    line-height: 32px;
+}
+
+@media (max-width: 991px) and (min-width: 768px){
+ .alphabet_right p,
+.alphabet_left p{
+    height: 24px;
+    line-height: normal;
+    margin-bottom: 10px;
+}
+} 
+
+
+ @media (max-width: 767px){
+ .wapper{
+    max-width: none;
+ }   
+}

@@ -1,0 +1,23 @@
+.wapper{
+    display: flex;
+    justify-content: center
+    
+}
+
+.seat_type{
+    width: 10rem;
+    height: 8rem;
+    display: inline-block;
+    color: whitesmoke;
+    border: 1px solid #D4AF37;
+    border-radius: 20px;
+    text-align: center;
+    margin-left: 50px;
+    margin-top: 50px;
+}
+
+.seat_type img{
+    width: 3rem;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
