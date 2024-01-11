@@ -1,6 +1,6 @@
 import React from 'react'
-import PaymentForm from '../feature/checkout/PaymentForm'
-import OrderSummary from '../feature/checkout/OrderSummary'
+import PaymentForm from '../features/checkout/PaymentForm'
+import OrderSummary from '../features/checkout/OrderSummary'
 
 const CheckOutPage = () => {
   return (
