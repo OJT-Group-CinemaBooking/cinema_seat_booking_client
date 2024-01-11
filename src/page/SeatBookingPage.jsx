@@ -1,6 +1,6 @@
 import React from 'react'
-import ShowSeat from '../feature/seat/ShowSeat'
-import OrderSummary from '../feature/seat/OrderSummary'
+import ShowSeat from '../features/seat/ShowSeat'
+import OrderSummary from '../features/seat/OrderSummary'
 
 const SeatBookingPage = () => {
 
