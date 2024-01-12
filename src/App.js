@@ -6,6 +6,8 @@ import AdminLayout from "./components/ui/AdminLayout";
 import AdminMovieTablePage from "./page/AdminMovieTablePage";
 import NewMovieForm from "./features/admin/NewMovieForm";
 import MovieCrew from "./features/admin/MovieCrew";
+import SeatBookingPage from "./page/SeatBookingPage";
+import CheckOutPage from "./page/CheckOutPage";
 
 
 function App() {
