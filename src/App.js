@@ -14,6 +14,8 @@ function App() {
       <Route path="/" element={<Layout/>}>
         <Route path="movie" element={<MoviePage/>}/>
         <Route path="movie/detail" element={<MovieDetailPage/>}/>
+        <Route path="book-seat" element={<SeatBookingPage/>} />
+        <Route path="checkout" element={<CheckOutPage/>} />
       </Route>
       <Route path="/admin" element={<AdminLayout/>}>
         <Route path="movie" element={<AdminMovieTablePage/>}/>
