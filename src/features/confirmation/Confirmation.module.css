@@ -1,0 +1,89 @@
+.headder,
+.date,
+.success h1 span,
+.ticket{
+    color: whitesmoke;
+}
+
+.headder{
+    text-align: center;
+    margin-top: 2rem;
+}
+
+.date{
+    width: 80rem;
+}
+
+.date p{
+    text-align: end;
+}
+
+.success{
+    display: flex;
+    border: 1px solid green;
+    width: 80rem;
+    height: 5rem;
+    align-items: center;
+    
+}
+
+.success h1{
+    margin-left: 1.5rem;
+}
+
+.ticket{
+    margin-top: 2rem;
+    width: 80rem;
+    border: 1px solid #D4AF37;
+    margin-bottom: 2rem;
+}
+
+.ticket_details{
+    display: inline-block;
+    width: 40rem;
+    margin: 1rem 0 0 1rem;
+}
+
+.ticket_details span{
+    color: #D4AF37;
+}
+
+.ticket_qr{
+    display: inline-flex;
+    vertical-align: top;
+    width: 37rem;
+    height: 16rem;
+    justify-content: center;
+    align-items: center;
+    border-left: 3px dashed whitesmoke;
+}
+
+@media (max-width: 1399px) and (min-width: 1199px){
+    .ticket_qr{
+        width: 28rem;
+    }
+}
+
+@media (max-width: 1199px) and (min-width: 992px){
+    .ticket_details{
+        width: 28rem;
+    }
+    .ticket_qr{
+        width: 28rem;
+    }
+}
+
+@media (max-width: 992px) and (min-width: 575px){
+    .ticket_details{
+        width: 100%;
+        margin-bottom: 1rem;
+    }
+    .ticket_qr{
+        border-top: 3px dashed whitesmoke;
+        border-left: none;
+        padding-top: 2rem;
+        padding-bottom: 2rem;
+        width: 100%;
+        height: auto;
+    }
+}
