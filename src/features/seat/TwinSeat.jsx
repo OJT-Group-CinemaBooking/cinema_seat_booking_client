@@ -7,7 +7,7 @@ const TwinSeat = () => {
     const imageClick = () => {
       console.log("image Click")
       if(selectSeat === './images/twin-seat.png'){
-      setSelectSeat('./images/gray-seat.png')
+      setSelectSeat('./images/white-seat.png')
       }else{
         setSelectSeat('./images/twin-seat.png')
       }
