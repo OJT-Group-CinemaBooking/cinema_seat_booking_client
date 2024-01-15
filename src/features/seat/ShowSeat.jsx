@@ -19,7 +19,7 @@ const ShowSeat = ({seat}) => {
 
   const normalRows = []
   for(let i=0;i<(seat[0]).rows;i++){
-    normalRows.push(<NomalSeatRow key={`normal-${i}`} column={seat[0].column}/>)
+    normalRows.push(<NomalSeatRow key={`normal-${i}`} column={seat[0].column} alphabet={alphabet[i]}/>)
   }
 
   const premiumRows = []
