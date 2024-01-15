@@ -1,0 +1,128 @@
+.form_container{
+    height: 100vh;
+    padding: 3rem 0;
+    overflow-y: auto;
+}
+
+.form_container::-webkit-scrollbar{
+    display: none;
+}
+
+.form_row{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
+}
+
+.genere_form{
+    height: 10rem;
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    row-gap: 1rem;
+    flex-wrap: wrap;
+    overflow-y: auto;
+    color: whitesmoke;
+    border: 1px solid #D4AF37;
+    border-radius: 1rem;
+    background-color: rgba(86, 101, 115, 0.2);
+}
+
+.form_check{
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.form input,
+.form textarea,
+.form select{
+    background-color: rgba(86, 101, 115, 0.2);
+    border: 1px solid #D4AF37;
+    color: whitesmoke;
+}
+
+.form input:focus,
+.form textarea:focus{
+    background-color: #56657333;
+    caret-color: #D4AF37;
+    color: whitesmoke;
+}
+
+.form input::placeholder{
+    color: rgb(245, 245, 245,0.6);
+}
+
+.form label{
+    color: rgb(86, 101, 115);
+}
+
+
+.form select option{
+    background-color: black;
+}
+
+.create_btn{
+    width: 5rem;
+    background-color: #D4AF37;
+    border-color: #D4AF37;
+}
+
+.create_btn:hover{
+    background-color: #bd981f;
+    border-color: #bd981f;
+}
+
+.create_btn:focus{
+    background-color: #D4AF37;
+}
+
+.starring_form{
+    height: 15rem;
+}
+
+.director_form{
+    height: 10rem;
+}
+
+.starring_form,
+.director_form{
+    display: flex;
+    flex-wrap: wrap;
+    overflow-y: auto;
+    justify-content: center;
+    border-radius: 1rem;
+    color: whitesmoke;
+    border: 1px solid #D4AF37;
+    background-color: rgba(86, 101, 115, 0.2);
+}
+
+.genere_form::-webkit-scrollbar,
+.starring_form::-webkit-scrollbar,
+.director_form::-webkit-scrollbar{
+    width: 0;
+}
+/* 
+.starring_form::-webkit-scrollbar-thumb,
+.director_form::-webkit-scrollbar-thumb{
+    background-color: #bd981f;
+} */
+
+.director{
+    width: 90%;
+    height: 5rem;
+    display: flex;
+    padding: 0 1rem;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.crew_image{
+    width: 3rem;
+    aspect-ratio: 1/1;
+    object-fit: cover;
+    object-position: center;
+}
+
+.crew_name{
+    min-width: 10rem;
+}

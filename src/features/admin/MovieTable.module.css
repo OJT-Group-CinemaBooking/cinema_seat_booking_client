@@ -1,0 +1,48 @@
+.table_container{
+    height: 100vh;
+    background-color: transparent;
+}
+
+.header{
+    display: flex;
+    padding: 3rem;
+    justify-content: space-between;
+}
+
+.header input,
+.header select{
+    background-color: rgba(29, 43, 83, 0.3);
+    color: whitesmoke;
+}
+
+.header input:focus{
+    background-color: rgba(29, 43, 83, 0.3);
+    color: whitesmoke;
+}
+
+.header input::placeholder{
+    color: whitesmoke;
+}
+
+.select_box{
+    width: 15%;
+}
+
+.option{
+    background: rgba(29, 43, 83, 0.3);
+}
+
+.search_box{
+    width: 30%;
+}
+
+.table_header{
+    height: 3rem;
+    font-size: 1.1rem;
+}
+
+.action{
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+}
