@@ -11,12 +11,13 @@ import CheckOutPage from "./page/CheckOutPage";
 import LoginPage from "./page/LoginPage";
 import SignUpPage from "./page/SignUpPage";
 import BookingConfirmationPage from "./page/BookingConfirmationPage";
-
+import HomePage from "./page/HomePage";
 
 function App() {
   return (
     <Routes>
       <Route path="/" element={<Layout/>}>
+        <Route index element={<HomePage />} />
         <Route path="movie" element={<MoviePage/>}/>
         <Route path="movie/detail" element={<MovieDetailPage/>}/>
         <Route path="book-seat" element={<SeatBookingPage/>} />
