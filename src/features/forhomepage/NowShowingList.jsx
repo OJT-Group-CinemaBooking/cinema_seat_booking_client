@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import NowShowing from './NowShowing';
 import classes from './NowShowingList.module.css'
 import CinemaCarousel from '../../components/ui/CinemaCarousel';
+import Footer from '../../components/ui/Footer';
 
 const movies = [
     {
@@ -57,11 +58,11 @@ const NowShowingList = () => {
         </Row>
 
         <Row>
-          <Button variant="outline-secondary" onClick={navigateMovie} style={{width: '150px',margin: 'auto'}} className='text-white' >View More</Button>
+          <Button variant="outline-secondary" onClick={navigateMovie} style={{width: '150px',margin: 'auto'}} className='text-white mt-3' >View More</Button>
         </Row>
 
         <CinemaCarousel/>
-        <Row xs={1} md={1} className='g-5 mt-4 mb-5' style={{background: '#2d63ea'}}>
+        <Row xs={1} md={1} className='g-5 mt-4 mb-5' style={{background: '#030637'}}>
           <Col className='my-3'>
               <Card className={classes.welcome}>
               <Card.Body>
@@ -73,6 +74,7 @@ const NowShowingList = () => {
               </Card>
           </Col>
         </Row>
+        <Footer/>
       </Container>
     </main>
   )
