@@ -9,8 +9,8 @@ const NowShowing = ({ name, genre, image }) => {
         <Card className={classes.nowShowing}>
         <Card.Img variant="top" src={image} />
         <Card.Body>
-            <Card.Title>{name}</Card.Title>
-            <Card.Text>
+            <Card.Title className='text-white'>{name}</Card.Title>
+            <Card.Text className='text-white'>
                 {genre} 
             </Card.Text>
         </Card.Body>
