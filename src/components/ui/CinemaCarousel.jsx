@@ -3,7 +3,7 @@ import { CarouselCaption, CarouselItem, Ratio } from 'react-bootstrap'
 
 const CinemaCarousel = () => {
   return (
-    <Carousel data-bs-theme="dark" className='mt-3 ps-3 pe-3' style={{zIndex: '0'}}>
+    <Carousel data-bs-theme="dark" className='mt-4 ps-3 pe-3' style={{zIndex: '0'}}>
       <CarouselItem>
         <Ratio aspectRatio={24}>
         <img 
