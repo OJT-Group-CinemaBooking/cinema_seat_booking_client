@@ -6,6 +6,9 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { store } from './store/store';
+import { fetchAllCrew } from './slice/CrewSlice';
+
+store.dispatch(fetchAllCrew())
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

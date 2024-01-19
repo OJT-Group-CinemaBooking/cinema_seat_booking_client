@@ -4,10 +4,12 @@ import MoviePage from "./page/MoviePage";
 import MovieDetailPage from "./page/MovieDetailPage";
 import AdminLayout from "./components/ui/AdminLayout";
 import AdminMovieTablePage from "./page/AdminMovieTablePage";
-import NewMovieForm from "./features/admin/NewMovieForm";
-import MovieCrew from "./features/admin/MovieCrew";
 import SeatBookingPage from "./page/SeatBookingPage";
 import CheckOutPage from "./page/CheckOutPage";
+import AdminMovieCrewPage from "./page/AdminMovieCrewPage";
+import AdminMovieCrewDetailPage from "./page/AdminMovieCrewDetailPage";
+import AdminNewMovieFromPage from "./page/AdminNewMovieFromPage";
+import AdminUpdateMovieFormPage from "./page/AdminUpdateMovieFormPage";
 
 
 function App() {
@@ -21,8 +23,10 @@ function App() {
       </Route>
       <Route path="/admin" element={<AdminLayout/>}>
         <Route path="movie" element={<AdminMovieTablePage/>}/>
-        <Route path="new-movie" element={<NewMovieForm/>}/>
-        <Route path="crew" element={<MovieCrew/>}/>
+        <Route path="new-movie" element={<AdminNewMovieFromPage/>}/>
+        <Route path="update-movie/:movieId" element={<AdminUpdateMovieFormPage/>}/>
+        <Route path="crew" element={<AdminMovieCrewPage/>}/>
+        <Route path="crew-detail/:crewId" element={<AdminMovieCrewDetailPage/>}/>
       </Route>
     </Routes>
   );
