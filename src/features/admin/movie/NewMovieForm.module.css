@@ -76,6 +76,12 @@
     background-color: #D4AF37;
 }
 
+.create_btn:disabled,
+.create_btn[disabled]{
+    background-color: #866f23;
+    border: none;
+}
+
 .starring_form{
     height: 15rem;
 }

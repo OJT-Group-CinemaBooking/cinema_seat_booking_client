@@ -41,8 +41,16 @@
     font-size: 1.1rem;
 }
 
+.table_body tr td{
+    color: white;
+}
+
 .action{
     width: 100%;
     display: flex;
     justify-content: space-evenly;
+}
+
+.action > svg{
+    cursor: pointer;
 }
