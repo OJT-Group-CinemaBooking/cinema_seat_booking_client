@@ -7,7 +7,7 @@ import TwinSeatRow from './TwinSeatRow'
 import ShowSeatType from './ShowSeatType'
 
 const ShowSeat = ({seat}) => {
-  const alphabet = ["A","B","C","D","E","F","G","H","I","J"]
+  const alphabet = ["A","B","C","D","E","F","G","H","I","J","K","L","N","O"]
   
   
   const alphabetRows = []
