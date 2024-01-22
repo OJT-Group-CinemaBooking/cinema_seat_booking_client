@@ -120,7 +120,7 @@ const Footer = () => {
         style={{ backgroundColor: "rgba(0, 0, 0, 0.2)" }}
       >
         &copy; {new Date().getFullYear()} Copyright:{" "}
-        <Link to="/contact" className="text-white">
+        <Link to="/contact-us" className="text-white">
           KyiMl App
         </Link>
       </div>
