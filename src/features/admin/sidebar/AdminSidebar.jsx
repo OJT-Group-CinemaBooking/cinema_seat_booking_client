@@ -34,6 +34,11 @@ const onChangePage = (name) => {
         onClick={() => {onChangePage('crew')}}>
         <span className={classes.icons}><Film/></span><p className={classes.content}>Movie Crew</p>
       </div>
+      <div 
+        className={`${classes.items} ${page === 'cinema' && classes.active}`} 
+        onClick={() => {onChangePage('cinema')}}>
+        <span className={classes.icons}><Film/></span><p className={classes.content}>Cinema</p>
+      </div>
     </Col>
   )
 }
