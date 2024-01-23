@@ -1,13 +1,17 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import classes from './UpdateMovieForm.module.css'
 import { Button, Col, Container, Form, Image, Row } from 'react-bootstrap';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { IMAGE_URL } from '../../config/baseURL';
-import { updateMovie } from '../../../slice/MovieSlice';
+import { getMovieStatus, setMovieStatusToIdle, updateMovie } from '../../../slice/MovieSlice';
 import { useNavigate } from 'react-router-dom';
+import { ArrowLeft } from 'react-bootstrap-icons';
+import InfoAlert from '../../../components/ui/InfoAlert';
 
 const UpdateMovieForm = ({ existedGeneres, existedCrews, movie, generes, starrings, directors }) => {
   const navigate = useNavigate()
+
+  const status = useSelector(getMovieStatus)
 
   const [poster, setPoster] = useState(null);
   const [banner, setBanner] = useState(null);
@@ -164,13 +168,44 @@ const UpdateMovieForm = ({ existedGeneres, existedCrews, movie, generes, starrin
       dispatch(updateMovie(data))
       setCanRequest(true)
     }
-    navigate('/admin/movie')
   };
+
+  const [ showAlert, setShowAlert ] = useState(false)
+
+    useEffect(() => {
+      if(status === 'update_success' || status === 'update_failed') {
+          setShowAlert(true)
+      }
+    },[status])
+    
+    const onHide = () => {
+      setShowAlert(false)
+    }
+
+    const onHandleBackArrow = () => {
+      dispatch(setMovieStatusToIdle())
+      navigate('/admin/movie')
+    }
 
   return (
     <Container>
       <Form className={classes.form} onSubmit={onSubmit}>
+        {
+          showAlert && <InfoAlert 
+            onHide={onHide}
+            variant={(status === 'update_success')? 'success' : 'danger'}
+            information={(status === 'update_success')? 'Successifully updated!' : 'Update Failed!'}
+          />
+        }
         <Row xs={2} className={classes.form_container}>
+          <Col xs='12'>
+            <Row className={classes.back_arrow}>
+              <ArrowLeft color="#D4AF37" size={30} onClick={onHandleBackArrow}/>
+            </Row>
+          </Col>
+          <Col xs='12' className='text-center text-light'>
+            <h2>Movie Update Form</h2>
+          </Col>
           <Col xs="10" md="6">
             {/** input Group */}
             <Row xs={1} className={classes.form_row}>

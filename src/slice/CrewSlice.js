@@ -102,7 +102,7 @@ const CrewSlice = createSlice({
                 state.crews = data;
                 state.starrings = state.crews.filter(c => c.role === 'Starring')
                 state.directors = state.crews.filter(c => c.role === 'Director')
-                state.status = 'success';
+                state.status = 'fetch_success';
             }
         })
         .addCase(fetchAllCrew.rejected, (state, action) => {
@@ -116,7 +116,7 @@ const CrewSlice = createSlice({
                     console.log("failed to create crew")
                 }
                 state.crews = [data, ...state.crews];
-                state.status = 'idle';
+                state.status = 'create_success';
             }
         })
         .addCase(createNewCrew.rejected, (state,action) => {
@@ -125,11 +125,13 @@ const CrewSlice = createSlice({
         })
         .addCase(updateCrew.fulfilled, (state, action) => {
             if(action.payload?.status){
-                const { status } = action.payload;
+                const { data, status } = action.payload;
                 if(status !== 200){
                     console.log("failed to create crew")
                 }
-                state.status = 'idle';
+                const crews = state.crews.filter(c => c.id !== data.id)
+                state.crews = [ data, ...crews ]
+                state.status = 'update_success';
             }
         })
         .addCase(updateCrew.rejected, (state,action) => {
