@@ -1,0 +1,29 @@
+.card_container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 18rem;
+}
+
+.card{
+    width: 15rem;
+    height: 16rem;
+    background-color: transparent;
+    border-radius: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: whitesmoke;
+}
+
+.card_image{
+    width: 3rem;
+    aspect-ratio: 1/1;
+    margin-top: 2rem;
+}
+
+.card_body{
+    width: 100%;
+    text-align: center;
+}

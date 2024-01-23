@@ -1,0 +1,75 @@
+.back_arrow{
+    width: 100%;
+}
+
+.back_arrow > svg{
+    display: inline-block;
+    width: fit-content;
+}
+
+.container{
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: rgb(201, 201, 201);
+}
+
+.container h3{
+    text-align: center;
+}
+
+.form_container{
+    width: 20rem;
+    border: 2px solid #bb8f00;
+    border-radius: 1rem;
+    padding: 1rem 1rem;
+}
+
+
+.form input,
+.form select{
+    background-color: transparent;
+    border: 1px solid #D4AF37;
+    color: whitesmoke;
+}
+
+.form input:focus,
+.form select:focus{
+    background-color: transparent;
+    caret-color: #D4AF37;
+    color: whitesmoke;
+    box-shadow: 0px 0px 5px 2px #D4AF37;
+    border: 1px solid #D4AF37;
+}
+
+.form input::placeholder{
+    color: rgb(245, 245, 245,0.6);
+}
+
+.form select option{
+    background-color: black;
+}
+
+.form button{
+    width: 5rem;
+    background-color: #D4AF37;
+    border-color: #D4AF37;
+}
+
+.form button:hover{
+    background-color: #bd981f;
+    border-color: #bd981f;
+}
+
+.form button:focus{
+    background-color: #D4AF37;
+    box-shadow: 0px 0px 5px 2px #D4AF37;
+}
+
+.form button:disabled,
+.form button[disabled]{
+    background-color: #D4AF37;
+    border: none;
+}
