@@ -1,0 +1,120 @@
+.cinema_table{
+    height: 100vh;
+    overflow-y: auto;
+    padding-top: 2rem;
+}
+
+.cinema_table::-webkit-scrollbar{
+    width: 0;
+}
+
+.cinema_table input,
+.cinema_table select{
+    background-color: rgba(29, 43, 83, 0.3);
+    color: whitesmoke;
+}
+
+.cinema_table input:focus{
+    background-color: rgba(29, 43, 83, 0.3);
+    color: whitesmoke;
+}
+
+.cinema_table input::placeholder{
+    color: whitesmoke;
+}
+
+.table{
+    margin-top: 2rem;
+    border-radius: 1rem;
+    background: rgb(41, 59, 75);
+}
+
+.table tbody,
+.table td,
+.table tfoot,
+.table th,
+.table thead,
+.table tr{
+    border-color: transparent;
+    color: whitesmoke;
+}
+
+.cinema_image{
+    width: 2rem;
+    aspect-ratio: 1/1;
+    object-fit: cover;
+    object-position: center;
+    border-radius: .5rem;
+}
+
+.form_col{
+    margin-top: 3rem;
+    top: 3rem;
+    position: sticky;
+}
+
+.form h3{
+    text-align: center;
+    margin-bottom: 2rem;
+    color: whitesmoke;
+}
+
+.form label{
+    color: white;
+}
+
+.form input,
+.form select{
+    background-color: transparent;
+    border: 1px solid #D4AF37;
+    color: whitesmoke;
+    margin-bottom: 2rem;
+}
+
+.form input:focus,
+.form select:focus{
+    background-color: transparent;
+    caret-color: #D4AF37;
+    color: whitesmoke;
+    box-shadow: 0px 0px 5px 2px #D4AF37;
+    border: 1px solid #D4AF37;
+}
+
+.form input::placeholder{
+    color: rgb(245, 245, 245,0.6);
+}
+
+.form select option{
+    background-color: black;
+}
+
+.button_wapper{
+    display: flex;
+    justify-content: center;
+    margin-top: 3rem;
+}
+
+.form button{
+    width: 5rem;
+    background-color: #D4AF37;
+    border-color: #D4AF37;
+}
+
+.form button:hover{
+    background-color: #bd981f;
+    border-color: #bd981f;
+}
+
+.form button:focus{
+    background-color: #D4AF37;
+}
+
+.form button:disabled,
+.form button[disabled]{
+    background-color: #D4AF37;
+    border: none;
+}
+
+.table svg{
+    cursor: pointer;
+}
