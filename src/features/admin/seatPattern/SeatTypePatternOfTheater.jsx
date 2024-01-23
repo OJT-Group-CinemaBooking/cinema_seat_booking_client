@@ -3,11 +3,13 @@ import classes from './SeatTypePatternOfTheater.module.css'
 import { Card, Col, Container, Row, Spinner } from 'react-bootstrap'
 import SeatPatternCard from './SeatPatternCard'
 import { PlusSquareDotted } from 'react-bootstrap-icons'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { fetchAllSeatTypePatternByTheater, getAllSeatTypePatternByTheater, getSeatTypePatternError, getSeatTypePatternStatus } from '../../../slice/SeatSlice'
 import { useDispatch, useSelector } from 'react-redux'
 
 const SeatTypePatternOfTheater = () => {
+
+    const { theaterId } = useParams()
 
     const seatTypePatterns = useSelector(getAllSeatTypePatternByTheater)
     const status = useSelector(getSeatTypePatternStatus)
@@ -17,9 +19,9 @@ const SeatTypePatternOfTheater = () => {
     const dispatch = useDispatch()
     useEffect(() => {
         if(status === 'idle') {
-            dispatch(fetchAllSeatTypePatternByTheater(1))
+            dispatch(fetchAllSeatTypePatternByTheater(theaterId))
         }
-    },[status,dispatch])
+    },[status,dispatch,theaterId])
 
   return (
     <Container className={classes.container}>

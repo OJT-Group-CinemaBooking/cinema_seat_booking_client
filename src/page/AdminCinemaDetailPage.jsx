@@ -30,7 +30,7 @@ const cinemaIdAsNumber = Number(cinemaId);
     )
   }
 
-  if(status === 'success'){
+  if(status.includes('_success')){
     content = <CinemaDetail cinema={cinema}/>
     
   }

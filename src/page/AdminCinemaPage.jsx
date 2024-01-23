@@ -19,7 +19,7 @@ const AdminNewCinemaPage = () => {
 
   let content = ''
 
-  if(status === 'success'){
+  if(status.includes('_success')){
     content = <Cinema allCinema={AllCinema}/>
   }
 

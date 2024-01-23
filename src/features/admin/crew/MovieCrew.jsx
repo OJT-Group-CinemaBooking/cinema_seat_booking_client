@@ -1,33 +1,16 @@
 import React, { useState } from "react";
 import classes from "./MovieCrew.module.css";
-import { Button, Col, Container, Form, Image, InputGroup, Row, Table } from "react-bootstrap";
-import { FileEarmarkXFill, PencilSquare, Search } from "react-bootstrap-icons";
+import { Button, Col, Container, Form, InputGroup, Row, Table } from "react-bootstrap";
+import { Search } from "react-bootstrap-icons";
 import { useDispatch, useSelector } from "react-redux";
-import { createNewCrew, deleteCrew, getAllDirectors, getAllStarrings } from "../../../slice/CrewSlice";
-import { useNavigate } from "react-router-dom";
-import { IMAGE_URL } from "../../config/baseURL";
-import ConfirmModal from "../../../components/ui/ConfirmModal";
+import { createNewCrew, getAllDirectors, getAllStarrings } from "../../../slice/CrewSlice";
+import SingleCrew from "./SingleCrew";
 
 const MovieCrew = ({ crews }) => {
   const starrings = useSelector(getAllStarrings)
   const directors = useSelector(getAllDirectors)
-  const navigate = useNavigate()
   const dispatch = useDispatch();
   const [ allCrew, setAllCrew ] = useState(crews)
-
-  const [ showModal, setShowModal ] = useState(false)
-
-  const onDelete = () => {
-    setShowModal(true)
-  }
-
-  const onCancel = () => {
-    setShowModal(false)
-  }
-
-  const onConfirm = (crewId) => {
-    dispatch(deleteCrew(crewId))
-  }
 
   const onSelectRole = (e) => {
     switch (e.target.value) {
@@ -46,11 +29,7 @@ const MovieCrew = ({ crews }) => {
     }
   }
 
-  const navigateDetail = (crewId) => {
-    navigate(`/admin/crew-detail/${crewId}`)
-  }
-
-  const [file, setFile] = useState('')
+  const [file, setFile] = useState(null)
   const [name, setName] = useState("");
   const [role, setRole] = useState("Starring");
   const [canRequest, setCanRequest] = useState(true);
@@ -67,7 +46,9 @@ const MovieCrew = ({ crews }) => {
       setCanRequest(false);
       const formData = new FormData()
 
-      formData.append('file', file)
+      if(file !== null) {
+        formData.append('file', file)
+      }
       const data = {
         crew : {
           name,
@@ -114,32 +95,12 @@ const MovieCrew = ({ crews }) => {
                 </tr>
               </thead>
               <tbody>
-                { allCrew.map((crew) => (
-                  <tr key={crew.id}>
-                    <td className="ps-3">
-                      <Image
-                        src={`${IMAGE_URL}/crew/${crew.id}.jpg`}
-                        alt="movie_crew"
-                        className={classes.crew_image}
-                      />
-                    </td>
-                    <td>{crew.name}</td>
-                    <td>{crew.role}</td>
-                    <td>
-                      <div className="d-flex justify-content-evenly pt-2">
-                        <PencilSquare color="#0079FF" onClick={() => {navigateDetail(crew.id)}}/>
-                        <FileEarmarkXFill color="red"  onClick={onDelete}/>
-                      </div>
-                    </td>{
-                      showModal && <ConfirmModal
-                        onClose={onCancel}
-                        onAction={() => {onConfirm(crew.id)}}
-                        title='Delete Confirmation'
-                        body={`Delete ${crew.name} ??`}
-                      />
-                    }
-                  </tr>
-                ))}
+                { allCrew.map((crew) => 
+                  <SingleCrew 
+                    key={crew.id}
+                    crew={crew}
+                  />
+                )}
               </tbody>
             </Table>
           </Row>

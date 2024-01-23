@@ -1,43 +1,20 @@
 import React, { useState } from 'react'
 import classes from './Theater.module.css'
-import { Button, Col, Container, Form, InputGroup, Row, Table } from 'react-bootstrap'
-import { FileEarmarkXFill, PencilSquare, Search } from 'react-bootstrap-icons'
-import ConfirmModal from '../../../components/ui/ConfirmModal'
+import { Button, Col, Container, Form, Row, Table } from 'react-bootstrap'
 import { useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
-import { createTheater, deleteTheater } from '../../../slice/TheaterSlice'
+import { createTheater } from '../../../slice/TheaterSlice'
+import SingleTheater from './SingleTheater'
 
 const Theater = ({theater,cinemaId}) => {
     
   const dispatch = useDispatch()
-  const navigate = useNavigate()
 
   const [name, setName] = useState('')
   const [screen, setScreen] = useState('')
   const [canRequest, setCanRequest] = useState(true)
 
-  const [ showModal, setShowModal ] = useState(false)
-
   const onNameInputChange = (e) => setName(e.target.value)
   const onScreenInputChange = (e) => setScreen(e.target.value)
-
-  const onDelete = () => {
-    setShowModal(true)
-  }
-
-  const onCancel = () => {
-    setShowModal(false)
-  }
-
-  const onConfirm = (theaterId) => {
-    dispatch(deleteTheater(theaterId))
-  }
-
-  const navigateDetail = (theaterId) => {
-    navigate(`/admin/theater-detail/${theaterId}/${cinemaId}`)
-  }
-
-
 
   const canCreate = [name,screen,canRequest].every(Boolean)
 
@@ -62,18 +39,6 @@ const Theater = ({theater,cinemaId}) => {
     <Container>
       <Row xs={1} md={2} className="d-flex justify-content-evenly">
         <Col xs="7" className={classes.theater_table}>
-          <Row xs={2} className="d-flex justify-content-between">
-            <Col xs="3">
-            </Col>
-            <Form as={Col} xs="6">
-              <InputGroup size="sm">
-                <Form.Control type="search" placeholder="Enter Name" />
-                <Button variant="outline-secondary" id="button-addon">
-                  <Search size={20} />
-                </Button>
-              </InputGroup>
-            </Form>
-          </Row>
 
           <Row xs={1}>
             <Table className={classes.table}>
@@ -81,28 +46,17 @@ const Theater = ({theater,cinemaId}) => {
                 <tr>
                   <th>Name</th>
                   <th>Screen</th>
+                  <th className='text-center'>Seat Type List</th>
                   <th className="text-center">Action</th>
                 </tr>
               </thead>
               <tbody>
                 { theater.map((theater) => (
-                  <tr key={theater.id}>
-                    <td>{theater.name}</td>
-                    <td>{theater.screen}</td>
-                    <td>
-                      <div className="d-flex justify-content-evenly pt-2">
-                        <PencilSquare color="#0079FF" onClick={() => {navigateDetail(theater.id)}}/>
-                        <FileEarmarkXFill color="red"  onClick={onDelete}/>
-                      </div>
-                    </td>{
-                      showModal && <ConfirmModal
-                        onClose={onCancel}
-                        onAction={() => {onConfirm(theater.id)}}
-                        title='Delete Confirmation'
-                        body={`Delete ${theater.name} ??`}
-                      />
-                    }
-                  </tr>
+                  <SingleTheater 
+                  key={theater.id}
+                    theater={theater} 
+                    cinemaId={cinemaId}
+                  />
                 ))}
               </tbody>
             </Table>

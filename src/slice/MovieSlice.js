@@ -182,6 +182,9 @@ const MovieSlice = createSlice({
             state.status = 'update_failed'
             state.error = action.error
         })
+        .addCase(deleteMovie.pending, (state) => {
+            state.status = 'loading'
+        })
         .addCase(deleteMovie.fulfilled, (state,action) => {
             if(action.payload?.status) {
                 const {status,data} = action.payload

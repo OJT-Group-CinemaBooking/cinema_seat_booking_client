@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import classes from './CinemaDetail.module.css'
 import { Button, Col, Container, Form, Image, Row } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'

@@ -47,7 +47,7 @@ export const updateCrew = createAsyncThunk('updateCrew', async(data) => {
         }
     })
     if(response.status === 200) {
-        if(data.formData) {
+        if(data.formData.has('file')) {
             const uploadResponse = await axios.post(`${UPLOAD_URL}/${response.data.id}`,data.formData, {
                 headers : {
                     "Content-Type" : "multipart/form-data"
@@ -109,6 +109,9 @@ const CrewSlice = createSlice({
             state.status = 'fetch_failed';
             state.error = action.error;
         })
+        .addCase(createNewCrew.pending, (state) => {
+            state.status = 'loading';
+        })
         .addCase(createNewCrew.fulfilled, (state, action) => {
             if(action.payload?.status){
                 const { data, status } = action.payload;
@@ -122,6 +125,9 @@ const CrewSlice = createSlice({
         .addCase(createNewCrew.rejected, (state,action) => {
             state.status = 'create_failed';
             state.error = action.error;
+        })
+        .addCase(updateCrew.pending, (state) => {
+            state.status = 'loading';
         })
         .addCase(updateCrew.fulfilled, (state, action) => {
             if(action.payload?.status){
@@ -137,6 +143,9 @@ const CrewSlice = createSlice({
         .addCase(updateCrew.rejected, (state,action) => {
             state.status = 'create_failed';
             state.error = action.error;
+        })
+        .addCase(deleteCrew.pending, (state) => {
+            state.status = 'loading';
         })
         .addCase(deleteCrew.fulfilled, (state,action) => {
             if(action.payload?.status) {

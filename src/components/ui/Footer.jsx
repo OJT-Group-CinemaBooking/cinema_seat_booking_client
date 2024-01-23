@@ -23,7 +23,8 @@ const Footer = () => {
             >
               <img
                 src="./images/kyi-mal-high-resolution-logo-transparent.png"
-                className="w-100"
+                className="w-100" 
+                alt="logo"
               />
               <a href="#!">
                 <div
