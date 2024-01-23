@@ -1,0 +1,61 @@
+.form h3{
+    text-align: center;
+    margin-bottom: 2rem;
+    color: whitesmoke;
+}
+
+.form label{
+    color: white;
+}
+
+.form input,
+.form select{
+    background-color: transparent;
+    border: 1px solid #D4AF37;
+    color: whitesmoke;
+    margin-bottom: 2rem;
+}
+
+.form input:focus,
+.form select:focus{
+    background-color: transparent;
+    caret-color: #D4AF37;
+    color: whitesmoke;
+    box-shadow: 0px 0px 5px 2px #D4AF37;
+    border: 1px solid #D4AF37;
+}
+
+.form input::placeholder{
+    color: rgb(245, 245, 245,0.6);
+}
+
+.form select option{
+    background-color: black;
+}
+
+.button_wapper{
+    display: flex;
+    justify-content: center;
+    margin-top: 3rem;
+}
+
+.form button{
+    width: 5rem;
+    background-color: #D4AF37;
+    border-color: #D4AF37;
+}
+
+.form button:hover{
+    background-color: #bd981f;
+    border-color: #bd981f;
+}
+
+.form button:focus{
+    background-color: #D4AF37;
+}
+
+.form button:disabled,
+.form button[disabled]{
+    background-color: #D4AF37;
+    border: none;
+}

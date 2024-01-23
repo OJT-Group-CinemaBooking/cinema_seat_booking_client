@@ -14,6 +14,10 @@ import LoginPage from "./page/LoginPage";
 import SignUpPage from "./page/SignUpPage";
 import BookingConfirmationPage from "./page/BookingConfirmationPage";
 import HomePage from "./page/HomePage";
+import AdminCinemaPage from "./page/AdminCinemaPage";
+import AdminCinemaDetailPage from "./page/AdminCinemaDetailPage";
+import AdminTheaterPage from "./page/AdminTheaterPage";
+import AdminTheaterDetailPage from "./page/AdminTheaterDetailPage";
 
 function App() {
   return (
@@ -34,6 +38,10 @@ function App() {
         <Route path="update-movie/:movieId" element={<AdminUpdateMovieFormPage/>}/>
         <Route path="crew" element={<AdminMovieCrewPage/>}/>
         <Route path="crew-detail/:crewId" element={<AdminMovieCrewDetailPage/>}/>
+        <Route path="cinema" element={<AdminCinemaPage/>} />
+        <Route path="cinema-detail/:cinemaId" element={<AdminCinemaDetailPage/>} />
+        <Route path="theater/:cinemaId" element={<AdminTheaterPage/>}/>
+        <Route path="theater-detail/:theaterId/:cinemaId" element={<AdminTheaterDetailPage/>} />
       </Route>
     </Routes>
   );
