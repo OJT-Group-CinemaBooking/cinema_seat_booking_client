@@ -122,7 +122,7 @@ const TheaterSlice = createSlice({
             }
         })
         .addCase(updateTheater.rejected,(state,action) => {
-            state.status = 'fail'
+            state.status = 'update_fail'
             state.error = action.error
         })
         .addCase(deleteTheater.fulfilled,(state,action) => {

@@ -2,6 +2,9 @@
     height: 80vh;
 }
 .cinema_info img{
+    width: 80%;
+    height: 100%;
+    object-fit: cover;
     border-radius: 1rem;
 }
 
