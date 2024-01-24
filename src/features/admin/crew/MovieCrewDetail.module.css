@@ -1,7 +1,12 @@
 .crew_info{
     height: 80vh;
+}
+
+.crew_info img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
     border-radius: 1rem;
-    background: rgb(41, 59, 75);
 }
 
 .form h3{
