@@ -86,7 +86,9 @@ const CrewSlice = createSlice({
     name : 'CrewSlice',
     initialState ,
     reducers : {
-
+        setCrewStatusToIdle : (state) => {
+            state.status = 'idle'
+        }
     },
     extraReducers(builder) {
         builder
@@ -171,3 +173,4 @@ export const getError = (state) => state.crew.error
 export const getAllStarrings = (state) => state.crew.starrings
 export const getAllDirectors = (state) => state.crew.directors
 export const getCrewById = (state, crewId) => state.crew.crews.find((c) => c.id === Number(crewId))
+export const { setCrewStatusToIdle } = CrewSlice.actions
