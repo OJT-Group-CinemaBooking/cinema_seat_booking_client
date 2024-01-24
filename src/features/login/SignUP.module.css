@@ -85,3 +85,50 @@
     border: none;
     cursor: pointer;
 }
+
+
+@media (max-width: 1142px) {
+    .signup_card{
+        width: 60rem;
+    }
+    .signup_form_wapper{
+        width: 25rem;
+        margin-left: 2rem;
+    }
+    .signup{
+        margin-top: 3rem;
+        height: auto;
+        align-items: normal;
+    }
+    .signup_card img{
+        width: 30rem;
+        height: 100%;
+        object-fit: cover;
+    }
+}
+
+@media (max-width: 944px){
+    
+    .signup_card img{
+        width: 25rem;
+        object-fit: contain
+    }
+}
+
+@media (max-width: 865px){
+    .signup_form_wapper{
+        width: 20rem;
+    }
+}
+
+@media (max-width: 785px){
+    .signup_card img{
+        width: 20rem;
+        object-fit: contain
+    }
+}
+@media (max-width: 700px){  
+    .signup_card img{
+       display: none;
+    }
+}
