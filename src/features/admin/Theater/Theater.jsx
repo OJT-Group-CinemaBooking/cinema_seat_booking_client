@@ -4,14 +4,17 @@ import { Button, Col, Container, Form, Row, Table } from 'react-bootstrap'
 import { useDispatch } from 'react-redux'
 import { createTheater } from '../../../slice/TheaterSlice'
 import SingleTheater from './SingleTheater'
+import { ArrowLeft } from 'react-bootstrap-icons'
+import { useNavigate } from 'react-router-dom'
 
 const Theater = ({theater,cinemaId}) => {
-    
-  const dispatch = useDispatch()
 
   const [name, setName] = useState('')
   const [screen, setScreen] = useState('')
   const [canRequest, setCanRequest] = useState(true)
+
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   const onNameInputChange = (e) => setName(e.target.value)
   const onScreenInputChange = (e) => setScreen(e.target.value)
@@ -35,8 +38,15 @@ const Theater = ({theater,cinemaId}) => {
     }
   }
 
+  const onHandleBackArrow = () => {
+    navigate(`/admin/cinema-detail/${cinemaId}`)
+  }
+
   return (
     <Container>
+      <Row className={classes.back_arrow}>
+              <ArrowLeft color="#D4AF37" size={30} onClick={onHandleBackArrow}/>
+      </Row>
       <Row xs={1} md={2} className="d-flex justify-content-evenly">
         <Col xs="7" className={classes.theater_table}>
 

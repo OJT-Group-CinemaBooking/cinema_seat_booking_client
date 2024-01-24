@@ -1,5 +1,5 @@
 .form{
-    width: 55rem;
+    width: 50rem;
     margin-top: 2rem;
     margin-left: 2rem;
     color: whitesmoke;
@@ -31,4 +31,34 @@
     background-color: rgba(35, 33, 33, 0.69);
     color: whitesmoke;
     border: 1px solid #D4AF37;
+}
+
+@media (max-width: 1312px){
+    .form{
+        width: 45rem;
+    }
+}
+
+@media (max-width: 1200px){
+    .form{
+        width: 40rem;
+    }
+}
+
+@media (max-width: 1120px){
+    .form{
+        width: 38rem;
+    }
+}
+
+@media (max-width: 1088px){
+    .form{
+        width: 36rem;
+    }
+}
+
+@media (max-width: 1056px) and (min-width: 992px){
+    .form{
+        width: 32rem;
+    }
 }

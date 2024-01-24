@@ -47,6 +47,14 @@
     border-radius: .5rem;
 }
 
+.back_arrow > svg{
+    display: inline-block;
+    width: fit-content;
+    position: relative;
+    cursor: pointer;
+    top: 1.5rem;
+}
+
 .form_col{
     margin-top: 3rem;
     top: 3rem;
