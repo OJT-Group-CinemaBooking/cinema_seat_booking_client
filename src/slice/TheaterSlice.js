@@ -76,7 +76,7 @@ const TheaterSlice = createSlice({
                     console.log("fail to fetch theater")
                 }
                 state.theaters = data
-                state.status = 'success'
+                state.status = 'fetch_success'
             }
         })
         .addCase(fetchTheaterByCinemaId.pending,(state) => {
@@ -89,7 +89,7 @@ const TheaterSlice = createSlice({
                     console.log("fail to fetch theater")
                 }
                 state.theaters = data
-                state.status = 'success'
+                state.status = 'fetch_success'
             }
         })
         .addCase(fetchAllTheater.rejected,(state,action) => {
@@ -103,7 +103,7 @@ const TheaterSlice = createSlice({
                     console.log('fail to create theater')
                 }
                 state.theaters = [data, ...state.theaters]
-                state.status = 'idle'
+                state.status = 'create_success'
             }
         })
         .addCase(createTheater.rejected,(state,action) => {
@@ -116,7 +116,9 @@ const TheaterSlice = createSlice({
                 if(status !== 200){
                     console.log("failed to update theater")
                 }
-                state.status = 'idle'
+                const theater = state.theaters.filter(t => t.id !== data.id)
+                state.theaters = [data, ...theater]
+                state.status = 'update_success'
             }
         })
         .addCase(updateTheater.rejected,(state,action) => {
@@ -130,7 +132,7 @@ const TheaterSlice = createSlice({
                     console.log('fail to delete theater')
                 }
                 state.theaters = state.theaters.filter(theater => theater.id !== data)
-                state.status = 'idle'
+                state.status = 'delete_success'
             }
         })
         .addCase(deleteTheater.rejected,(state,action) => {

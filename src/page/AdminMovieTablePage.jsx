@@ -23,7 +23,7 @@ const AdminMovieTablePage = () => {
       </div>
     )
   }
-  if(movieStatus === 'fetch_success') {
+  if(movieStatus.includes('_success')) {
     content = <MovieTable movies={movies} />
   }
   return (

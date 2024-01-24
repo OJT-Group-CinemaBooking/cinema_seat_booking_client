@@ -8,7 +8,7 @@ const MovieCrewDetail = ({ crew }) => {
 
   const [name, setName] = useState(crew?.name);
   const [role, setRole] = useState(crew?.role);
-  const [file, setFile] = useState('');
+  const [file, setFile] = useState(null);
   const [canRequest, setCanRequest] = useState(true);
   const dispatch = useDispatch();
 
@@ -22,7 +22,9 @@ const MovieCrewDetail = ({ crew }) => {
     event.preventDefault();
     const formData = new FormData()
 
-    formData.append('file', file)
+    if(file !== null) {
+      formData.append('file', file)
+    }
     if (canCreate) {
       setCanRequest(false);
       const data = {

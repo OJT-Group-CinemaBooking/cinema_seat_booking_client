@@ -93,6 +93,9 @@ const CinemaSlice = createSlice({
     },
     extraReducers(builder){
         builder
+        .addCase(createCinema.pending, (state) => {
+            state.status = 'loading'
+        })
         .addCase(createCinema.fulfilled , (state,action) => {
             if(action.payload?.status){
                 const {data,status} = action.payload
@@ -100,7 +103,7 @@ const CinemaSlice = createSlice({
                     console.log('fail to create cinema')
                 }
                 state.cinemas = [data, ...state.cinemas]
-                state.status = 'idle'
+                state.status = 'create_success'
             }
         })
         .addCase(createCinema.rejected , (state,action) => {
@@ -117,7 +120,7 @@ const CinemaSlice = createSlice({
                     console.log("fail to fetch cinema")
                 }
                 state.cinemas = data
-                state.status = 'success'
+                state.status = 'fetch_success'
             }
         })
         .addCase(fetchAllCinema.rejected , (state,action) => {
@@ -126,15 +129,17 @@ const CinemaSlice = createSlice({
         })
         .addCase(updateCinema.fulfilled, (state,action) => {
             if(action.payload?.status){
-                const { status } = action.payload;
+                const { data, status } = action.payload;
                 if(status !== 200){
                     console.log("failed to update cinema")
                 }
-                state.status = 'idle';
+                const cinema = state.cinemas.filter(c => c.id !== data.id)
+                state.cinemas = [data, ...cinema]
+                state.status = 'update_success';
             }
         })
         .addCase(updateCinema.rejected, (state,action) => {
-            state.status = 'fail'
+            state.status = 'update_failed'
             state.error = action.error
         })
         .addCase(deleteCinema.fulfilled, (state,action) => {
@@ -144,7 +149,7 @@ const CinemaSlice = createSlice({
                     console.log('fail to delete cinema')
                 }
                 state.cinemas = state.cinemas.filter(cinema => cinema.id !== data)
-                state.status = 'idle'
+                state.status = 'delete_success'
             }
         })
         .addCase(deleteCinema.rejected,(state,action) => {

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import classes from './TheaterDetail.module.css'
 import { useDispatch } from 'react-redux'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { updateTheater } from '../../../slice/TheaterSlice'
 import { Button, Col, Container, Form, Row } from 'react-bootstrap'
 

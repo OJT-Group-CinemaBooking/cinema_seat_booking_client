@@ -1,33 +1,11 @@
-import React, { useState } from 'react'
+import React from 'react'
 import classes from './MovieTable.module.css'
 import { Button, Col, Container, Form, InputGroup, Row, Table } from 'react-bootstrap'
-import { CalendarPlusFill, FileEarmarkXFill, PencilSquare, Search } from 'react-bootstrap-icons'
-import { useNavigate } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
-import ConfirmModal from '../../../components/ui/ConfirmModal'
-import { deleteMovie } from '../../../slice/MovieSlice'
+import { Search } from 'react-bootstrap-icons'
+import SingleMovie from './SingleMovie'
 
 const MovieTable = ({ movies }) => {
-    const [ showModal, setShowModal ] = useState(false)
-
-    const dispatch = useDispatch()
-    const navigate = useNavigate()
-
-    const onUpdate = (movieId) => {
-        navigate(`/admin/update-movie/${movieId}`)
-    }
-
-    const onDelete = () => {
-        setShowModal(true)
-    }
-
-    const onModalClose = () => {
-        setShowModal(false)
-    }
-
-    const onConfirm = (id) => {
-        dispatch(deleteMovie(id))
-    }
+    
   return (
     <Container className={classes.table_container} fluid>
         <Row xs={1}>
@@ -62,39 +40,12 @@ const MovieTable = ({ movies }) => {
                     </tr>
                 </thead>
                 <tbody className={classes.table_body}>
-                    {movies.map( movie => (
-                        <tr key={movie.id}>
-                            <td>{movie.title}</td>
-                            <td>{movie.releaseDate}</td>
-                            <td>{(new Date(movie.createdAt)).toLocaleString()}</td>
-                            <td className={`text-${movie.showing? 'success' : 'secondary'}`}>{movie.showing ? 'SHOWING' : 'SHOW OFF'}</td>
-                            <td>
-                                <div className={classes.action}>
-                                    <CalendarPlusFill 
-                                        color='gold' 
-                                        size={20} 
-                                    />
-                                    <PencilSquare 
-                                        color='blue' 
-                                        size={20} 
-                                        onClick={() => {onUpdate(movie.id)}}
-                                    />
-                                    <FileEarmarkXFill 
-                                        color='red' 
-                                        size={20} 
-                                        onClick={onDelete}
-                                    />
-                                </div>{
-                                        showModal && <ConfirmModal
-                                            onClose={onModalClose} 
-                                            onAction={() => {onConfirm(movie.id)}} 
-                                            title='Delete Confirmation' 
-                                            body={`Delete ${movie.title} ??`}
-                                        />
-                                    }
-                            </td>
-                        </tr>
-                    ))}
+                    {movies.map( movie => 
+                        <SingleMovie 
+                            key={movie.id} 
+                            movie={movie}
+                        />
+                    )}
                 </tbody>
                 </Table>
             </Col>

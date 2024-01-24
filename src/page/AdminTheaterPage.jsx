@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchAllTheater, fetchTheaterByCinemaId, getAllTheater, getTheaterError, getTheaterStatus } from '../slice/TheaterSlice'
+import { fetchTheaterByCinemaId, getAllTheater, getTheaterError, getTheaterStatus } from '../slice/TheaterSlice'
 import Theater from '../features/admin/Theater/Theater'
 import { Spinner } from 'react-bootstrap'
 import { useParams } from 'react-router-dom'
@@ -18,11 +18,11 @@ const AdminTheaterPage = () => {
     if(status === 'idle') {
       dispatch(fetchTheaterByCinemaId(Number(cinemaId)))
     }
-  },[dispatch,status])
+  },[dispatch,status,cinemaId])
 
   let content = ''
 
-  if(status === 'success'){
+  if(status.includes('_success')){
     content = <Theater theater={allTheater} cinemaId={Number(cinemaId)}/>
   }
 

@@ -119,7 +119,9 @@ const MovieSlice = createSlice({
     name : 'MovieSlice',
     initialState,
     reducers : {
-
+        setMovieStatusToIdle : (state) => {
+            state.status = 'idle'
+        }
     },
     extraReducers(builder) {
         builder
@@ -165,18 +167,23 @@ const MovieSlice = createSlice({
         })
         .addCase(updateMovie.fulfilled, (state,action) => {
             if(action.payload?.status) {
-                const { status } = action.payload
+                const { data, status } = action.payload
                 if(status !== 200) {
                     console.log("failed to update movie")
                     state.status = 'update_failed'
                     return;
                 }
-                state.status = 'idle'
+                const movies = state.movies.filter(m => m.id !== data.id)
+                state.movies = [ data, ...movies]
+                state.status = 'update_success'
             }
         })
         .addCase(updateMovie.rejected, (state,action) => {
             state.status = 'update_failed'
             state.error = action.error
+        })
+        .addCase(deleteMovie.pending, (state) => {
+            state.status = 'loading'
         })
         .addCase(deleteMovie.fulfilled, (state,action) => {
             if(action.payload?.status) {
@@ -202,3 +209,4 @@ export default MovieSlice.reducer;
 export const getAllMovies = state => state.movie.movies
 export const getMovieStatus = state => state.movie.status
 export const getMovieById = (state,movieId) => state.movie.movies.find(m => m.id === Number(movieId))
+export const { setMovieStatusToIdle } = MovieSlice.actions
