@@ -3,10 +3,11 @@ import classes from './CinemaDetail.module.css'
 import { Button, Col, Container, Form, Image, Row } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { getCinemaStatus, updateCinema } from '../../../slice/CinemaSlice'
+import { getCinemaStatus, setCinemaToIdle, updateCinema } from '../../../slice/CinemaSlice'
 import { IMAGE_URL } from '../../config/baseURL'
 import { fetchTheaterByCinemaId } from '../../../slice/TheaterSlice'
 import InfoAlert from '../../../components/ui/InfoAlert'
+import { ArrowLeft } from 'react-bootstrap-icons'
 
 const CinemaDetail = ({cinema}) => {
   const status = useSelector(getCinemaStatus)
@@ -66,6 +67,11 @@ const CinemaDetail = ({cinema}) => {
       setShowAlert(false)
     }
 
+    const onHandleBackArrow = () => {
+      dispatch(setCinemaToIdle())
+      navigate('/admin/cinema')
+    }
+
   return (
     <Container className='min-vh-100 px-5' fluid>
         {
@@ -75,13 +81,16 @@ const CinemaDetail = ({cinema}) => {
             information={(status === 'update_success')? 'Successifully updated!' : 'Update Failed!'}
           />
         }
+        <Row className={classes.back_arrow}>
+              <ArrowLeft color="#D4AF37" size={30} onClick={onHandleBackArrow}/>
+        </Row>
       <Row className='d-flex justify-content-evenly min-vh-100 py-5'>
         <Col sm='6' className={classes.cinema_info}>
           <Image src={`${IMAGE_URL}/cinema/${cinema.id}.jpg`} alt="cinema" />
         </Col>
         <Col sm='4' className={classes.cinema_update}>
         <Form onSubmit={onSubmit} className={classes.form}>
-            <h3>EDIT FORM</h3>
+            <h3>CINEMA EDIT</h3>
             <Form.Group>
               <Form.Label>Name *</Form.Label>
               <Form.Control

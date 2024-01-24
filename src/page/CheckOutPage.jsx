@@ -5,8 +5,8 @@ import OrderSummary from '../features/checkout/OrderSummary'
 const CheckOutPage = () => {
   return (
     <>
-        <PaymentForm/>
-        <OrderSummary/>
+      <PaymentForm/>
+      <OrderSummary/>
     </>
   )
 }

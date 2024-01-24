@@ -13,6 +13,7 @@
     display: inline-block;
     width: fit-content;
     position: relative;
+    cursor: pointer;
     bottom: -1rem;
 }
 

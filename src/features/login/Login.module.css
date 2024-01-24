@@ -83,3 +83,37 @@
     border: none;
     cursor: pointer;
 }
+
+@media (max-width: 954px) {
+    .login_card{
+        width: 50rem;
+    }
+    .login{
+        margin-top: 3rem;
+        height: auto;
+        align-items: normal;
+    }
+    .login_card img{
+        width: 20rem;
+        height: 100%;
+        object-fit: cover;
+    }
+}
+
+@media (max-width: 764px){
+    .login_card{
+        width: 40rem;
+    }
+    .login_card img{
+        width: 16rem;
+        height: 100%;
+        object-fit: contain
+    }
+}
+
+@media (max-width: 611px){
+    .login_card img{
+        height: auto;
+        width: 100%;
+    }
+}

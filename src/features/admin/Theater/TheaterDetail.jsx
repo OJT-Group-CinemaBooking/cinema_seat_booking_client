@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { updateTheater } from '../../../slice/TheaterSlice'
 import { Button, Col, Container, Form, Row } from 'react-bootstrap'
+import { ArrowLeft } from 'react-bootstrap-icons'
 
 const TheaterDetail = ({theater,cinemaId}) => {
 
@@ -35,9 +36,15 @@ const TheaterDetail = ({theater,cinemaId}) => {
     }
   }
 
+  const onHandleBackArrow = () => {
+    navigate(`/admin/theater/${cinemaId}`)
+  }
 
   return (
     <Container className='min-vh-100 px-5' fluid>
+      <Row className={classes.back_arrow}>
+              <ArrowLeft color="#D4AF37" size={30} onClick={onHandleBackArrow}/>
+      </Row>
       <Row className='d-flex justify-content-evenly min-vh-100 py-5'>
         
         <Col sm='4' className={classes.theater_update}>
