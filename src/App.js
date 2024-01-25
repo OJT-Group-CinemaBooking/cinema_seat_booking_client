@@ -43,9 +43,9 @@ function App() {
         <Route path="update-movie/:movieId" element={<AdminUpdateMovieFormPage/>}/>
         <Route path="crew" element={<AdminMovieCrewPage/>}/>
         <Route path="crew-detail/:crewId" element={<AdminMovieCrewDetailPage/>}/>
-        <Route path="seatTypePattern/:theaterId" element={<SeatTypePatternOfTheater/>} />
-        <Route path="seatForm/:theaterId" element={<SeatPatternAddForm/>} />
-        <Route path="seatupdate/:theaterId/:seatTypePatternId" element={<SeatPatternUpdateForm/>} />
+        <Route path="seatTypePattern/:cinemaId/:theaterId" element={<SeatTypePatternOfTheater/>} />
+        <Route path="seatForm/:cinemaId/:theaterId" element={<SeatPatternAddForm/>} />
+        <Route path="seat-update/:cinemaId/:theaterId/:seatTypePatternId" element={<SeatPatternUpdateForm/>}/>
         <Route path="cinema" element={<AdminCinemaPage/>} />
         <Route path="cinema-detail/:cinemaId" element={<AdminCinemaDetailPage/>} />
         <Route path="theater/:cinemaId" element={<AdminTheaterPage/>}/>

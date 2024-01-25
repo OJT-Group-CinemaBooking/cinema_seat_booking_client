@@ -2,14 +2,14 @@ import React, { useEffect } from 'react'
 import classes from './SeatTypePatternOfTheater.module.css'
 import { Card, Col, Container, Row, Spinner } from 'react-bootstrap'
 import SeatPatternCard from './SeatPatternCard'
-import { PlusSquareDotted } from 'react-bootstrap-icons'
+import { ArrowLeft, PlusSquareDotted } from 'react-bootstrap-icons'
 import { useNavigate, useParams } from 'react-router-dom'
 import { fetchAllSeatTypePatternByTheater, getAllSeatTypePatternByTheater, getSeatTypePatternError, getSeatTypePatternStatus } from '../../../slice/SeatSlice'
 import { useDispatch, useSelector } from 'react-redux'
 
 const SeatTypePatternOfTheater = () => {
 
-    const { theaterId } = useParams()
+    const { cinemaId, theaterId } = useParams()
 
     const seatTypePatterns = useSelector(getAllSeatTypePatternByTheater)
     const status = useSelector(getSeatTypePatternStatus)
@@ -23,20 +23,31 @@ const SeatTypePatternOfTheater = () => {
         }
     },[status,dispatch,theaterId])
 
+    const onHandleBackArrow = () => {
+        navigate(`/admin/theater/${cinemaId}`)
+    }
+
   return (
     <Container className={classes.container}>
+
         {status === 'loading' && 
             <div className="w-100 mt-5 d-flex justify-content-center">
                 <Spinner animation="border" variant="secondary" />
             </div>
         }
-        {(status.includes('_success'))&&  
-            <Row className='px-5 py-5 g-5'>
+
+        {(status.includes('_success'))&& 
+        <>
+        <Row className={classes.back_arrow}>
+            <ArrowLeft color="#D4AF37" size={30} onClick={onHandleBackArrow}/>
+        </Row> 
+        <Row className='px-5 pb-5 g-5'>
             {
                 seatTypePatterns?.map( seatTypePattern => 
                     <SeatPatternCard 
                         key={seatTypePattern.id} 
-                        theaterId={1}
+                        cinemaId={cinemaId} 
+                        theaterId={theaterId}
                         seatTypePattern={seatTypePattern}
                     />
                 )
@@ -45,14 +56,16 @@ const SeatTypePatternOfTheater = () => {
                 <Card className={classes.card}>
                     <PlusSquareDotted 
                         className={classes.add}
-                        onClick={() => navigate(`/admin/seatForm/${1}`)}
+                        onClick={() => navigate(`/admin/seatForm/${cinemaId}/${theaterId}`)}
                         color='white' 
                         size={60}
                     />
                 </Card>
             </Col>
         </Row>
+        </>
         }
+
         {status === 'fetch_failed' && <p>{error}</p>}
     </Container>
   )
