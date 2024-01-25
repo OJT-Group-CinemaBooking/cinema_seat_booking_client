@@ -23,7 +23,8 @@ const Footer = () => {
             >
               <img
                 src="./images/kyi-mal-high-resolution-logo-transparent.png"
-                className="w-100"
+                className="w-100" 
+                alt="logo"
               />
               <a href="#!">
                 <div
@@ -120,7 +121,7 @@ const Footer = () => {
         style={{ backgroundColor: "rgba(0, 0, 0, 0.2)" }}
       >
         &copy; {new Date().getFullYear()} Copyright:{" "}
-        <Link to="/contact" className="text-white">
+        <Link to="/contact-us" className="text-white">
           KyiMl App
         </Link>
       </div>

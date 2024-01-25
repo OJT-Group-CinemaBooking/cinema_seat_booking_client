@@ -1,11 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import classes from "./NewMovieForm.module.css";
 import { Button, Col, Container, Form, Image, Row } from "react-bootstrap";
-import { useDispatch } from "react-redux";
-import { createNewMovie } from "../../../slice/MovieSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { createNewMovie, getMovieStatus, setMovieStatusToIdle } from "../../../slice/MovieSlice";
 import { IMAGE_URL } from "../../config/baseURL";
+import InfoAlert from "../../../components/ui/InfoAlert";
 
 const NewMovieForm = ({ generes, starrings, directors }) => {
+  const status = useSelector(getMovieStatus)
+
   const [poster, setPoster] = useState(null);
   const [banner, setBanner] = useState(null);
   const [title, setTitle] = useState('')
@@ -178,10 +181,33 @@ const NewMovieForm = ({ generes, starrings, directors }) => {
     }
   };
 
+  const [ showAlert, setShowAlert ] = useState(false)
+
+  useEffect(() => {
+    if(status === 'create_success' || status === 'create_failed') {
+        setShowAlert(true)
+    }
+  },[status])
+  
+  const onHide = () => {
+    setShowAlert(false)
+    dispatch(setMovieStatusToIdle())
+  }
+
   return (
     <Container>
       <Form className={classes.form} onSubmit={onSubmit}>
+        {
+          showAlert && <InfoAlert 
+            onHide={onHide}
+            variant={(status === 'create_success')? 'success' : 'danger'}
+            information={(status === 'create_success')? 'Successifully created!' : 'Create Failed!'}
+          />
+        }
         <Row xs={2} className={classes.form_container}>
+          <Col xs='12' className='text-center text-light my-3'>
+            <h2>New Movie Form</h2>
+          </Col>
           <Col xs="10" md="6">
             {/** input Group */}
             <Row xs={1} className={classes.form_row}>

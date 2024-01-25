@@ -83,7 +83,7 @@ const AdminUpdateMovieFormPage = () => {
             </div>
         )
     }
-    if(crewStatus === 'success') {
+    if(crewStatus.includes('_success')) {
         content = <UpdateMovieForm movie={movie} existedGeneres={existedGeneres} existedCrews={existedCrews} generes={generes} starrings={starrings} directors={directors}/>
     }
   return (

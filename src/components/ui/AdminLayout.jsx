@@ -8,7 +8,7 @@ const AdminLayout = () => {
     <Container fluid >
         <Row xs={2}>
             <AdminSidebar/>
-            <Col xs='10'>
+            <Col xs='10' style={{backgroundColor:"rgba(2, 20, 33)"}}>
                 <Outlet/>
             </Col>
         </Row>

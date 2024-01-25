@@ -1,16 +1,23 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import classes from './MovieCrewDetail.module.css'
-import { Button, Col, Container, Form, Row } from 'react-bootstrap'
-import { useDispatch } from 'react-redux';
-import { updateCrew } from '../../../slice/CrewSlice';
+import { Button, Col, Container, Form, Image, Row } from 'react-bootstrap'
+import { useDispatch, useSelector } from 'react-redux';
+import { getCrewStatus, setCrewStatusToIdle, updateCrew } from '../../../slice/CrewSlice';
+import InfoAlert from '../../../components/ui/InfoAlert';
+import { IMAGE_URL } from '../../config/baseURL';
+import { ArrowLeft } from 'react-bootstrap-icons';
+import { useNavigate } from 'react-router-dom';
 
 const MovieCrewDetail = ({ crew }) => {
 
+  const status = useSelector(getCrewStatus)
+
   const [name, setName] = useState(crew?.name);
   const [role, setRole] = useState(crew?.role);
-  const [file, setFile] = useState('');
+  const [file, setFile] = useState(null);
   const [canRequest, setCanRequest] = useState(true);
   const dispatch = useDispatch();
+  const navigate = useNavigate()
 
   const onNameChange = (e) => setName(e.target.value.toUpperCase())
   const onRoleChange = (e) => setRole(e.target.value)
@@ -22,7 +29,9 @@ const MovieCrewDetail = ({ crew }) => {
     event.preventDefault();
     const formData = new FormData()
 
-    formData.append('file', file)
+    if(file !== null) {
+      formData.append('file', file)
+    }
     if (canCreate) {
       setCanRequest(false);
       const data = {
@@ -38,15 +47,42 @@ const MovieCrewDetail = ({ crew }) => {
     }
   };
 
+  const [ showAlert, setShowAlert ] = useState(false)
+
+    useEffect(() => {
+      if(status === 'update_success' || status === 'update_failed') {
+          setShowAlert(true)
+      }
+    },[status])
+    
+    const onHide = () => {
+      setShowAlert(false)
+    }
+
+    const onHandleBackArrow = () => {
+      dispatch(setCrewStatusToIdle())
+      navigate('/admin/crew')
+    }
+
   return (
     <Container className='min-vh-100 px-5' fluid>
+      {
+          showAlert && <InfoAlert 
+            onHide={onHide}
+            variant={(status === 'update_success')? 'success' : 'danger'}
+            information={(status === 'update_success')? 'Successifully updated!' : 'Update Failed!'}
+          />
+        }
+        <Row className={classes.back_arrow}>
+              <ArrowLeft color="#D4AF37" size={30} onClick={onHandleBackArrow}/>
+        </Row>
       <Row className='d-flex justify-content-evenly min-vh-100 py-5'>
         <Col sm='6' className={classes.crew_info}>
-
+          <Image src={`${IMAGE_URL}/crew/${crew.id}.jpg`} alt="cinema"  />
         </Col>
         <Col sm='4' className={classes.crew_update}>
         <Form onSubmit={onSubmit} className={classes.form}>
-            <h3>EDIT FORM</h3>
+            <h3>CREW EDIT</h3>
             <Form.Group>
               <Form.Label>Name *</Form.Label>
               <Form.Control

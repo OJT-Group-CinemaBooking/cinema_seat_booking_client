@@ -1,0 +1,8 @@
+.contact{
+  background-color: #030637;
+}
+
+.contact:hover{
+  transform: scale(1.01);
+  box-shadow: 3px 4px 8px #808B96;
+}

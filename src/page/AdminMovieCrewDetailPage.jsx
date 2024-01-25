@@ -26,7 +26,7 @@ const AdminMovieCrewDetailPage = () => {
         )
     }
 
-    if(status === 'success') {
+    if(status.includes('_success')) {
         content = <MovieCrewDetail crew={crew}/>
     }
   return (

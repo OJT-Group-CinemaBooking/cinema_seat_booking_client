@@ -1,6 +1,7 @@
 .form_container{
     height: 100vh;
-    padding: 3rem 0;
+    padding-top: 1rem;
+    padding-bottom: 3rem;
     overflow-y: auto;
 }
 
