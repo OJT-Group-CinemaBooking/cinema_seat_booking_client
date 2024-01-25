@@ -3,9 +3,13 @@ import classes from "./MovieDetail.module.css";
 import { Col, Container, Image, Row } from "react-bootstrap";
 import MovieInformation from "./MovieInformation";
 import MovieShowTime from "./MovieShowTime";
+import { useSelector } from "react-redux";
+import { fetchAllCinema, getAllCinema } from "../../slice/CinemaSlice";
 
 const MovieDetail = () => {
   const [change, setChange] = useState("information");
+
+  const cinema = useSelector(getAllCinema())
 
   const onChangeInfo = (info) => setChange(info);
 
@@ -56,7 +60,7 @@ const MovieDetail = () => {
       </Row>
       <Row>
         {change === "information" && <MovieInformation />}
-        {change === "showtime" && <MovieShowTime />}
+        {change === "showtime" && <MovieShowTime cinema={cinema}/>}
       </Row>
     </Container>
   );

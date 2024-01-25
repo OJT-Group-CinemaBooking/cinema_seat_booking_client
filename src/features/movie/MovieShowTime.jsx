@@ -1,10 +1,11 @@
 import React, { useRef, useState } from 'react'
 import classes from './MovieShowTime.module.css'
-import { Col, Container, Row } from 'react-bootstrap'
+import { Col, Container, Image, Row } from 'react-bootstrap'
 import { ChevronLeft, ChevronRight } from 'react-bootstrap-icons'
 import MovieTime from './MovieTime'
+import { IMAGE_URL } from '../config/baseURL'
 
-const MovieShowTime = () => {
+const MovieShowTime = ({cinema}) => {
   const days = [
     {
       id: 1,
@@ -77,14 +78,14 @@ const MovieShowTime = () => {
   }
   return (
     <Container>
-      <Row xs={2} className='mb-5'>
-        <Col xs='2 offset-1'>
+      <Row xs={2} className={'mb-5 '+classes.cinema_bar}>
+        {/* <Col xs='2 offset-1'>
           <div className={classes.outside_slide}>
             <div className={classes.slide_item} >
               Sun <br/> 31
             </div>
           </div>
-        </Col>
+        </Col> */}
         <Col xs='7'>
           <div className={classes.slide_container}>
             <div className={classes.slide_wapper}>
@@ -93,10 +94,10 @@ const MovieShowTime = () => {
               </div>
               <div className={classes.slide_list} ref={scrollRef}>
                 {
-                  days.map(day => 
+                  cinema.map(cinema => 
                   <div className={classes.slide_item} 
-                    onClick={() => {onMonthBtnClick(day.name)}} >
-                    {(day.name).substring(0,3)} <br/> {day.id}
+                    onClick={() => {onMonthBtnClick(cinema.id)}} >
+                      <Image src={`${IMAGE_URL}/cinema/${cinema.id}.jpg`} />
                   </div>)
                 }
               </div>
