@@ -9,7 +9,7 @@ import InfoAlert from '../../../components/ui/InfoAlert'
 
 const SeatPatternUpdateForm = () => {
 
-    const {theaterId,seatTypePatternId} = useParams()
+    const { cinemaId, theaterId, seatTypePatternId } = useParams()
     const [ showAlert, setShowAlert ] = useState(false)
     const status = useSelector(getSeatTypePatternStatus)
     const seatTypePattern = useSelector( state => getSeatTypePatternById(state,seatTypePatternId) )
@@ -62,7 +62,7 @@ const SeatPatternUpdateForm = () => {
 
     const onHandleBackArrow = () => {
         dispatch(setSeatSliceStatusToIdle())
-        navigate(`/admin/seatTypePattern/${theaterId}`)
+        navigate(`/admin/seatTypePattern/${cinemaId}/${theaterId}`)
     }
   return (
     <Container className={classes.container}>

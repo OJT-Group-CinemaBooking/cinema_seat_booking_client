@@ -30,7 +30,7 @@ const SingleTheater = ({ theater, cinemaId }) => {
 
     const onNavigateSeatTypePattern = () => {
     dispatch(fetchAllSeatTypePatternByTheater(theater.id))
-    navigate(`/admin/seatTypePattern/${theater.id}`)
+    navigate(`/admin/seatTypePattern/${cinemaId}/${theater.id}`)
     }
   return (
     <tr key={theater.id}>

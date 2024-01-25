@@ -12,7 +12,7 @@ const Movie = ({ title, duration, releaseDate, image, genere, language }) => {
   }
 
   return (
-    <Col>
+    <Col className='d-flex justify-content-center'>
         <Card className={classes.card}>
             <Card.Img className={classes.card_image} variant="center" src={image} />
             <div className={classes.card_image_hover}>

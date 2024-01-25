@@ -83,7 +83,7 @@ const ComingSoonMovies = () => {
         <div className={classes.slide_list} ref={scrollRef}>
           {
             months.map(month => 
-            <div className={`${classes.slide_item} ${(selectedMonth === month.name) && classes.active}`} 
+            <div key={month.id} className={`${classes.slide_item} ${(selectedMonth === month.name) && classes.active}`} 
               onClick={() => {onMonthBtnClick(month.name)}} >
               {(month.name).substring(0,3)}
             </div>)
