@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux'
 import { deleteSeatTypePattern } from '../../../slice/SeatSlice'
 import ConfirmModal from '../../../components/ui/ConfirmModal'
 
-const SeatPatternCard = ({ seatTypePattern, theaterId }) => {
+const SeatPatternCard = ({ cinemaId, seatTypePattern, theaterId }) => {
 
   const [ showModal, setShowModal ] = useState(false)
   const dispatch = useDispatch()
@@ -35,11 +35,12 @@ const SeatPatternCard = ({ seatTypePattern, theaterId }) => {
         <Card.Img 
           className={classes.card_image} 
           src= {
-            (seatTypePattern.seatType === 'STANDARD')? '../images/red-seat.png' : 
-            (seatTypePattern.seatType === 'PREMIUM')? '../images/yellow-seat.png' :
-            (seatTypePattern.seatType === 'TWIN')? '../images/twin-seat.png' : 
-            (seatTypePattern.seatType === 'RECLINER')? '../images/gray-seat.png' : 
-            (seatTypePattern.seatType === 'VIP')? '../images/white-seat.png' : '../images/red-seat.png'
+            (seatTypePattern.seatType === 'STANDARD')? `${process.env.PUBLIC_URL}/images/red-seat.png` : 
+            (seatTypePattern.seatType === 'PREMIUM')? `${process.env.PUBLIC_URL}/images/yellow-seat.png` :
+            (seatTypePattern.seatType === 'TWIN')? `${process.env.PUBLIC_URL}/images/twin-seat.png` : 
+            (seatTypePattern.seatType === 'RECLINER')? `${process.env.PUBLIC_URL}/images/gray-seat.png` : 
+            (seatTypePattern.seatType === 'VIP')? `${process.env.PUBLIC_URL}/images/white-seat.png` : 
+            `${process.env.PUBLIC_URL}/images/red-seat.png`
           }
           alt='seat'/>
         <Card.Body className={classes.card_body}>
@@ -47,7 +48,7 @@ const SeatPatternCard = ({ seatTypePattern, theaterId }) => {
           <Card.Subtitle className='py-2'>Price : {seatTypePattern.seatPrice} MMK</Card.Subtitle>
           <Card.Text>Row : {seatTypePattern.rowCount} Column : {seatTypePattern.columnCount}</Card.Text>
           <Card.Footer className='d-flex justify-content-evenly'>
-            <Button variant='secondary'onClick={() => navigate(`/admin/seatupdate/${theaterId}/${seatTypePattern.id}`)}>Edit</Button>
+            <Button variant='secondary'onClick={() => navigate(`/admin/seat-update/${cinemaId}/${theaterId}/${seatTypePattern.id}`)}>Edit</Button>
             <Button variant='danger'
               onClick={onDelete}
             >

@@ -1,0 +1,75 @@
+.card_row{
+    position: relative;
+}
+
+.card_container{
+    width: 100%;
+    overflow-x: auto;
+    margin-top: 1rem;
+    scroll-behavior: smooth;
+}
+
+.card_container::-webkit-scrollbar{
+    width: 0;
+}
+
+.card_wapper{
+    width: max-content;
+    padding: 0 1vw;
+}
+
+.slide_btn{
+    top: 1vw;
+    width: 5vw;
+    display: flex;
+    font-size: 4vw;
+    color: #b6b6b6;
+    height: 90%;
+    align-items: center;
+    width: fit-content;
+    position: absolute;
+    cursor: pointer;
+    z-index: 1;
+}
+
+.slide_btn:hover{
+    color: #ffff;
+}
+
+.slide_btn_left{
+    left: 0;
+    background-image: linear-gradient(to left,
+        rgba(0,0,0,0) 0%,
+        rgba(0,0,0,0.2) 20%,
+        rgba(0,0,0,0.5) 40%,
+        rgba(0,0,0,0.8) 60%,
+        rgba(0,0,0,0.9) 80%,
+        rgba(0,0,0,1)100%
+    );
+}
+
+.slide_btn_left svg{
+    position: relative;
+    border: 2px solid wheat;
+    border-radius: 2rem;
+    left: -5vw;
+}
+
+.slide_btn_right{
+    right: 0;
+    background-image: linear-gradient(to right,
+        rgba(0,0,0,0) 0%,
+        rgba(0,0,0,0.2) 20%,
+        rgba(0,0,0,0.5) 40%,
+        rgba(0,0,0,0.8) 60%,
+        rgba(0,0,0,0.9) 80%,
+        rgba(0,0,0,1)100%
+    );
+}
+
+.slide_btn_right svg{
+    position: relative;
+    border: 2px solid wheat;
+    border-radius: 2rem;
+    right: -5vw;
+}
