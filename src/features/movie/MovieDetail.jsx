@@ -9,7 +9,7 @@ import { fetchAllCinema, getAllCinema } from "../../slice/CinemaSlice";
 const MovieDetail = () => {
   const [change, setChange] = useState("information");
 
-  const cinema = useSelector(getAllCinema())
+  const cinema = useSelector(getAllCinema)
 
   const onChangeInfo = (info) => setChange(info);
 
