@@ -1,10 +1,10 @@
 import React from 'react'
-import NowShowingList from '../features/forhomepage/NowShowingList'
+import Home from '../features/movie/Home'
 
 const HomePage = () => {
   return (
     <section>
-        <NowShowingList/>
+        <Home />
     </section>
   )
 }

@@ -1,0 +1,26 @@
+.footer{
+    background-color: black;
+    color: rgb(255, 251, 251);
+}
+
+.footer h4,
+.contact_us svg{
+    color: #D4AF37;
+}
+
+.aboutUs{
+    text-align: justify;
+}
+
+.footer a{
+    text-decoration: none;
+}
+
+.footer hr{
+   opacity: 0.8;
+   background-color: whitesmoke;
+}
+
+.copyright{
+    background-color: rgb(20, 19, 19);
+}

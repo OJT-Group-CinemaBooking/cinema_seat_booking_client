@@ -28,3 +28,11 @@
 .add{
     cursor: pointer;
 }
+
+.back_arrow > svg{
+    cursor: pointer;
+    display: inline-block;
+    width: fit-content;
+    position: relative;
+    bottom: -1rem;
+}
