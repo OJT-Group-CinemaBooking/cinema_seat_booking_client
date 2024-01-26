@@ -8,7 +8,7 @@ const Movie = ({ title, duration, releaseDate, image, genere, language }) => {
   const navigate = useNavigate()
 
   const onLookDetail = () => {
-    navigate('/movie/detail')
+    navigate('/movie/detail/'+1)
   }
 
   return (
