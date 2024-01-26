@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import classes from './MovieCrewDetail.module.css'
-import { Button, Col, Container, Form, Image, Row } from 'react-bootstrap'
+import { Button, Col, Container, Form, Image, Row, Spinner } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux';
 import { getCrewStatus, setCrewStatusToIdle, updateCrew } from '../../../slice/CrewSlice';
 import InfoAlert from '../../../components/ui/InfoAlert';
@@ -22,6 +22,12 @@ const MovieCrewDetail = ({ crew }) => {
   const onNameChange = (e) => setName(e.target.value.toUpperCase())
   const onRoleChange = (e) => setRole(e.target.value)
   const onFileInputChange = (e) => setFile(e.target.files[0])
+ 
+  const fileInputRef = useRef()
+
+  const imageInputHandler = () => {
+    fileInputRef.current.click();
+  }
 
   const canCreate = [name,  canRequest].every(Boolean);
 
@@ -42,6 +48,7 @@ const MovieCrewDetail = ({ crew }) => {
         },
         formData
       }
+      dispatch(setCrewStatusToIdle())
       dispatch(updateCrew(data))
       setCanRequest(true);
     }
@@ -65,6 +72,13 @@ const MovieCrewDetail = ({ crew }) => {
     }
 
   return (
+    <>
+    {status === 'loading' && 
+      <div className="w-100 mt-5 d-flex justify-content-center">
+        <Spinner animation="border" variant="secondary" />
+      </div>
+    }
+    {status.includes('_success') && 
     <Container className='min-vh-100 px-5' fluid>
       {
           showAlert && <InfoAlert 
@@ -76,12 +90,28 @@ const MovieCrewDetail = ({ crew }) => {
         <Row className={classes.back_arrow}>
               <ArrowLeft color="#D4AF37" size={30} onClick={onHandleBackArrow}/>
         </Row>
-      <Row className='d-flex justify-content-evenly min-vh-100 py-5'>
+      <Row className='d-flex justify-content-evenly py-5'>
+      <Form onSubmit={onSubmit} className={classes.form}>
+
         <Col sm='6' className={classes.crew_info}>
-          <Image src={`${IMAGE_URL}/crew/${crew.id}.jpg`} alt="cinema"  />
+          
+          <div className={classes.movie_file} onClick={imageInputHandler}>
+            { file ? (
+              <Image src={URL.createObjectURL(file)} alt="crew"  className={classes.file}/>
+            ) : (
+              <Image src={`${IMAGE_URL}/crew/${crew.id}.jpg`} alt="crew"  className={classes.file} />
+            )}
+            <Form.Control 
+              type="file" 
+              ref={fileInputRef}
+              onChange={onFileInputChange}
+              style={{display : 'none'}}
+            />
+          </div>
+
         </Col>
+
         <Col sm='4' className={classes.crew_update}>
-        <Form onSubmit={onSubmit} className={classes.form}>
             <h3>CREW EDIT</h3>
             <Form.Group>
               <Form.Label>Name *</Form.Label>
@@ -103,23 +133,17 @@ const MovieCrewDetail = ({ crew }) => {
                 <option value="Director">Director</option>
               </Form.Select>
             </Form.Group>
-            <Form.Group>
-              <Form.Label>Enter Image *</Form.Label>
-              <Form.Control
-                type="file" 
-                onChange={onFileInputChange}
-                placeholder="Enter imageName..."
-              />
-            </Form.Group>
             <div className={classes.button_wapper}>
               <Button type="submit"  disabled={!canCreate} >
                 SAVE
               </Button>
             </div>
-          </Form>
         </Col>
+        </Form>
       </Row>
     </Container>
+    }
+    </>
   )
 }
 

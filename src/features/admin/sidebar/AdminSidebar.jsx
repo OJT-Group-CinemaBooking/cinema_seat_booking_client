@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import classes from './AdminSidebar.module.css'
 import { Col } from 'react-bootstrap'
-import { Film, HouseGearFill } from 'react-bootstrap-icons'
+import { CameraReels, ClipboardPlus, Film, HouseGearFill, PersonVideo } from 'react-bootstrap-icons'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { setCrewStatusToIdle } from '../../../slice/CrewSlice'
@@ -39,17 +39,17 @@ const onCinemaChangeIdle = () => {
       <div 
         className={`${classes.items} ${page === 'new-movie' && classes.active}`} 
         onClick={() => {onChangePage('new-movie')}}>
-        <span className={classes.icons}><Film/></span><p className={classes.content}>Add Movie</p>
+        <span className={classes.icons}><ClipboardPlus/></span><p className={classes.content}>Add Movie</p>
       </div>
       <div 
         className={`${classes.items} ${page === 'crew' && classes.active}`} 
         onClick={() => {onChangePage('crew');onCrewChangeIdle()}}>
-        <span className={classes.icons}><Film/></span><p className={classes.content}>Movie Crew</p>
+        <span className={classes.icons}><PersonVideo/></span><p className={classes.content}>Movie Crew</p>
       </div>
       <div 
         className={`${classes.items} ${page === 'cinema' && classes.active}`} 
         onClick={() => {onChangePage('cinema');onCinemaChangeIdle()}}>
-        <span className={classes.icons}><Film/></span><p className={classes.content}>Cinema</p>
+        <span className={classes.icons}><CameraReels/></span><p className={classes.content}>Cinema</p>
       </div>
     </Col>
   )

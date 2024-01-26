@@ -15,6 +15,51 @@
     margin-bottom: 2rem;
 }
 
+.poster_form{
+    margin-bottom: 3rem;
+    width: fit-content;
+}
+
+.movie_poster{
+    width: 15rem;
+    height: 20rem;
+    border: 3px dotted rgba(141, 141, 141, 0.541);
+    cursor: pointer;
+}
+
+.poster{
+    width: 100%;
+    height: 100%;
+    aspect-ratio: 2/3;
+    object-fit: cover;
+    object-position: center;
+}
+
+.movie_banner{
+    width: 100%;
+    height: 15rem;
+    border: 3px dotted rgba(141, 141, 141, 0.541);
+    cursor: pointer;
+}
+
+.banner{
+    width: 100%;
+    height: 100%;
+    aspect-ratio: 7/3;
+    object-fit: cover;
+    object-position: center;
+}
+
+.poster_holder,
+.banner_holder{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: rgba(141, 141, 141, 0.541);
+}
+
 .genere_form{
     height: 10rem;
     padding: 1rem;
@@ -32,6 +77,15 @@
 .form_check{
     display: flex;
     justify-content: space-evenly;
+}
+
+.flags_select button{
+    color: whitesmoke;
+    padding: 0;
+    display: flex;
+    justify-content: space-around;
+    border: 1px solid #D4AF37;
+    background: rgba(86, 101, 115, 0.2);
 }
 
 .form input,
