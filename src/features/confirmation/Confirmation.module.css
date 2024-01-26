@@ -5,6 +5,10 @@
     color: whitesmoke;
 }
 
+.ticket{
+    border: 1px solid rgba(198, 198, 198, 0.536);
+}
+
 .headder{
     text-align: center;
     margin-top: 2rem;
@@ -31,59 +35,71 @@
     margin-left: 1.5rem;
 }
 
+.first_row{
+    margin-top: 1rem;
+}
+
+.date_time{
+    text-align: end;
+    margin-right: 1rem;
+}
+
+.movie_name{
+    margin: 1rem 0 1rem 1rem;
+}
+
 .ticket{
     margin-top: 2rem;
     width: 80rem;
-    border: 1px solid #D4AF37;
     margin-bottom: 2rem;
 }
 
-.ticket_details{
-    display: inline-block;
-    width: 40rem;
-    margin: 1rem 0 0 1rem;
+.ticket_details p{
+    margin-left: 1rem;
+    margin-bottom: 0.2rem;
+}
+
+.ticket_details h4{
+    margin-left: 1rem;
 }
 
 .ticket_details span{
     color: #D4AF37;
+    margin-left: 0.5rem;
 }
 
-.ticket_qr{
-    display: inline-flex;
-    vertical-align: top;
-    width: 37rem;
-    height: 16rem;
-    justify-content: center;
-    align-items: center;
-    border-left: 3px dashed whitesmoke;
+.hr_style{
+    border-top: 2px solid white;
+    background-color: transparent;
 }
 
-@media (max-width: 1399px) and (min-width: 1199px){
-    .ticket_qr{
-        width: 28rem;
-    }
+.hr_style_dotted{
+    border-top: 2px dashed white;
+    background-color: transparent;
 }
 
-@media (max-width: 1199px) and (min-width: 992px){
-    .ticket_details{
-        width: 28rem;
-    }
-    .ticket_qr{
-        width: 28rem;
-    }
+.order_summary h4{
+    margin-left: 1rem;
 }
 
-@media (max-width: 992px) and (min-width: 575px){
-    .ticket_details{
-        width: 100%;
-        margin-bottom: 1rem;
-    }
-    .ticket_qr{
-        border-top: 3px dashed whitesmoke;
-        border-left: none;
-        padding-top: 2rem;
-        padding-bottom: 2rem;
-        width: 100%;
-        height: auto;
-    }
+.fee{
+    padding-left: 8rem;
+}
+
+.fee_price{
+    text-align: end;
+    padding-right: 10rem;
+}
+
+.extra_fee{
+    height: 20px;
+}
+
+.note h4,
+.note p{
+    margin-left: 1rem;
+}
+
+.note h4{
+    margin-bottom: 1.5rem;
 }
