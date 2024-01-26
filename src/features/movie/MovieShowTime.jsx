@@ -1,114 +1,118 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import classes from './MovieShowTime.module.css'
-import { Col, Container, Image, Row } from 'react-bootstrap'
-import { ChevronLeft, ChevronRight } from 'react-bootstrap-icons'
-import MovieTime from './MovieTime'
+import { Col, Container, Image, Row, Spinner } from 'react-bootstrap'
+import { useDispatch, useSelector } from 'react-redux'
+import TheaterAccordion from './TheaterAccordion'
+import { fetchTheaterByCinemaId, getAllTheater, getTheaterStatus } from '../../slice/TheaterSlice'
 import { IMAGE_URL } from '../config/baseURL'
 
-const MovieShowTime = ({cinema}) => {
-  const days = [
-    {
-      id: 1,
-      name: 'Monday'
-    },
-    {
-      id: 2,
-      name: 'Tuesday'
-    },
-    {
-      id: 3,
-      name: 'Wednesday'
-    },
-    {
-      id: 4,
-      name: 'Thursday'
-    },
-    {
-      id: 5,
-      name: 'Friday'
-    },
-    {
-      id: 6,
-      name: 'Saturday'
-    },
-    {
-      id: 7,
-      name: 'Sunday'
-    },
-    {
-      id: 8,
-      name: 'Monday'
-    },
-    {
-      id: 9,
-      name: 'Tuesday'
-    },
-    {
-      id: 10,
-      name: 'Wednesday'
-    },
-    {
-      id: 11,
-      name: 'Thursday'
-    },
-    {
-      id: 12,
-      name: 'Friday'
-    },
-    {
-      id: 13,
-      name: 'Saturday'
-    },
-  ]
+const MovieShowTime = ({ movieId, cinemas }) => {
 
-  const [ date, setDate ] = useState()
-    
-  const scrollRef = useRef()
+  // const cinemas = [
+  //   {
+  //     id : 1,
+  //     name : 'cinema1'
+  //   },
+  //   {
+  //     id : 2,
+  //     name : 'cinema2'
+  //   },
+  //   {
+  //     id : 3,
+  //     name : 'cinema3'
+  //   },
+  //   {
+  //     id : 4,
+  //     name : 'cinema4'
+  //   },
+  //   {
+  //     id : 5,
+  //     name : 'cinema5'
+  //   },
+  //   {
+  //     id : 6,
+  //     name : 'cinema6'
+  //   },
+  //   {
+  //     id : 7,
+  //     name : 'cinema7'
+  //   },
+  //   {
+  //     id : 8,
+  //     name : 'cinema8'
+  //   },
+  //   {
+  //     id : 9,
+  //     name : 'cinema9'
+  //   },
+  //   {
+  //     id : 10,
+  //     name : 'cinema10'
+  //   }
+  // ]
 
-  const onScrollLeft = () => {
-      scrollRef.current.scrollLeft -= 90;
+  // const theaters = [
+  //   {
+  //     id : 1,
+  //     name : 'KyiMal Theater1'
+  //   }
+  // ]
+
+  const theaterStatus = useSelector(getTheaterStatus)
+  const theaters = useSelector(getAllTheater)
+
+  const dispatch = useDispatch()
+
+  const [ selected, setSelected ] = useState(cinemas[0])
+
+  useEffect(() => {
+    dispatch(fetchTheaterByCinemaId(selected.id))
+  },[dispatch,selected])
+  
+  const onSelect = (cinema) => {
+    setSelected(cinema)
   }
 
-  const onScrollRight = () => {
-      scrollRef.current.scrollLeft += 90;
-  }
-
-  const onMonthBtnClick = (name) => {
-    setDate(name)
-  }
   return (
-    <Container>
-      <Row xs={2} className={'mb-5 '+classes.cinema_bar}>
-        {/* <Col xs='2 offset-1'>
-          <div className={classes.outside_slide}>
-            <div className={classes.slide_item} >
-              Sun <br/> 31
-            </div>
-          </div>
-        </Col> */}
-        <Col xs='7'>
-          <div className={classes.slide_container}>
-            <div className={classes.slide_wapper}>
-              <div className={classes.slide_btn+' '+classes.slide_btn_left}>
-                  <ChevronLeft onClick={onScrollLeft}/>
+    <Container fluid>
+      <Row xs={1} className='d-flex justify-content-center'>
+        <Col xs='12' className='text-center text-light'><h3>Choose Cinema</h3></Col>
+        <Col xs='8' className={classes.cinema_column}>
+          {
+            cinemas.map(cinema => 
+              <div key={cinema.id} 
+                className={classes.btn} 
+                onClick={() => onSelect(cinema)}
+              >
+                <Image 
+                  src={`${IMAGE_URL}/cinema/${cinema.id}.jpg`} 
+                  alt='cinema'  
+                  className={`${classes.cinema_image} ${selected.name === cinema.name && classes.active}`}
+                />  
               </div>
-              <div className={classes.slide_list} ref={scrollRef}>
-                {
-                  cinema.map(cinema => 
-                  <div className={classes.slide_item} 
-                    onClick={() => {onMonthBtnClick(cinema.id)}} >
-                      <Image src={`${IMAGE_URL}/cinema/${cinema.id}.jpg`} />
-                  </div>)
-                }
-              </div>
-              <div className={classes.slide_btn+' '+classes.slide_btn_right}>
-                  <ChevronRight onClick={onScrollRight}/>
-              </div>
-            </div>
-          </div>
+            )
+          }
         </Col>
       </Row>
-      <MovieTime/>
+      { theaterStatus === 'loading' && 
+        <div className="w-100 mt-5 d-flex justify-content-center">
+          <Spinner animation="border" variant="secondary" />
+        </div>
+      }
+      {theaterStatus.includes('_success') && 
+        <Row xs={1} className='d-flex justify-content-center'>
+          {
+            theaters.map(theater => 
+              <TheaterAccordion 
+                key={theater.id} 
+                movieId={movieId}
+                theater={theater} 
+              />
+              )
+          }
+        </Row>
+      }
+      {theaterStatus === 'fetch_failed' && <p>Failed to Load.SomeThings Wrong!</p>}
     </Container>
   )
 }

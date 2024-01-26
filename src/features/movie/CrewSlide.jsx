@@ -1,8 +1,9 @@
 import React, { useRef } from 'react'
 import classes from './CrewSlide.module.css'
 import { CaretLeft, CaretRight } from 'react-bootstrap-icons'
+import { IMAGE_URL } from '../config/baseURL'
 
-const CrewSlide = () => {
+const CrewSlide = ({ movieCrews }) => {
   const scrollRef = useRef()
 
   const onScrollLeft = () => {
@@ -19,40 +20,16 @@ const CrewSlide = () => {
             <CaretLeft/>
         </div>
         <div className={classes.slide_list} ref={scrollRef}>
-            <div className={classes.slide_item}>
-              <img className={classes.image} src='https://image.tmdb.org/t/p/w500/dv2qhorxFHfLdWQHjhGXOi1YUXy.jpg'  alt='person'/>
-              <div className={classes.name}>KO SHIBASAKI</div>
-            </div>
 
-            <div className={classes.slide_item}>
-              <img className={classes.image} src='https://image.tmdb.org/t/p/w500/dv2qhorxFHfLdWQHjhGXOi1YUXy.jpg'  alt='person'/>
-              <div className={classes.name}>KO SHIBASAKI</div>
-            </div>
+          {
+            movieCrews.map( movieCrew => 
+              <div key={movieCrew.id} className={classes.slide_item}>
+                <img className={classes.image} src={`${IMAGE_URL}/crew/${movieCrew.crew.id}.jpg`}  alt='person'/>
+                <div className={classes.name}>{movieCrew.crew.name}</div>
+              </div>
+            )
+          }
 
-            <div className={classes.slide_item}>
-              <img className={classes.image} src='https://image.tmdb.org/t/p/w500/dv2qhorxFHfLdWQHjhGXOi1YUXy.jpg'  alt='person'/>
-              <div className={classes.name}>KO SHIBASAKI</div>
-            </div>
-
-            <div className={classes.slide_item}>
-              <img className={classes.image} src='https://image.tmdb.org/t/p/w500/dv2qhorxFHfLdWQHjhGXOi1YUXy.jpg'  alt='person'/>
-              <div className={classes.name}>KO SHIBASAKI</div>
-            </div>
-
-            <div className={classes.slide_item}>
-              <img className={classes.image} src='https://image.tmdb.org/t/p/w500/dv2qhorxFHfLdWQHjhGXOi1YUXy.jpg'  alt='person'/>
-              <div className={classes.name}>KO SHIBASAKI</div>
-            </div>
-
-            <div className={classes.slide_item}>
-              <img className={classes.image} src='https://image.tmdb.org/t/p/w500/dv2qhorxFHfLdWQHjhGXOi1YUXy.jpg'  alt='person'/>
-              <div className={classes.name}>KO SHIBASAKI</div>
-            </div>
-
-            <div className={classes.slide_item}>
-              <img className={classes.image} src='https://image.tmdb.org/t/p/w500/dv2qhorxFHfLdWQHjhGXOi1YUXy.jpg'  alt='person'/>
-              <div className={classes.name}>KO SHIBASAKI</div>
-            </div>
         </div>
         <div className={classes.slide_btn+' '+classes.slide_btn_right} onClick={onScrollRight}>
             <CaretRight/>
