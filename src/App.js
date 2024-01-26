@@ -38,6 +38,7 @@ function App() {
         <Route path="confirmation" element={<BookingConfirmationPage/>}/>
         <Route path="login" element={<LoginPage/>} />
         <Route path="sign-up" element={<SignUpPage/>} />
+        <Route path="checkout" element={<CheckOutPage/>} />
       </Route>
       <Route path="/admin" element={<AdminLayout/>}>
         <Route path="movie" element={<AdminMovieTablePage/>}/>
