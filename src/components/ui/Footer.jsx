@@ -1,12 +1,12 @@
 import React from 'react';
 import { MDBFooter, MDBContainer, MDBRow, MDBCol, MDBIcon } from 'mdb-react-ui-kit';
-import { EnvelopeAtFill, EnvelopeFill, Facebook, Google, HouseDoorFill, Instagram, PrinterFill, TelephoneFill, Twitter } from 'react-bootstrap-icons';
+import { EnvelopeFill, Facebook, Google, HouseDoorFill, Instagram, PrinterFill, TelephoneFill, Twitter } from 'react-bootstrap-icons';
 import classes from './Footer.module.css'
 import { Link } from 'react-router-dom';
 
 export default function Footer() {
   return (
-    <MDBFooter className={`text-center text-lg-start mt-5  ${classes.footer}`}>
+    <MDBFooter className={`text-center text-lg-start  ${classes.footer}`}>
 
       <section className=''>
         <MDBContainer className='text-center text-md-start mt-5'>
