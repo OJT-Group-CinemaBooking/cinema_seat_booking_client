@@ -3,7 +3,6 @@ import classes from './Home.module.css'
 import { Col, Container, Row } from 'react-bootstrap'
 import MovieCarousel from '../../components/ui/MovieCarousel'
 import MovieSlide from './MovieSlide'
-import Footer from '../../components/ui/Footer'
 
 const Home = () => {
     const movie = {
@@ -51,9 +50,6 @@ const Home = () => {
             <Col className='mt-2'>
                 <MovieSlide movie={movie} />
             </Col>
-        </Row>
-        <Row>
-            <Footer />
         </Row>
     </Container>
   )

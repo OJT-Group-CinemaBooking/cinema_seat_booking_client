@@ -1,0 +1,73 @@
+.accordion{
+
+}
+
+.accordion_item{
+    background-color: rgba(39, 55, 70, 0.5);
+}
+
+.accordion_item button{
+    color: rgb(243, 156, 18);
+    background-color: rgba(12, 12, 12, 0.1);
+    border-bottom: 1px solid rgb(243, 156, 18);
+}
+
+.accordion_item button:focus{
+    z-index: 0;
+    box-shadow: none;
+    background-color: rgba(22, 22, 22, 0.1);
+    border-bottom: 1px solid rgb(243, 156, 18);
+}
+
+.accordion_item button:not(.collapsed){
+    color: rgb(243, 156, 18);
+    background-color: rgba(22, 22, 22, 0.1);
+}
+
+.accordion_body{
+    color: whitesmoke;
+}
+
+.schedule_scroll{
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    gap: 3rem;
+    overflow-x: auto;
+}
+
+.schedule_scroll::-webkit-scrollbar{
+    width: 0;
+}
+
+.schedule_item{
+    display: flex;
+    flex-direction: column;
+}
+
+.date{
+    width: fit-content;
+    height: fit-content;
+    font-size: 1rem;
+    padding: .5rem .5rem;
+    margin-bottom: 1rem;
+    border: 1px solid rgb(243, 156, 18);
+    border-radius: .5rem;
+    background-color: rgba(243, 157, 18, 0.664);
+}
+
+.time{
+    width: fit-content;
+    height: fit-content;
+    font-size: .7rem;
+    padding: .3rem .5rem;
+    margin: .4rem 0 .4rem .5rem;
+    border: 1px solid whitesmoke;
+    border-radius: 1rem;
+    color: whitesmoke;
+    cursor: pointer;
+}
+
+.time:hover{
+    background-color: rgba(214, 214, 214, 0.658);
+}

@@ -29,13 +29,16 @@ function App() {
       <Route path="/" element={<Layout/>}>
         <Route index element={<HomePage />} />
         <Route path="contact-us" element={<ContactUsPage />} />
-        <Route path="movie" element={<MoviePage/>}/>
-        <Route path="movie/detail" element={<MovieDetailPage/>}/>
+        <Route path="movie" >
+          <Route index element={<MoviePage/>} />
+          <Route path="detail/:movieId" element={<MovieDetailPage/>}/>
+        </Route>
         <Route path="book-seat" element={<SeatBookingPage/>} />
         <Route path="checkout" element={<CheckOutPage/>} />
         <Route path="confirmation" element={<BookingConfirmationPage/>}/>
         <Route path="login" element={<LoginPage/>} />
         <Route path="sign-up" element={<SignUpPage/>} />
+        <Route path="checkout" element={<CheckOutPage/>} />
       </Route>
       <Route path="/admin" element={<AdminLayout/>}>
         <Route path="movie" element={<AdminMovieTablePage/>}/>
