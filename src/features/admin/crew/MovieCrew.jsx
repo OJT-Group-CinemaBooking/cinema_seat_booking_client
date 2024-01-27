@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import classes from "./MovieCrew.module.css";
-import { Button, Col, Container, Form, InputGroup, Row, Table } from "react-bootstrap";
+import { Button, Col, Container, Form, Image, InputGroup, Row, Table } from "react-bootstrap";
 import { Search } from "react-bootstrap-icons";
 import { useDispatch, useSelector } from "react-redux";
-import { createNewCrew, getAllDirectors, getAllStarrings } from "../../../slice/CrewSlice";
+import { createNewCrew, getAllDirectors, getAllStarrings, setCrewStatusToIdle } from "../../../slice/CrewSlice";
 import SingleCrew from "./SingleCrew";
 
 const MovieCrew = ({ crews }) => {
@@ -38,6 +38,12 @@ const MovieCrew = ({ crews }) => {
   const onRoleChange = (e) => setRole(e.target.value)
   const onFileInputChange = (e) => setFile(e.target.files[0])
 
+  const fileInputRef = useRef()
+
+  const imageInputHandler = () => {
+    fileInputRef.current.click();
+  }
+
   const canCreate = [file, name, role, canRequest].every(Boolean);
 
   const onSubmit = (event) => {
@@ -57,11 +63,13 @@ const MovieCrew = ({ crews }) => {
         formData
       }
       dispatch(createNewCrew(data));
+      dispatch(setCrewStatusToIdle())
       setName("")
       setRole("")
       setCanRequest(true);
     }
   };
+
   return (
     <Container>
       <Row xs={1} md={2} className="d-flex justify-content-evenly">
@@ -109,6 +117,27 @@ const MovieCrew = ({ crews }) => {
         <Col xs="4" className={classes.form_col}>
           <Form onSubmit={onSubmit} className={classes.form}>
             <h3>NEW CREW</h3>
+            <Form.Group className={classes.photo_row}>
+
+              <div className={classes.movie_file} onClick={imageInputHandler}>
+                { file ? (
+                  <Image src={URL.createObjectURL(file)} alt="crew" className={classes.file} />
+                ) : (
+                  <div className={classes.file_holder}>
+                    <h2>Photo</h2>
+                    <h1>3 / 4</h1>
+                  </div>
+                )}
+                <Form.Control 
+                  type="file" 
+                  ref={fileInputRef}
+                  onChange={onFileInputChange}
+                  style={{display : 'none'}}
+                  required
+                />
+              </div>
+
+            </Form.Group>
             <Form.Group>
               <Form.Label>Name *</Form.Label>
               <Form.Control
@@ -124,15 +153,6 @@ const MovieCrew = ({ crews }) => {
                 <option value="Starring">Starring</option>
                 <option value="Director">Director</option>
               </Form.Select>
-            </Form.Group>
-            <Form.Group>
-              <Form.Label>Image *</Form.Label>
-              <Form.Control
-                type="file"
-                onChange={onFileInputChange}
-                placeholder="Enter imageName..."
-                required
-              />
             </Form.Group>
             <div className={classes.button_wapper}>
               <Button type="submit" disabled={!canCreate}>
