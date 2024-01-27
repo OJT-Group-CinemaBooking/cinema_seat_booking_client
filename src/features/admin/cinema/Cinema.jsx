@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { Button, Col, Container, Form, Row, Table } from 'react-bootstrap'
+import React, { useRef, useState } from 'react'
+import { Button, Col, Container, Form, Image, Row, Table } from 'react-bootstrap'
 import classes from './Cinema.module.css'
 import { useDispatch } from 'react-redux'
 import { createCinema} from '../../../slice/CinemaSlice'
@@ -17,6 +17,12 @@ const NewCinemaForm = ({allCinema}) => {
   const onNameInputChange = (e) => setName(e.target.value)
   const onLocationInputChange = (e) => setLocation(e.target.value)
   const onImageInputChange = (e) => setImage(e.target.files[0])
+  
+  const fileInputRef = useRef()
+
+  const imageInputHandler = () => {
+    fileInputRef.current.click();
+  }
 
   const canCreate = [name,location,canRequest].every(Boolean)
 
@@ -53,6 +59,7 @@ const NewCinemaForm = ({allCinema}) => {
                     <th>Image</th>
                     <th>Name</th>
                     <th>Loaction</th>
+                    <th className='text-center'>Theaters</th>
                     <th className="text-center">Action</th>
                   </tr>
                 </thead>
@@ -71,6 +78,27 @@ const NewCinemaForm = ({allCinema}) => {
         <Col xs="4" className={classes.form_col}>
           <Form onSubmit={onSubmit} className={classes.form}>
             <h3>NEW Cinema</h3>
+            <Form.Group  className={classes.image_row}>
+              
+              <div className={classes.cinema_file} onClick={imageInputHandler}>
+                { image ? (
+                  <Image src={URL.createObjectURL(image)} alt="cinema" className={classes.file} />
+                ) : (
+                  <div className={classes.file_holder}>
+                    <h2>Photo</h2>
+                    <h1>1 / 1</h1>
+                  </div>
+                )}
+                <Form.Control 
+                  type="file" 
+                  ref={fileInputRef}
+                  onChange={onImageInputChange}
+                  style={{display : 'none'}}
+                  required
+                />
+              </div>
+
+            </Form.Group>
             <Form.Group>
               <Form.Label>Name *</Form.Label>
               <Form.Control
@@ -86,15 +114,6 @@ const NewCinemaForm = ({allCinema}) => {
                 type="text"
                 onChange={onLocationInputChange}
                 placeholder="Eg.Yangon"
-                required
-              />
-            </Form.Group>
-            <Form.Group>
-              <Form.Label>Image *</Form.Label>
-              <Form.Control
-                type="file"
-                onChange={onImageInputChange}
-                placeholder="Enter imageName..."
                 required
               />
             </Form.Group>

@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import classes from "./NewMovieForm.module.css";
 import { Button, Col, Container, Form, Image, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { createNewMovie, getMovieStatus, setMovieStatusToIdle } from "../../../slice/MovieSlice";
 import { IMAGE_URL } from "../../config/baseURL";
 import InfoAlert from "../../../components/ui/InfoAlert";
+import ReactFlagsSelect from "react-flags-select";
 
 const NewMovieForm = ({ generes, starrings, directors }) => {
   const status = useSelector(getMovieStatus)
@@ -29,6 +30,16 @@ const NewMovieForm = ({ generes, starrings, directors }) => {
   const [canRequest, setCanRequest] = useState(true)
 
   const dispatch = useDispatch();
+  const posterRef = useRef()
+  const bannerRef = useRef()
+
+  const onPosterClick = () => {
+    posterRef.current.click();
+  }
+
+  const onBannerClick = () => {
+    bannerRef.current.click();
+  }
 
   const onPosterInputChange = (e) => {
     setPoster(e.target.files[0])
@@ -41,9 +52,6 @@ const NewMovieForm = ({ generes, starrings, directors }) => {
   };
   const onReleaseDateInputChange = (e) => {
     setReleaseDate(e.target.value);
-  };
-  const onCountryInputChange = (e) => {
-    setCountry(e.target.value);
   };
   const onLanguageInputChange = (e) => {
     setLanguage(e.target.value);
@@ -208,6 +216,127 @@ const NewMovieForm = ({ generes, starrings, directors }) => {
           <Col xs='12' className='text-center text-light my-3'>
             <h2>New Movie Form</h2>
           </Col>
+
+          <Col xs="10" md="6">
+            {/** image Group */}
+            <Row xs={1} className={classes.form_row}>
+              <Form.Group
+                as={Col}
+                xs="10"
+                className={classes.poster_form}
+                controlId="formfile1"
+              >
+                <Form.Label>Movie Poster</Form.Label>
+
+                <div className={classes.movie_poster} onClick={onPosterClick}>
+                  { poster ? (
+                    <Image src={URL.createObjectURL(poster)} alt="poster" className={classes.poster} />
+                  ) : (
+                    <div className={classes.poster_holder}>
+                      <h1>2 / 3</h1>
+                    </div>
+                  )}
+                  <Form.Control 
+                    type="file" 
+                    ref={posterRef}
+                    onChange={onPosterInputChange} 
+                    style={{display : 'none'}}
+                  />
+                </div>
+
+              </Form.Group>
+            </Row>
+            <Row xs={1} className={classes.form_row}>
+              <Form.Group
+                as={Col}
+                xs="10"
+                className="mb-3"
+                controlId="formfile2"
+              >
+                <Form.Label>Movie Banner *</Form.Label>
+                <div className={classes.movie_banner} onClick={onBannerClick}>
+                  { banner ? (
+                    <Image src={URL.createObjectURL(banner)} alt="banner" className={classes.banner} />
+                  ) : (
+                    <div className={classes.banner_holder}>
+                      <h1>7 / 3</h1>
+                    </div>
+                  )}
+                  <Form.Control 
+                    type="file" 
+                    ref={bannerRef}
+                    onChange={onBannerInputChange} 
+                    style={{display : 'none'}}
+                  />
+                </div>
+              </Form.Group>
+            </Row>
+            <Row xs={1} className={classes.form_row}>
+              <Form.Group as={Col} xs="10">
+                <Form.Label>Movie Trailer *</Form.Label>
+                <Form.Control
+                  type="text" 
+                  value={trailer}
+                  placeholder="Trailer Link-"
+                  onChange={onTrailerInputChange}
+                />
+              </Form.Group>
+            </Row>
+
+            <Row xs={1} className={classes.form_row}>
+              <Form.Group as={Col} md="10">
+                <Form.Label>Movie Synopsis *</Form.Label>
+                <Form.Control
+                  as="textarea"
+                  rows={3} 
+                  value={synopsis}
+                  placeholder="Synopsis"
+                  onChange={onSynopsisInputChange}
+                />
+              </Form.Group>
+            </Row>
+
+            <Row xs={1} className={classes.form_check}>
+              <Col xs="4 offset-1 mb-2">
+                <Form.Check
+                  type="switch" 
+                  checked={nowShowing}
+                  id="custom-switch1"
+                  label="NowShowing"
+                  onChange={onNowShowingHandleChange}
+                />
+              </Col>
+              <Col xs="4 offset-1 mb-2">
+                <Form.Check
+                  type="switch" 
+                  checked={comingSoon}
+                  id="custom-switch2"
+                  label="ComingSoon"
+                  onChange={onComingSoonHandleChange}
+                />
+              </Col>
+              <Col xs="4 offset-1 mb-2">
+                <Form.Check
+                  type="switch" 
+                  checked={popularNow}
+                  id="custom-switch3"
+                  label="PopularNow"
+                  onChange={onPopularNowHandleChange}
+                />
+              </Col>
+              <Col xs="4 offset-1 mb-2">
+                <Form.Check
+                  type="switch" 
+                  checked={showing}
+                  id="custom-switch4"
+                  label="Show"
+                  onChange={onShowingHandleChange}
+                />
+              </Col>
+            </Row>
+
+          </Col>
+
           <Col xs="10" md="6">
             {/** input Group */}
             <Row xs={1} className={classes.form_row}>
@@ -239,12 +368,13 @@ const NewMovieForm = ({ generes, starrings, directors }) => {
             <Row xs={2} className={classes.form_row}>
               <Form.Group as={Col} md="5">
                 <Form.Label>Country *</Form.Label>
-                <Form.Control
-                  required
-                  type="text"
-                  value={country}
-                  placeholder="Country -"
-                  onChange={onCountryInputChange}
+                <ReactFlagsSelect 
+                  className={classes.flags_select}
+                  selected={country}
+                  onSelect={(code) => setCountry(code)}
+                  placeholder="Select Country" 
+                  searchable 
+                  searchPlaceholder="Search countries"
                 />
               </Form.Group>
               <Form.Group as={Col} md="5">
@@ -301,101 +431,7 @@ const NewMovieForm = ({ generes, starrings, directors }) => {
                 </div>
               </Form.Group>
             </Row>
-
-            <Row xs={1} className={classes.form_row}>
-              <Form.Group as={Col} md="10">
-                <Form.Label>Movie Synopsis *</Form.Label>
-                <Form.Control
-                  as="textarea"
-                  rows={3} 
-                  value={synopsis}
-                  placeholder="Synopsis"
-                  onChange={onSynopsisInputChange}
-                />
-              </Form.Group>
-            </Row>
-
-            <Row xs={1} className={classes.form_check}>
-              <Col xs="4 offset-1 mb-2">
-                <Form.Check
-                  type="switch" 
-                  checked={nowShowing}
-                  id="custom-switch1"
-                  label="NowShowing"
-                  onChange={onNowShowingHandleChange}
-                />
-              </Col>
-              <Col xs="4 offset-1 mb-2">
-                <Form.Check
-                  type="switch" 
-                  checked={comingSoon}
-                  id="custom-switch2"
-                  label="ComingSoon"
-                  onChange={onComingSoonHandleChange}
-                />
-              </Col>
-              <Col xs="4 offset-1 mb-2">
-                <Form.Check
-                  type="switch" 
-                  checked={popularNow}
-                  id="custom-switch3"
-                  label="PopularNow"
-                  onChange={onPopularNowHandleChange}
-                />
-              </Col>
-              <Col xs="4 offset-1 mb-2">
-                <Form.Check
-                  type="switch" 
-                  checked={showing}
-                  id="custom-switch4"
-                  label="Show"
-                  onChange={onShowingHandleChange}
-                />
-              </Col>
-            </Row>
-          </Col>
-
-          <Col xs="10" md="6">
-            {/** image Group */}
-            <Row xs={1} className={classes.form_row}>
-              <Form.Group as={Col} xs="10">
-                <Form.Label>Movie Trailer *</Form.Label>
-                <Form.Control
-                  type="text" 
-                  value={trailer}
-                  placeholder="Trailer Link-"
-                  onChange={onTrailerInputChange}
-                />
-              </Form.Group>
-            </Row>
-            <Row xs={1} className={classes.form_row}>
-              <Form.Group
-                as={Col}
-                xs="10"
-                className="mb-3"
-                controlId="formfile1"
-              >
-                <Form.Label>Movie Poster</Form.Label>
-                <Form.Control 
-                  type="file" 
-                  onChange={onPosterInputChange}
-                />
-              </Form.Group>
-            </Row>
-            <Row xs={1} className={classes.form_row}>
-              <Form.Group
-                as={Col}
-                xs="10"
-                className="mb-3"
-                controlId="formfile2"
-              >
-                <Form.Label>Movie Banner</Form.Label>
-                <Form.Control 
-                  type="file" 
-                  onChange={onBannerInputChange}
-                />
-              </Form.Group>
-            </Row>
+            
             <Row xs={1} className={classes.form_row}>
               <Form.Group
                 as={Col}
@@ -425,6 +461,7 @@ const NewMovieForm = ({ generes, starrings, directors }) => {
                 </div>
               </Form.Group>
             </Row>
+
             <Row xs={1} className={classes.form_row}>
               <Form.Group
                 as={Col}
@@ -454,6 +491,7 @@ const NewMovieForm = ({ generes, starrings, directors }) => {
                 </div>
               </Form.Group>
             </Row>
+
           </Col>
 
           <Col xs="12" className="text-center">

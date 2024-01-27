@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { FileEarmarkXFill, PencilSquare } from 'react-bootstrap-icons'
+import { CameraReels, FileEarmarkXFill, PencilSquare } from 'react-bootstrap-icons'
 import { IMAGE_URL } from '../../config/baseURL'
 import ConfirmModal from '../../../components/ui/ConfirmModal'
 import { deleteCinema } from '../../../slice/CinemaSlice'
 import { Image } from 'react-bootstrap'
 import { useDispatch } from 'react-redux'
+import { fetchTheaterByCinemaId } from '../../../slice/TheaterSlice'
 
 const SingleCinema = ({ cinema }) => {
 
@@ -27,6 +28,11 @@ const SingleCinema = ({ cinema }) => {
       const onNavigateDetail = () => {
         navigate(`/admin/cinema-detail/${cinema.id}`)
       }
+      
+    const navigateToTheater = () => {
+      navigate(`/admin/theater/${cinema.id}`)
+      dispatch(fetchTheaterByCinemaId(cinema.id))
+    }
   return (
     <tr key={cinema.id}>
     <td className="ps-3">
@@ -44,6 +50,9 @@ const SingleCinema = ({ cinema }) => {
     </td>
     <td>{cinema.name}</td>
     <td>{cinema.location}</td>
+    <td className='text-center'>
+      <CameraReels color='#D4AF37' onClick={navigateToTheater} />
+    </td>
     <td>
       <div className="d-flex justify-content-evenly pt-2">
         <PencilSquare color="#0079FF" onClick={onNavigateDetail}/>
