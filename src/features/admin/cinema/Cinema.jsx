@@ -1,103 +1,120 @@
-import React, { useRef, useState } from 'react'
-import { Button, Col, Container, Form, Image, Row, Table } from 'react-bootstrap'
-import classes from './Cinema.module.css'
-import { useDispatch } from 'react-redux'
-import { createCinema} from '../../../slice/CinemaSlice'
-import SingleCinema from './SingleCinema'
+import React, { useRef, useState } from "react";
+import {
+  Button,
+  Col,
+  Container,
+  Form,
+  Image,
+  Row,
+  Table,
+} from "react-bootstrap";
+import classes from "./Cinema.module.css";
+import { useDispatch, useSelector } from "react-redux";
+import { createCinema, getCinemaStatus } from "../../../slice/CinemaSlice";
+import SingleCinema from "./SingleCinema";
 
-const NewCinemaForm = ({allCinema}) => {
+const NewCinemaForm = ({ allCinema }) => {
 
-  const dispatch = useDispatch()
+  const status = useSelector(getCinemaStatus)
 
-  const [name, setName] = useState('')
-  const [location, setLocation] = useState('')
-  const [image, setImage] = useState(null)
-  const [canRequest, setCanRequest] = useState(true)
+  const dispatch = useDispatch();
 
-  const onNameInputChange = (e) => setName(e.target.value)
-  const onLocationInputChange = (e) => setLocation(e.target.value)
-  const onImageInputChange = (e) => setImage(e.target.files[0])
-  
-  const fileInputRef = useRef()
+  const [name, setName] = useState("");
+  const [location, setLocation] = useState("");
+  const [image, setImage] = useState(null);
+  const [canRequest, setCanRequest] = useState(true);
+
+  const onNameInputChange = (e) => setName(e.target.value);
+  const onLocationInputChange = (e) => setLocation(e.target.value);
+  const onImageInputChange = (e) => setImage(e.target.files[0]);
+
+  const fileInputRef = useRef();
 
   const imageInputHandler = () => {
     fileInputRef.current.click();
-  }
+  };
 
-  const canCreate = [name,location,canRequest].every(Boolean)
+  const canCreate = [name, location, canRequest].every(Boolean);
 
-  const onSubmit = (event) =>{
-    event.preventDefault()
-    if(canCreate) {
-      setCanRequest(false)
-      const formData = new FormData()
-      formData.append('file',image)
+  const onSubmit = (event) => {
+    event.preventDefault();
+    if (canCreate) {
+      setCanRequest(false);
+      const formData = new FormData();
+      formData.append("file", image);
       const data = {
-        cinema : {
+        cinema: {
           name,
-          location
+          location,
         },
-        formData
-      }
-      dispatch(createCinema(data))
-      setName('')
-      setLocation('')
-      setCanRequest(true)
+        formData,
+      };
+      dispatch(createCinema(data));
+      setName("");
+      setLocation("");
+      setCanRequest(true);
     }
+  };
+
+  let cinemaDetail = "";
+
+  if (status === "loading") {
+    cinemaDetail = <tbody>Contents are Loading...</tbody>;
+  } else {
+    cinemaDetail = (
+      <tbody>
+        {allCinema.map((cinema) => (
+          <SingleCinema key={cinema.id} cinema={cinema} />
+        ))}
+      </tbody>
+    );
   }
 
   return (
-
     <Container>
       <Row xs={1} md={2} className="d-flex justify-content-evenly">
         <Col xs="7" className={classes.cinema_table}>
-
           <Row xs={1}>
-              <Table className={classes.table}>
-                <thead>
-                  <tr>
-                    <th>Image</th>
-                    <th>Name</th>
-                    <th>Loaction</th>
-                    <th className='text-center'>Theaters</th>
-                    <th className="text-center">Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  { allCinema.map((cinema) => 
-                    <SingleCinema 
-                      key={cinema.id} 
-                      cinema={cinema}
-                    />
-                  )}
-                </tbody>
-              </Table>
+            <Table className={classes.table}>
+              <thead>
+                <tr>
+                  <th>Image</th>
+                  <th>Name</th>
+                  <th>Loaction</th>
+                  <th className="text-center">Theaters</th>
+                  <th className="text-center">Action</th>
+                </tr>
+              </thead>
+              {cinemaDetail}
+            </Table>
           </Row>
         </Col>
 
         <Col xs="4" className={classes.form_col}>
           <Form onSubmit={onSubmit} className={classes.form}>
             <h3>NEW Cinema</h3>
-            <Form.Group  className={classes.image_row}>
-              
+            <Form.Group className={classes.image_row}>
               <div className={classes.cinema_file} onClick={imageInputHandler}>
-                { image ? (
-                  <Image src={URL.createObjectURL(image)} alt="cinema" className={classes.file} />
+                {image ? (
+                  <Image
+                    src={URL.createObjectURL(image)}
+                    alt="cinema"
+                    className={classes.file}
+                  />
                 ) : (
                   <div className={classes.file_holder}>
                     <h2>Photo</h2>
                     <h1>1 / 1</h1>
                   </div>
                 )}
-                <Form.Control 
-                  type="file" 
+                <Form.Control
+                  type="file"
                   ref={fileInputRef}
                   onChange={onImageInputChange}
-                  style={{display : 'none'}}
+                  style={{ display: "none" }}
                   required
                 />
               </div>
-
             </Form.Group>
             <Form.Group>
               <Form.Label>Name *</Form.Label>
@@ -126,7 +143,7 @@ const NewCinemaForm = ({allCinema}) => {
         </Col>
       </Row>
     </Container>
-  )
-}
+  );
+};
 
-export default NewCinemaForm
+export default NewCinemaForm;
