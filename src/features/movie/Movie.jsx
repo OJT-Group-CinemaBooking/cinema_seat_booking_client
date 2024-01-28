@@ -12,7 +12,7 @@ const Movie = ({ title, duration, releaseDate, image, genere, language }) => {
 
   const onLookDetail = () => {
     dispatch(setShowTimeStatusToIdle())
-    navigate('/movie/detail/'+1)
+    navigate(`movie/${1}/detail`)
   }
 
   return (

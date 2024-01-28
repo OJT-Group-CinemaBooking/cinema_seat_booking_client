@@ -13,7 +13,7 @@ const SingleMovie = ({ movie }) => {
     const navigate = useNavigate()
 
     const onUpdate = () => {
-        navigate(`/admin/update-movie/${movie.id}`)
+        navigate(`/admin/movie/${movie.id}/update`)
     }
 
     const onDelete = () => {
@@ -22,7 +22,7 @@ const SingleMovie = ({ movie }) => {
 
     const handleSchedule = () => {
         dispatch(setShowTimeStatusToIdle())
-        navigate(`/admin/movie/schedule/${movie.id}`)
+        navigate(`/admin/movie/${movie.id}/schedule`)
     }
 
     const onModalClose = () => {

@@ -21,43 +21,64 @@ import AdminCinemaPage from "./page/AdminCinemaPage";
 import AdminCinemaDetailPage from "./page/AdminCinemaDetailPage";
 import AdminTheaterPage from "./page/AdminTheaterPage";
 import AdminTheaterDetailPage from "./page/AdminTheaterDetailPage";
-import ContactUsPage from "./page/ContactUsPage";
+// import ContactUsPage from "./page/ContactUsPage";
 import MovieSchedule from "./features/admin/movie/MovieSchedule";
 
 function App() {
   return (
     <Routes>
+      {/* client view */}
       <Route path="/" element={<Layout/>}>
         <Route index element={<HomePage />} />
-        <Route path="contact-us" element={<ContactUsPage />} />
+
+        {/* for movie */}
         <Route path="movie" >
           <Route index element={<MoviePage/>} />
-          <Route path="detail/:movieId" element={<MovieDetailPage/>}/>
+          <Route path=":movieId/detail" element={<MovieDetailPage/>}/>
         </Route>
+
         <Route path="book-seat" element={<SeatBookingPage/>} />
         <Route path="checkout" element={<CheckOutPage/>} />
         <Route path="confirmation" element={<BookingConfirmationPage/>}/>
         <Route path="login" element={<LoginPage/>} />
         <Route path="sign-up" element={<SignUpPage/>} />
         <Route path="checkout" element={<CheckOutPage/>} />
+        
+        {/* <Route path="contact-us" element={<ContactUsPage />} /> */}
       </Route>
 
+      {/* admin pannel */}
       <Route path="/admin" element={<AdminLayout/>}>
+
+        {/* for movie */}
         <Route path="movie">
           <Route index element={<AdminMovieTablePage/>}/>
-          <Route path="schedule/:movieId" element={<MovieSchedule />} />
+          <Route path="new" element={<AdminNewMovieFromPage/>}/>
+          <Route path=":movieId/update" element={<AdminUpdateMovieFormPage/>}/>
+          <Route path=":movieId/schedule" element={<MovieSchedule />} />
         </Route>
-        <Route path="new-movie" element={<AdminNewMovieFromPage/>}/>
-        <Route path="update-movie/:movieId" element={<AdminUpdateMovieFormPage/>}/>
-        <Route path="crew" element={<AdminMovieCrewPage/>}/>
-        <Route path="crew-detail/:crewId" element={<AdminMovieCrewDetailPage/>}/>
-        <Route path="seatTypePattern/:cinemaId/:theaterId" element={<SeatTypePatternOfTheater/>} />
-        <Route path="seatForm/:cinemaId/:theaterId" element={<SeatPatternAddForm/>} />
-        <Route path="seat-update/:cinemaId/:theaterId/:seatTypePatternId" element={<SeatPatternUpdateForm/>}/>
-        <Route path="cinema" element={<AdminCinemaPage/>} />
-        <Route path="cinema-detail/:cinemaId" element={<AdminCinemaDetailPage/>} />
-        <Route path="theater/:cinemaId" element={<AdminTheaterPage/>}/>
-        <Route path="theater-detail/:theaterId/:cinemaId" element={<AdminTheaterDetailPage/>} />
+
+        {/* for movie crew */}
+        <Route path="crew">
+          <Route index element={<AdminMovieCrewPage/>}/>
+          <Route path=":crewId/update" element={<AdminMovieCrewDetailPage/>}/>
+        </Route>
+
+        {/* for cinema to seat-pattern */}
+        <Route path="cinema">
+          <Route index element={<AdminCinemaPage/>} />
+          <Route path=":cinemaId/update" element={<AdminCinemaDetailPage/>}/>
+          <Route path=":cinemaId/theater">
+            <Route index element={<AdminTheaterPage/>}/>
+            <Route path=":theaterId/update" element={<AdminTheaterDetailPage/>} />
+            <Route path=":theaterId/seat-pattern" element={<SeatTypePatternOfTheater/>} />
+            <Route path=":theaterId/seat-form" element={<SeatPatternAddForm/>} />
+            <Route path=":theaterId/seat-pattern/:seatTypePatternId/update" 
+              element={<SeatPatternUpdateForm/>}
+            />
+          </Route>
+        </Route>
+
       </Route>
     </Routes>
   );

@@ -62,7 +62,7 @@ const SeatPatternUpdateForm = () => {
 
     const onHandleBackArrow = () => {
         dispatch(setSeatSliceStatusToIdle())
-        navigate(`/admin/seatTypePattern/${cinemaId}/${theaterId}`)
+        navigate(`/admin/cinema/${cinemaId}/theater/${theaterId}/seat-pattern`)
     }
   return (
     <Container className={classes.container}>

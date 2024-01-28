@@ -32,12 +32,12 @@ const TheaterDetail = ({theater,cinemaId}) => {
       }
       dispatch(updateTheater(data))
       setCanRequest(true)
-      navigate(`/admin/theater/${cinemaId}`)
+      navigate(`/admin/cinema/${cinemaId}/theater`)
     }
   }
 
   const onHandleBackArrow = () => {
-    navigate(`/admin/theater/${cinemaId}`)
+    navigate(`/admin/cinema/${cinemaId}/theater`)
   }
 
   return (

@@ -25,12 +25,12 @@ const SingleTheater = ({ theater, cinemaId }) => {
     }
 
     const onNavigateDetail = () => {
-    navigate(`/admin/theater-detail/${theater.id}/${cinemaId}`)
+    navigate(`/admin/cinema/${cinemaId}/theater/${theater.id}/update`)
     }
 
     const onNavigateSeatTypePattern = () => {
     dispatch(fetchAllSeatTypePatternByTheater(theater.id))
-    navigate(`/admin/seatTypePattern/${cinemaId}/${theater.id}`)
+    navigate(`/admin/cinema/${cinemaId}/theater/${theater.id}/seat-pattern`)
     }
   return (
     <tr key={theater.id}>

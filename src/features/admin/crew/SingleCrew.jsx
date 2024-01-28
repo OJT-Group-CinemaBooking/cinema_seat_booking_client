@@ -13,8 +13,8 @@ const SingleCrew = ({ crew }) => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   
-  const onNavigateDetail = () => {
-    navigate(`/admin/crew-detail/${crew.id}`)
+  const onNavigateUpdate = () => {
+    navigate(`/admin/crew/${crew.id}/update`)
   }
 
   const onDelete = () => {
@@ -47,7 +47,7 @@ const SingleCrew = ({ crew }) => {
         <td>{crew.role}</td>
         <td>
             <div className="d-flex justify-content-evenly pt-2">
-            <PencilSquare color="#0079FF" onClick={onNavigateDetail}/>
+            <PencilSquare color="#0079FF" onClick={onNavigateUpdate}/>
             <FileEarmarkXFill color="red"  onClick={onDelete}/>
             </div>
         </td>{
