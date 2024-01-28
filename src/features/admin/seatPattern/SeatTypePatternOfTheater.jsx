@@ -24,7 +24,7 @@ const SeatTypePatternOfTheater = () => {
     },[status,dispatch,theaterId])
 
     const onHandleBackArrow = () => {
-        navigate(`/admin/theater/${cinemaId}`)
+        navigate(`/admin/cinema/${cinemaId}/theater`)
     }
 
   return (
@@ -41,7 +41,7 @@ const SeatTypePatternOfTheater = () => {
         <Row className={classes.back_arrow}>
             <ArrowLeft color="#D4AF37" size={30} onClick={onHandleBackArrow}/>
         </Row> 
-        <Row className='px-5 pb-5 g-5'>
+        <Row className='px-5 py-5 g-5'>
             {
                 seatTypePatterns?.map( seatTypePattern => 
                     <SeatPatternCard 
@@ -56,7 +56,7 @@ const SeatTypePatternOfTheater = () => {
                 <Card className={classes.card}>
                     <PlusSquareDotted 
                         className={classes.add}
-                        onClick={() => navigate(`/admin/seatForm/${cinemaId}/${theaterId}`)}
+                        onClick={() => navigate(`/admin/cinema/${cinemaId}/theater/${theaterId}/seat-form`)}
                         color='white' 
                         size={60}
                     />

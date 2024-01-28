@@ -26,11 +26,11 @@ const SingleCinema = ({ cinema }) => {
       }
     
       const onNavigateDetail = () => {
-        navigate(`/admin/cinema-detail/${cinema.id}`)
+        navigate(`/admin/cinema/${cinema.id}/update`)
       }
       
     const navigateToTheater = () => {
-      navigate(`/admin/theater/${cinema.id}`)
+      navigate(`/admin/cinema/${cinema.id}/theater`)
       dispatch(fetchTheaterByCinemaId(cinema.id))
     }
   return (

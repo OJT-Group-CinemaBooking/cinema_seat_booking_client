@@ -41,8 +41,8 @@ const onCouponChangeIdle = () => {
         <span className={classes.icons}><Film/></span><p className={classes.content}>Movies</p>
       </div>
       <div 
-        className={`${classes.items} ${page === 'new-movie' && classes.active}`} 
-        onClick={() => {onChangePage('new-movie')}}>
+        className={`${classes.items} ${page === 'movie/new' && classes.active}`} 
+        onClick={() => {onChangePage('movie/new')}}>
         <span className={classes.icons}><ClipboardPlus/></span><p className={classes.content}>Add Movie</p>
       </div>
       <div 

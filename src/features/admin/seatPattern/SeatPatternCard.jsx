@@ -48,7 +48,13 @@ const SeatPatternCard = ({ cinemaId, seatTypePattern, theaterId }) => {
           <Card.Subtitle className='py-2'>Price : {seatTypePattern.seatPrice} MMK</Card.Subtitle>
           <Card.Text>Row : {seatTypePattern.rowCount} Column : {seatTypePattern.columnCount}</Card.Text>
           <Card.Footer className='d-flex justify-content-evenly'>
-            <Button variant='secondary'onClick={() => navigate(`/admin/seat-update/${cinemaId}/${theaterId}/${seatTypePattern.id}`)}>Edit</Button>
+            <Button 
+              variant='secondary' 
+              onClick={() => 
+                navigate(`/admin/cinema/${cinemaId}/theater/${theaterId}/seat-pattern/${seatTypePattern.id}/update`)}
+            >
+              Edit
+            </Button>
             <Button variant='danger'
               onClick={onDelete}
             >
