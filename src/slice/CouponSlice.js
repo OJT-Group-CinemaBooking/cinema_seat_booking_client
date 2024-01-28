@@ -35,6 +35,13 @@ export const checkCoupon = createAsyncThunk('checkCoupon', async(couponCode) => 
     }
 })
 
+export const deleteCoupon = createAsyncThunk('deleteCoupon', async(couponId) => {
+    const response = await axios.delete(`${COUPON_URL}/${couponId}/delete`)
+    return {
+        data : response.data,
+        status : response.status
+    }
+})
 
 const initialState = {
     coupons : [],
@@ -101,6 +108,21 @@ const CouponSlice = createSlice({
         })
         .addCase(checkCoupon.rejected,(state,action) => {
             state.status = 'check_coupon_failed'
+            state.error = action.error
+        })
+        
+        .addCase(deleteCoupon.fulfilled, (state,action) => {
+            if(action.payload?.status) {
+                const {data,status} = action.payload
+                if(status !== 200) {
+                    console.log('fail to delete coupon')
+                }
+                state.coupons = state.coupons.filter(coupon => coupon.id !== data)
+                state.status = 'delete_success'
+            }
+        })
+        .addCase(deleteCoupon.rejected,(state,action) => {
+            state.status = 'delete_failed'
             state.error = action.error
         })
     }
