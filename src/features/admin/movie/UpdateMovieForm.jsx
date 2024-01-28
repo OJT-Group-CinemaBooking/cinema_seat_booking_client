@@ -243,11 +243,6 @@ const UpdateMovieForm = ({ existedGeneres, existedCrews, movie, generes, starrin
                     style={{display : 'none'}}
                   />
                 </div>
-
-                {/* <Form.Control 
-                  type="file" 
-                  onChange={onPosterInputChange}
-                /> */}
               </Form.Group>
             </Row>
             <Row xs={1} className={classes.form_row}>
@@ -272,11 +267,6 @@ const UpdateMovieForm = ({ existedGeneres, existedCrews, movie, generes, starrin
                     style={{display : 'none'}}
                   />
                 </div>
-
-                {/* <Form.Control 
-                  type="file" 
-                  onChange={onBannerInputChange}
-                /> */}
               </Form.Group>
             </Row>
 

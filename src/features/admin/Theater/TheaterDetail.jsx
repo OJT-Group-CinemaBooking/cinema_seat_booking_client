@@ -49,7 +49,7 @@ const TheaterDetail = ({theater,cinemaId}) => {
         
         <Col sm='4' className={classes.theater_update}>
         <Form onSubmit={onSubmit} className={classes.form}>
-            <h3>EDIT FORM</h3>
+            <h3>EDIT THEATER INFO</h3>
             <Form.Group>
               <Form.Label>Name *</Form.Label>
               <Form.Control

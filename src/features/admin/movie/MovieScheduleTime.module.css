@@ -1,0 +1,12 @@
+.show_time{
+    height: fit-content;
+    color: whitesmoke;
+    line-height: .5rem;
+    padding: .5rem 1rem;
+    border: thin solid whitesmoke;
+    border-radius: 1rem;
+}
+
+.show_time svg{
+    cursor: pointer;
+}
