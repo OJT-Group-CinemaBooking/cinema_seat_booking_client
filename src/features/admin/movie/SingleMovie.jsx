@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
-import { CalendarPlusFill, FileEarmarkXFill, PencilSquare } from 'react-bootstrap-icons'
+import { CalendarWeek, FileEarmarkXFill, PencilSquare } from 'react-bootstrap-icons'
 import ConfirmModal from '../../../components/ui/ConfirmModal'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { deleteMovie } from '../../../slice/MovieSlice'
+import { setShowTimeStatusToIdle } from '../../../slice/ShowTimeSlice'
 
 const SingleMovie = ({ movie }) => {
     const [ showModal, setShowModal ] = useState(false)
@@ -17,6 +18,11 @@ const SingleMovie = ({ movie }) => {
 
     const onDelete = () => {
         setShowModal(true)
+    }
+
+    const handleSchedule = () => {
+        dispatch(setShowTimeStatusToIdle())
+        navigate(`/admin/movie/schedule/${movie.id}`)
     }
 
     const onModalClose = () => {
@@ -34,10 +40,11 @@ const SingleMovie = ({ movie }) => {
         <td className={`text-${movie.showing? 'success' : 'secondary'}`}>{movie.showing ? 'SHOWING' : 'SHOW OFF'}</td>
         <td>
             <div className='w-100 d-flex justify-content-evenly'>
-                <CalendarPlusFill 
+                <CalendarWeek 
                     style={{cursor: 'pointer'}}
-                    color='gold' 
+                    color='rgb(127, 168, 184)' 
                     size={20} 
+                    onClick={handleSchedule}
                 />
                 <PencilSquare 
                     style={{cursor: 'pointer'}}

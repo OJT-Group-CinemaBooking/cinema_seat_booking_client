@@ -22,6 +22,7 @@ import AdminCinemaDetailPage from "./page/AdminCinemaDetailPage";
 import AdminTheaterPage from "./page/AdminTheaterPage";
 import AdminTheaterDetailPage from "./page/AdminTheaterDetailPage";
 import ContactUsPage from "./page/ContactUsPage";
+import MovieSchedule from "./features/admin/movie/MovieSchedule";
 
 function App() {
   return (
@@ -40,8 +41,12 @@ function App() {
         <Route path="sign-up" element={<SignUpPage/>} />
         <Route path="checkout" element={<CheckOutPage/>} />
       </Route>
+
       <Route path="/admin" element={<AdminLayout/>}>
-        <Route path="movie" element={<AdminMovieTablePage/>}/>
+        <Route path="movie">
+          <Route index element={<AdminMovieTablePage/>}/>
+          <Route path="schedule/:movieId" element={<MovieSchedule />} />
+        </Route>
         <Route path="new-movie" element={<AdminNewMovieFromPage/>}/>
         <Route path="update-movie/:movieId" element={<AdminUpdateMovieFormPage/>}/>
         <Route path="crew" element={<AdminMovieCrewPage/>}/>

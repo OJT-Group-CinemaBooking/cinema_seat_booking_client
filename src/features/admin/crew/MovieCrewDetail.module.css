@@ -7,6 +7,7 @@
 .movie_file{
     width: 75%;
     height: 80%;
+    border: 3px dotted rgba(141, 141, 141, 0.541);
     cursor: pointer;
 }
 
