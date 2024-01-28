@@ -26,17 +26,17 @@ export default function Footer() {
           <MDBCol md="2" lg="2" xl="2" className='mx-auto mb-4'>
               <h4 className='text-uppercase fw-bold mb-4'>Movie</h4>
               <p>
-                <Link href='/' className='text-reset'>
+                <Link to={'/movie'} className='text-reset'>
                   Now Showing
                 </Link>
               </p>
               <p>
-                <Link href='/' className='text-reset'>
+                <Link to={'/movie'} className='text-reset'>
                   Coming Soon
                 </Link>
               </p>
               <p>
-                <Link href='/' className='text-reset'>
+                <Link to={'/'} className='text-reset'>
                   Cinema
                 </Link>
               </p>
@@ -48,17 +48,17 @@ export default function Footer() {
             <MDBCol md="3" lg="2" xl="2" className='mx-auto mb-4'>
               <h4 className='text-uppercase fw-bold mb-4'>Account</h4>
               <p>
-                <Link href='/' className='text-reset'>
+                <Link to={'/'} className='text-reset'>
                   My Profile
                 </Link>
               </p>
               <p>
-                <Link href='/' className='text-reset'>
+                <Link to={'/'} className='text-reset'>
                   CardInfo
                 </Link>
               </p>
               <p>
-                <Link href='/' className='text-reset'>
+                <Link to={'/'} className='text-reset'>
                   History
                 </Link>
               </p>
