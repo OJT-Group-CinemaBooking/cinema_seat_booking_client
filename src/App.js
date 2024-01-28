@@ -22,6 +22,7 @@ import AdminCinemaDetailPage from "./page/AdminCinemaDetailPage";
 import AdminTheaterPage from "./page/AdminTheaterPage";
 import AdminTheaterDetailPage from "./page/AdminTheaterDetailPage";
 import ContactUsPage from "./page/ContactUsPage";
+import AdminCouponPage from "./page/AdminCouponPage";
 
 function App() {
   return (
@@ -53,6 +54,7 @@ function App() {
         <Route path="cinema-detail/:cinemaId" element={<AdminCinemaDetailPage/>} />
         <Route path="theater/:cinemaId" element={<AdminTheaterPage/>}/>
         <Route path="theater-detail/:theaterId/:cinemaId" element={<AdminTheaterDetailPage/>} />
+        <Route path="coupon" element={<AdminCouponPage/>} />
       </Route>
     </Routes>
   );

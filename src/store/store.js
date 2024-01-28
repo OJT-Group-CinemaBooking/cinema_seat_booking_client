@@ -5,6 +5,7 @@ import SeatSlice from "../slice/SeatSlice"
 import CinemaSlice from "../slice/CinemaSlice"
 import TheaterSlice from "../slice/TheaterSlice"
 import TicketSlice from "../slice/TicketSlice"
+import CouponSlice from "../slice/CouponSlice"
 
 export const store = configureStore({
     reducer : {
@@ -14,5 +15,6 @@ export const store = configureStore({
         cinema : CinemaSlice,
         theater : TheaterSlice,
         ticket : TicketSlice,
+        coupon : CouponSlice,
     }
 })
