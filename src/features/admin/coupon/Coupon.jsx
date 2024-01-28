@@ -79,6 +79,7 @@ const Coupon = ({ coupon }) => {
                   <th className='text-center'>Expiry Date</th>
                   <th className='text-center'>User Count Left</th>
                   <th className='text-center'>Discount</th>
+                  <th className="text-center">Action</th>
                 </tr>
               </thead>
               <tbody>
