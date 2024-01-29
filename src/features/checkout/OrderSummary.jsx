@@ -1,9 +1,70 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import classes from './OrderSummary.module.css'
 import { Clock, VolumeUp } from 'react-bootstrap-icons'
 import { Accordion, Button, Form } from 'react-bootstrap'
+import InfoAlert from '../../components/ui/InfoAlert'
+import { useDispatch, useSelector } from 'react-redux'
+import { checkCoupon, getCheckedCoupon, getCouponStatus } from '../../slice/CouponSlice'
 
 const OrderSummary = () => {
+
+  const coupon = useSelector(getCheckedCoupon)
+  const status = useSelector(getCouponStatus)
+
+  const [ showAlert, setShowAlert ] = useState(false)
+  const [ couponCode, setCouponCode ] = useState('')
+  const [ canRequest, setCanRequest ] = useState(true)
+
+  const dispatch = useDispatch()
+
+  const onCouponCodeInputChange = (e) => setCouponCode(e.target.value)
+
+  const canCreate = [couponCode,canRequest].every(Boolean)
+
+  const onCouponSubmit = (event) => {
+    event.preventDefault()
+    if(canCreate) {
+      setCanRequest(false)
+      dispatch(checkCoupon(couponCode))
+      setCanRequest(true)
+      console.log("onsubmit cancreate")
+    }
+  }
+
+    useEffect(() => {
+      if(status === 'check_coupon_success' || status === 'check_coupon_failed') {
+          setShowAlert(true)
+      }
+    },[status])
+
+    let alartColor = 'success'
+    let message = 'Successful'
+    let discount = 0
+
+    if(status === 'check_coupon_failed'){
+      alartColor = 'danger'
+      message = 'Worng Coupon Code'
+    }
+    if(status === 'check_coupon_success'){
+        if(coupon.expiryDate < new Date().toISOString().split('T')[0] || coupon.userCount === 0) {
+          alartColor = 'danger'
+          if(coupon.expiryDate < new Date().toISOString().split('T')[0] ){
+            message = 'Expired'
+          }
+          if(coupon.userCount === 0 ){
+            message = 'Out of limit'
+          }
+        }else{
+          discount = coupon.discount
+        }
+    }
+
+  const onHide = () => {
+    setShowAlert(false)
+  }
+
+  const totalPrice = 26000
+  const actualPrice = totalPrice - discount
   return (
     <div className={classes.container}>
          <h3>Booking Summary</h3>
@@ -41,15 +102,26 @@ const OrderSummary = () => {
                 <Accordion.Item className={classes.accordion_item} eventKey="0">
                   <Accordion.Header className={classes.accordion_header}>Have a cupon code?</Accordion.Header>
                   <Accordion.Body className={classes.accordion_body}>
-                   <Form className={classes.cuponForm}>
-                    <Form.Control  type="text" placeholder="Cupon code"/>
-                    <Button variant='primary'>Check cupon code</Button>
+                   <Form className={classes.cuponForm} onSubmit={onCouponSubmit}>
+                   {
+                  showAlert && <InfoAlert 
+                    onHide={onHide}
+                    variant={alartColor}
+                    information={message}
+                  />
+                }
+                    <Form.Control
+                      type="text"
+                      placeholder="Cupon code"
+                      value={couponCode}
+                      onChange={onCouponCodeInputChange}/>
+                    <Button type='submit' variant='primary'>Check cupon code</Button>
                    </Form>
                   </Accordion.Body>
                 </Accordion.Item>
               </Accordion>
              
-              <p className={classes.totalPrice}>Total - <span>26000 MMK</span></p>
+              <p className={classes.totalPrice}>Total - <span>{actualPrice} MMK</span></p>
             </div>
             
          </div>

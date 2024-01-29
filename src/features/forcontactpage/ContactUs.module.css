@@ -1,4 +1,4 @@
-.contact-section {
+.contact_section {
     padding: 7em 0;
   }
   
@@ -9,7 +9,7 @@
     box-shadow: 0px 21px 41px -13px rgba(0, 0, 0, 0.18);
   }
   
-  .contact-wrap {
+  .contact_wrap {
     background: rgba(127, 39, 156, 1);
     background: -moz-linear-gradient(
       -45deg,
@@ -39,7 +39,7 @@
     );
   }
   
-  h3 {
+  .header {
     color: white;
   }
   
@@ -49,7 +49,7 @@
     background-position: center center;
   }
   
-  .form-control {
+  .form_control {
     height: 62px;
     background: transparent;
     font-size: 16px;
@@ -80,13 +80,13 @@
     }
   
   
-  textarea.form-control {
+  textarea.form_control {
     height: inherit !important;
     margin-top: 5px;
   }
   
   .contactForm {
-    .form-control {
+    .form_control {
       border: none;
       border-bottom: 1px solid rgba(255, 255, 255, 0.2);
       padding: 0;
@@ -107,26 +107,13 @@
     margin-top: 20px;
   }
   
-  .btn-primary {
+  .btn_primary {
     background: #d62196 !important;
     border-color: #d62196 !important;
     color: #fff;
   }
   
-  .info-wrap {
-    h3 {
-      color: #d62196;
-      position: relative;
-      &:after {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 60px;
-        height: 3px;
-        background: #d62196;
-        content: "";
-      }
-    }
+  .info_wrap {
     .dbox {
       width: 100%;
        color: rgba(255,255,255,.8);
@@ -159,24 +146,9 @@
       }
     }
   }
+
   
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  .h1,
-  .h2,
-  .h3,
-  .h4,
-  .h5 {
-    line-height: 1.5;
-    font-weight: 400;
-    font-family: "Poppins", Arial, sans-serif;
-    color: #000;
-  }
-  
-  a {
+  .link {
     transition: 0.3s all ease;
     color: #d62196;
     text-decoration: none;
@@ -188,12 +160,16 @@
     }
   }
   
-  #contactForm {
+  .contactForm {
     .form-control {
       font-size: 16px;
     }
   }
 
-  input[type="text"],     input[type="text"]:focus     {color: #fff;        background: transparent;         border: none;         outline-width: 0;     }
-  input[type="email"],     input[type="email"]:focus     {color: #fff;         background: transparent;         border: none;         outline-width: 0;     }
-  textarea[type="text"],     textarea[type="text"]:focus     {color: #fff;         background: transparent;         border: none;         outline-width: 0;     }
+ .form_control:focus{
+  color: #fff;
+  background: transparent;
+  border: none;
+  outline-width: 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+ }

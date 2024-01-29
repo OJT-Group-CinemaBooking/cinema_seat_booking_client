@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import classes from './AdminSidebar.module.css'
 import { Col } from 'react-bootstrap'
-import { CameraReels, ClipboardPlus, Film, HouseGearFill, PersonVideo } from 'react-bootstrap-icons'
+import { CameraReels, ClipboardPlus, Film, HouseGearFill, PersonVideo, TicketPerforated } from 'react-bootstrap-icons'
 import { useNavigate } from 'react-router-dom'
 
 const AdminSidebar = () => {
@@ -13,7 +13,6 @@ const onChangePage = (name) => {
   setPage(name)
   navigate(name)
 }
-
   return (
     <Col xs='2' className={classes.sidebar_col}>
       <div className={classes.sidebar_title}>
@@ -38,6 +37,11 @@ const onChangePage = (name) => {
         className={`${classes.items} ${page === 'cinema' && classes.active}`} 
         onClick={() => onChangePage('cinema')}>
         <span className={classes.icons}><CameraReels/></span><p className={classes.content}>Cinema</p>
+      </div>
+      <div 
+        className={`${classes.items} ${page === 'coupon' && classes.active}`} 
+        onClick={() => {onChangePage('coupon');onCouponChangeIdle()}}>
+        <span className={classes.icons}><TicketPerforated/></span><p className={classes.content}>Coupon</p>
       </div>
     </Col>
   )

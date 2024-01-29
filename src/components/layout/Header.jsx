@@ -1,27 +1,54 @@
-import classes from './Header.module.css'
-import { Container, Image, Nav, Navbar } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
+import classes from "./Header.module.css";
+import { Container, Image, Nav, Navbar } from "react-bootstrap";
+import { PersonCircle } from "react-bootstrap-icons";
+import { Link } from "react-router-dom";
 
 const Header = () => {
-
   return (
-    <Navbar id='navbar' expand="lg" className={classes.navbar}>
-    <Container fluid>
-      <Navbar.Brand as={Link} to={'/'} >
-        <Image src={`${process.env.PUBLIC_URL}/images/kyimal.png`} className={classes.nav_logo} alt='logo' />
-      </Navbar.Brand>
-      <Navbar.Toggle aria-controls="basic-navbar-nav"/>
-      <Navbar.Collapse id="basic-navbar-nav" className={classes.nav_link_holder}>
-        <Nav>
-          <Link className={classes.nav_link} as={Link} to={'/'} >Home</Link>
-          <Link className={classes.nav_link} as={Link} to={'/movie'} >Movie</Link>
-          <Link className={classes.nav_link} as={Link} to={'/'} >Cinema</Link>
-          <Link className={classes.nav_link} as={Link} to={'/contact-us'} >ContactUs</Link>
-        </Nav>
-      </Navbar.Collapse>
-    </Container>
-  </Navbar>
-  )
-}
+    <Navbar
+      collapseOnSelect
+      expand="lg"
+      className={`bg-body-tertiary ${classes.navbar}`}
+    >
+      <Container>
+        <Navbar.Brand href="#home">
+          <Image
+            src={`${process.env.PUBLIC_URL}/images/kyimal.png`}
+            className={classes.nav_logo}
+            alt="logo"
+          />
+        </Navbar.Brand>
+        <Navbar.Toggle
+          aria-controls="responsive-navbar-nav"
+          className={classes.buger_btn}
+        />
+        <Navbar.Collapse
+          id={`responsive-navbar-nav ${classes.nav_link_holder}`}
+        >
+          <Nav className="me-auto">
+            <Link className={classes.nav_link} as={Link} to={"/"}>
+              Home
+            </Link>
+            <Link className={classes.nav_link} as={Link} to={"/movie"}>
+              Movie
+            </Link>
+            <Link className={classes.nav_link} as={Link} to={"/"}>
+              Cinema
+            </Link>
+            <Link className={classes.nav_link} as={Link} to={"/contact-us"}>
+              ContactUs
+            </Link>
+          </Nav>
+          <Nav>
+            <Link className={classes.person} as={Link} to={"/"}>
+              {" "}
+              <PersonCircle />
+            </Link>
+          </Nav>
+        </Navbar.Collapse>
+      </Container>
+    </Navbar>
+  );
+};
 
-export default Header
+export default Header;

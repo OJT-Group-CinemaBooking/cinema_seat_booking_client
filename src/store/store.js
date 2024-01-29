@@ -5,6 +5,7 @@ import SeatSlice from "../slice/SeatSlice"
 import CinemaSlice from "../slice/CinemaSlice"
 import TheaterSlice from "../slice/TheaterSlice"
 import TicketSlice from "../slice/TicketSlice"
+import CouponSlice from "../slice/CouponSlice"
 import ShowTimeSlice from "../slice/ShowTimeSlice"
 import BookSeatSlice from "../slice/BookSeatSlice"
 
@@ -18,5 +19,6 @@ export const store = configureStore({
         showtime : ShowTimeSlice,
         bookseat : BookSeatSlice,
         ticket : TicketSlice,
+        coupon : CouponSlice,
     }
 })

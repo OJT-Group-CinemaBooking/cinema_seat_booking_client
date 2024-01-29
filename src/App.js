@@ -21,7 +21,8 @@ import AdminCinemaPage from "./page/AdminCinemaPage";
 import AdminCinemaDetailPage from "./page/AdminCinemaDetailPage";
 import AdminTheaterPage from "./page/AdminTheaterPage";
 import AdminTheaterDetailPage from "./page/AdminTheaterDetailPage";
-// import ContactUsPage from "./page/ContactUsPage";
+import ContactUsPage from "./page/ContactUsPage";
+import AdminCouponPage from "./page/AdminCouponPage";
 import MovieSchedule from "./features/admin/movie/MovieSchedule";
 
 function App() {
@@ -43,8 +44,7 @@ function App() {
         <Route path="login" element={<LoginPage/>} />
         <Route path="sign-up" element={<SignUpPage/>} />
         <Route path="checkout" element={<CheckOutPage/>} />
-        
-        {/* <Route path="contact-us" element={<ContactUsPage />} /> */}
+        <Route path="contact-us" element={<ContactUsPage />} />
       </Route>
 
       {/* admin pannel */}
@@ -78,7 +78,7 @@ function App() {
             />
           </Route>
         </Route>
-
+        <Route path="coupon" element={<AdminCouponPage/>} />
       </Route>
     </Routes>
   );
