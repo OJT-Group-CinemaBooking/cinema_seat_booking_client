@@ -40,7 +40,7 @@ const onChangePage = (name) => {
       </div>
       <div 
         className={`${classes.items} ${page === 'coupon' && classes.active}`} 
-        onClick={() => {onChangePage('coupon');onCouponChangeIdle()}}>
+        onClick={() => {onChangePage('coupon')}}>
         <span className={classes.icons}><TicketPerforated/></span><p className={classes.content}>Coupon</p>
       </div>
     </Col>
