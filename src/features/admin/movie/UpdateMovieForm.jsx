@@ -3,7 +3,7 @@ import classes from './UpdateMovieForm.module.css'
 import { Button, Col, Container, Form, Image, Row } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { IMAGE_URL } from '../../config/baseURL';
-import { getMovieStatus, setMovieStatusToIdle, updateMovie } from '../../../slice/MovieSlice';
+import { getMovieStatus, updateMovie } from '../../../slice/MovieSlice';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft } from 'react-bootstrap-icons';
 import InfoAlert from '../../../components/ui/InfoAlert';
@@ -194,7 +194,6 @@ const UpdateMovieForm = ({ existedGeneres, existedCrews, movie, generes, starrin
     }
 
     const onHandleBackArrow = () => {
-      dispatch(setMovieStatusToIdle())
       navigate('/admin/movie')
     }
 

@@ -2,11 +2,12 @@ import React, { useState } from 'react'
 import { Diagram3Fill, FileEarmarkXFill, PencilSquare } from 'react-bootstrap-icons'
 import ConfirmModal from '../../../components/ui/ConfirmModal'
 import { useNavigate } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
-import { deleteTheater } from '../../../slice/TheaterSlice'
-import { fetchAllSeatTypePatternByTheater } from '../../../slice/SeatSlice'
+import { useDispatch, useSelector } from 'react-redux'
+import { deleteTheater, getTheaterStatus, setTheaterStatusToIdle } from '../../../slice/TheaterSlice'
 
 const SingleTheater = ({ theater, cinemaId }) => {
+
+    const status = useSelector(getTheaterStatus)
 
     const [ showModal, setShowModal ] = useState(false)
     const navigate = useNavigate()
@@ -25,11 +26,13 @@ const SingleTheater = ({ theater, cinemaId }) => {
     }
 
     const onNavigateDetail = () => {
+    if(status === 'update_success') {
+        dispatch(setTheaterStatusToIdle())
+    }
     navigate(`/admin/cinema/${cinemaId}/theater/${theater.id}/update`)
     }
 
     const onNavigateSeatTypePattern = () => {
-    dispatch(fetchAllSeatTypePatternByTheater(theater.id))
     navigate(`/admin/cinema/${cinemaId}/theater/${theater.id}/seat-pattern`)
     }
   return (

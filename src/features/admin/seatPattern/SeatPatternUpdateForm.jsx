@@ -4,7 +4,7 @@ import { Button, Col, Container, Form, Row } from 'react-bootstrap'
 import { ArrowLeft } from 'react-bootstrap-icons'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { getSeatTypePatternById, getSeatTypePatternStatus, setSeatSliceStatusToIdle, updateSeatTypePattern } from '../../../slice/SeatSlice'
+import { getSeatTypePatternById, getSeatTypePatternStatus, updateSeatTypePattern } from '../../../slice/SeatSlice'
 import InfoAlert from '../../../components/ui/InfoAlert'
 
 const SeatPatternUpdateForm = () => {
@@ -61,7 +61,6 @@ const SeatPatternUpdateForm = () => {
     }
 
     const onHandleBackArrow = () => {
-        dispatch(setSeatSliceStatusToIdle())
         navigate(`/admin/cinema/${cinemaId}/theater/${theaterId}/seat-pattern`)
     }
   return (

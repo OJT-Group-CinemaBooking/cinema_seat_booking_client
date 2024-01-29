@@ -3,32 +3,15 @@ import classes from './AdminSidebar.module.css'
 import { Col } from 'react-bootstrap'
 import { CameraReels, ClipboardPlus, Film, HouseGearFill, PersonVideo, TicketPerforated } from 'react-bootstrap-icons'
 import { useNavigate } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
-import { setCrewStatusToIdle } from '../../../slice/CrewSlice'
-import { setCinemaToIdle } from '../../../slice/CinemaSlice'
-import { setCouponToIdle } from '../../../slice/CouponSlice'
-
 
 const AdminSidebar = () => {
 
   const [ page, setPage ] = useState(' ');
 const navigate = useNavigate()
-const dispatch = useDispatch()
   
 const onChangePage = (name) => {
   setPage(name)
   navigate(name)
-}
-
-const onCrewChangeIdle = () => {
-  dispatch(setCrewStatusToIdle())
-}
-
-const onCinemaChangeIdle = () => {
-  dispatch(setCinemaToIdle())
-}
-const onCouponChangeIdle = () => {
-  dispatch(setCouponToIdle())
 }
   return (
     <Col xs='2' className={classes.sidebar_col}>
@@ -47,12 +30,12 @@ const onCouponChangeIdle = () => {
       </div>
       <div 
         className={`${classes.items} ${page === 'crew' && classes.active}`} 
-        onClick={() => {onChangePage('crew');onCrewChangeIdle()}}>
+        onClick={() => onChangePage('crew')}>
         <span className={classes.icons}><PersonVideo/></span><p className={classes.content}>Movie Crew</p>
       </div>
       <div 
         className={`${classes.items} ${page === 'cinema' && classes.active}`} 
-        onClick={() => {onChangePage('cinema');onCinemaChangeIdle()}}>
+        onClick={() => onChangePage('cinema')}>
         <span className={classes.icons}><CameraReels/></span><p className={classes.content}>Cinema</p>
       </div>
       <div 

@@ -1,83 +1,30 @@
 import React from 'react'
 import classes from './TheaterAccordion.module.css'
 import { Accordion, Col } from 'react-bootstrap'
-import { useSelector } from 'react-redux'
-import { getShowTimesByTheaterId } from '../../slice/ShowTimeSlice'
+import { useDispatch, useSelector } from 'react-redux'
+import { getAllShowTime } from '../../slice/ShowTimeSlice'
+import { useNavigate } from 'react-router-dom'
+import { emptySelectedSeats, setBookSeatStatusToIdle } from '../../slice/BookSeatSlice'
 
-const TheaterAccordion = ({ /*movieId,*/ theater }) => {
+const TheaterAccordion = ({ movieId, theater }) => {
 
   
-  const showTimes = useSelector((state) => getShowTimesByTheaterId(state,theater.id))
+  const allShowTime = useSelector(getAllShowTime)
 
-  // const showTime = [
-  //   {
-  //     id: 1,
-  //     date: '2024/1/26',
-  //     time: '8:00am'
-  //   },
-  //   {
-  //     id: 2,
-  //     date: '2024/1/26',
-  //     time: '10:00am'
-  //   },
-  //   {
-  //     id: 3,
-  //     date: '2024/1/26',
-  //     time: '12:00pm'
-  //   },
-  //   {
-  //     id: 4,
-  //     date: '2024/1/26',
-  //     time: '3:00pm'
-  //   },
-  //   {
-  //     id: 5,
-  //     date: '2024/1/26',
-  //     time: '6:00pm'
-  //   },
-  //   {
-  //     id: 6,
-  //     date: '2024/1/27',
-  //     time: '8:00am'
-  //   },
-  //   {
-  //     id: 7,
-  //     date: '2024/1/27',
-  //     time: '12:00pm'
-  //   },
-  //   {
-  //     id: 8,
-  //     date: '2024/1/27',
-  //     time: '5:00pm'
-  //   },
-  //   {
-  //     id: 9,
-  //     date: '2024/1/28',
-  //     time: '10:00am'
-  //   },
-  //   {
-  //     id: 10,
-  //     date: '2024/1/27',
-  //     time: '1:00pm'
-  //   },
-  //   {
-  //     id: 11,
-  //     date: '2024/1/27',
-  //     time: '6:00pm'
-  //   },
-  //   {
-  //     id: 12,
-  //     date: '2024/1/27',
-  //     time: '8:00pm'
-  //   }
-  // ]
+  const showTimes = allShowTime.filter(st => st.theater.id === theater.id)
 
-  // const showTimes = theater.showTime
-  // const showTimeList = showTimes.filter( st => st.connectedMovieId === movieId)
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
 
   const uniqueShowTimeDates = new Set(showTimes.map( st => st.showDate))
 
   const showTimeDates = [ ...uniqueShowTimeDates ]
+
+  const seatBookingHandler = (showTimeId) => {
+    dispatch(emptySelectedSeats())
+    dispatch(setBookSeatStatusToIdle())
+    navigate(`/movie/${movieId}/theater/${theater.id}/show-time/${showTimeId}/seat`)
+  }
 
   return (
     <Col xs='10' sm='8' className='my-2'>
@@ -91,7 +38,7 @@ const TheaterAccordion = ({ /*movieId,*/ theater }) => {
                   <div className={classes.date}>{showDate}</div>
                   {
                     showTimes.filter(st => st.showDate === showDate).map( st => (
-                      <div key={st.id} className={classes.time}>
+                      <div key={st.id} className={classes.time} onClick={() => seatBookingHandler(st.id)}>
                         {st.showTime}
                       </div>
                     ))

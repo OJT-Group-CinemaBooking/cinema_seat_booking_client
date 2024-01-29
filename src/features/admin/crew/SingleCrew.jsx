@@ -3,17 +3,22 @@ import { FileEarmarkXFill, PencilSquare } from 'react-bootstrap-icons'
 import ConfirmModal from '../../../components/ui/ConfirmModal'
 import { useNavigate } from 'react-router-dom'
 import { IMAGE_URL } from "../../config/baseURL";
-import { deleteCrew } from '../../../slice/CrewSlice';
+import { deleteCrew, getCrewStatus, setCrewStatusToIdle } from '../../../slice/CrewSlice';
 import { Image } from 'react-bootstrap';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 const SingleCrew = ({ crew }) => {
+
+  const status = useSelector(getCrewStatus)
 
   const [ showModal, setShowModal ] = useState(false)
   const navigate = useNavigate()
   const dispatch = useDispatch()
   
   const onNavigateUpdate = () => {
+    if(status === 'update_success') {
+      dispatch(setCrewStatusToIdle())
+    }
     navigate(`/admin/crew/${crew.id}/update`)
   }
 

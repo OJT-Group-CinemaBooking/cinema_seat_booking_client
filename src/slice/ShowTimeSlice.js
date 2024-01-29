@@ -114,5 +114,5 @@ export default ShowTimeSlice.reducer
 export const { setShowTimeStatusToIdle } = ShowTimeSlice.actions
 export const getShowTimeStatus = (state) => state.showtime.status
 export const getAllShowTime = (state) => state.showtime.showTimes
-export const getShowTimesByTheaterId = (state,theaterId) => 
-    state.showtime.showTimes.filter(st => st.theater.id === theaterId)
+export const getShowTimeById = (state,showTimeId) => 
+    state.showtime.showTimes.find(st => st.id === showTimeId)
