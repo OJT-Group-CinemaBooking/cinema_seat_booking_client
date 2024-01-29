@@ -4,7 +4,7 @@ import { Button, Col, Container, Form, Row } from 'react-bootstrap'
 import { ArrowLeft } from 'react-bootstrap-icons'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { createSeatTypePattern, getSeatTypePatternStatus, setSeatSliceStatusToIdle } from '../../../slice/SeatSlice'
+import { createSeatTypePattern, getSeatTypePatternStatus } from '../../../slice/SeatSlice'
 import InfoAlert from '../../../components/ui/InfoAlert'
 
 const SeatPatternAddForm = () => {
@@ -17,6 +17,7 @@ const SeatPatternAddForm = () => {
     const [ seatPrice, setSeatPrice ] = useState('')
     const [ rowCount, setRowCount ] = useState('')
     const [ columnCount, setColumnCount ] = useState('')
+    const [ rowsOrder, setRowsOrder ] = useState(0)
     const [ canRequest, setCanRequest ] = useState(true)
     const navigate = useNavigate()
     const dispatch = useDispatch()
@@ -25,6 +26,7 @@ const SeatPatternAddForm = () => {
     const onPriceInputChange = (e) => {setSeatPrice(e.target.value)}
     const onRowInputChange = (e) => {setRowCount(e.target.value)}
     const onColumnInputChange = (e) => {setColumnCount(e.target.value)}
+    const onRowsOrderInputChange = (e) => {setRowsOrder(e.target.value)}
 
     const canCreate = [ seatType, seatPrice, rowCount, columnCount, canRequest ].every(Boolean)
 
@@ -38,7 +40,8 @@ const SeatPatternAddForm = () => {
                     seatType,
                     seatPrice,
                     rowCount,
-                    columnCount
+                    columnCount,
+                    rowsOrder
                 },
                 theaterId 
             }
@@ -48,6 +51,7 @@ const SeatPatternAddForm = () => {
             setSeatPrice('')
             setRowCount('')
             setColumnCount('')
+            setRowsOrder(0)
             setCanRequest(true)
         }
     }
@@ -65,7 +69,6 @@ const SeatPatternAddForm = () => {
     }
 
     const onHandleBackArrow = () => {
-        dispatch(setSeatSliceStatusToIdle())
         navigate(`/admin/cinema/${cinemaId}/theater/${theaterId}/seat-pattern`)
     }
   return (
@@ -111,7 +114,9 @@ const SeatPatternAddForm = () => {
                     required
                     type="number" 
                     value={rowCount}
-                    placeholder="Enter Row Count -"
+                    placeholder="Enter Row Count -" 
+                    min={1} 
+                    max={10}
                     onChange={onRowInputChange}
                     />
                 </Form.Group>
@@ -121,8 +126,21 @@ const SeatPatternAddForm = () => {
                     required
                     type="number" 
                     value={columnCount}
-                    placeholder="Enter Column Count -"
+                    placeholder="Enter Column Count -" 
+                    min={1}
+                    max={(seatType !== 'TWIN')? 8 : 24}
                     onChange={onColumnInputChange}
+                    />
+                </Form.Group>
+                <Form.Group as={Col} xs='12' className='mb-2'>
+                    <Form.Label>Rows Order *</Form.Label>
+                    <Form.Control
+                    required
+                    type="number" 
+                    value={rowsOrder}
+                    placeholder="Enter Order Of This Pattern -" 
+                    min={0}
+                    onChange={onRowsOrderInputChange}
                     />
                 </Form.Group>
                 <div className='w-100 d-flex justify-content-center mt-3'>

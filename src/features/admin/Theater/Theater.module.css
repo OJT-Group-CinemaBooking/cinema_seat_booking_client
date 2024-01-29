@@ -1,7 +1,7 @@
 .theater_table{
-    height: 100vh;
+    height: 93vh;
     overflow-y: auto;
-    padding-top: 2rem;
+    padding-top: 3rem;
 }
 
 .theater_table::-webkit-scrollbar{
@@ -24,7 +24,6 @@
 }
 
 .table{
-    margin-top: 2rem;
     border-radius: 1rem;
     background: rgb(41, 59, 75);
 }

@@ -1,32 +1,40 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchTheaterByCinemaId, getAllTheater, getTheaterError, getTheaterStatus } from '../slice/TheaterSlice'
+import { fetchAllTheater, getAllTheater, getTheaterError, getTheaterStatus } from '../slice/TheaterSlice'
 import Theater from '../features/admin/Theater/Theater'
 import { Spinner } from 'react-bootstrap'
 import { useParams } from 'react-router-dom'
+import { fetchAllCinema, getCinemaStatus } from '../slice/CinemaSlice'
 
 const AdminTheaterPage = () => {
-    const allTheater = useSelector(getAllTheater)
-  const status = useSelector(getTheaterStatus)
-  const error = useSelector(getTheaterError)
-
-  const dispatch = useDispatch()
 
   const { cinemaId } = useParams()
 
+  const theaterStatus = useSelector(getTheaterStatus)
+  const cinemaStatus = useSelector(getCinemaStatus)
+  const error = useSelector(getTheaterError)
+
+  const allTheater = useSelector(getAllTheater)
+  const theaterList = allTheater.filter(theater => theater.cinema.id === Number(cinemaId))
+  
+  const dispatch = useDispatch()
+
   useEffect(() => {
-    if(status === 'idle') {
-      dispatch(fetchTheaterByCinemaId(Number(cinemaId)))
+    if(theaterStatus === 'idle') {
+      dispatch(fetchAllTheater())
     }
-  },[dispatch,status,cinemaId])
+    if(cinemaStatus === 'idle') {
+      dispatch(fetchAllCinema())
+    }
+  },[dispatch,theaterStatus,cinemaStatus])
 
   let content = ''
 
-  if(status.includes('_success')){
-    content = <Theater theater={allTheater} cinemaId={Number(cinemaId)}/>
+  if(theaterStatus.includes('_success')){
+    content = <Theater cinemaId={cinemaId} theaterList={theaterList} />
   }
 
-  if(status === 'loading'){
+  if(theaterStatus === 'loading'){
     content = (
     <div className="w-100 mt-5 d-flex justify-content-center">
       <Spinner animation="border" variant="secondary" />
@@ -34,7 +42,7 @@ const AdminTheaterPage = () => {
     )
   }
 
-  if(status === 'fetch_fail') {
+  if(theaterStatus === 'fetch_fail') {
     content = <p>{error}</p>
   }
 

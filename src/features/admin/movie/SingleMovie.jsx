@@ -2,17 +2,23 @@ import React, { useState } from 'react'
 import { CalendarWeek, FileEarmarkXFill, PencilSquare } from 'react-bootstrap-icons'
 import ConfirmModal from '../../../components/ui/ConfirmModal'
 import { useNavigate } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
-import { deleteMovie } from '../../../slice/MovieSlice'
+import { useDispatch, useSelector } from 'react-redux'
+import { deleteMovie, getMovieStatus, setMovieStatusToIdle } from '../../../slice/MovieSlice'
 import { setShowTimeStatusToIdle } from '../../../slice/ShowTimeSlice'
 
 const SingleMovie = ({ movie }) => {
+
+    const movieStatus = useSelector(getMovieStatus)
+
     const [ showModal, setShowModal ] = useState(false)
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
     const onUpdate = () => {
+        if(movieStatus === 'update_success') {
+            dispatch(setMovieStatusToIdle())
+        }
         navigate(`/admin/movie/${movie.id}/update`)
     }
 

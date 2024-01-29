@@ -58,7 +58,7 @@ const MovieSchedule = () => {
             <ArrowLeft 
                 color="#D4AF37" 
                 size={30} 
-                className='d-inline' 
+                className={classes.back_arrow} 
                 onClick={() => navigate('/admin/movie')} 
             />
             <h3 className='text-center text-white'>Schedule( {movie?.title} )</h3>

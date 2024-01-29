@@ -62,7 +62,9 @@ const TheaterSlice = createSlice({
     name : 'theaterSlice',
     initialState,
     reducers : {
-
+        setTheaterStatusToIdle : (state) => {
+            state.status = 'idle'
+        }
     },
     extraReducers(builder) {
         builder
@@ -153,3 +155,4 @@ export const getTheaterStatus = (state) => state.theater.status
 export const getTheaterError = (state) => state.theater.error
 export const getTheaterById = (state,theaterId) => 
     state.theater.theaters.find((t) => t.id === Number(theaterId))
+export const { setTheaterStatusToIdle } = TheaterSlice.actions

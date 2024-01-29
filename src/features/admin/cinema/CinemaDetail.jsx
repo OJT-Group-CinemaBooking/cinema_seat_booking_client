@@ -3,7 +3,7 @@ import classes from './CinemaDetail.module.css'
 import { Button, Col, Container, Form, Image, Row } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { getCinemaStatus, setCinemaToIdle, updateCinema } from '../../../slice/CinemaSlice'
+import { getCinemaStatus, updateCinema } from '../../../slice/CinemaSlice'
 import { IMAGE_URL } from '../../config/baseURL'
 import InfoAlert from '../../../components/ui/InfoAlert'
 import { ArrowLeft } from 'react-bootstrap-icons'
@@ -68,7 +68,6 @@ const CinemaDetail = ({cinema}) => {
     }
 
     const onHandleBackArrow = () => {
-      dispatch(setCinemaToIdle())
       navigate('/admin/cinema')
     }
 

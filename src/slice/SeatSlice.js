@@ -48,13 +48,13 @@ export const fetchAllSeatTypePatternByTheater = createAsyncThunk('fetchAllSeatTy
     }
 })
 
-// export const fetchAllSeatPattern = createAsyncThunk('fetchAllSeatPattern', async() => {
-//     const response = await axios.get(FETCH_URL)
-//     return {
-//         data : response.data,
-//         status : response.status
-//     }
-// })
+export const fetchAllSeatPattern = createAsyncThunk('fetchAllSeatPattern', async() => {
+    const response = await axios.get(FETCH_URL)
+    return {
+        data : response.data,
+        status : response.status
+    }
+})
 
 const initialState = {
     seatTypePatterns : [],
@@ -72,25 +72,25 @@ const SeatSlice = createSlice({
     },
     extraReducers(builder) {
         builder
-        // .addCase(fetchAllSeatPattern.pending, (state) => {
-        //     state.status = 'loading'
-        // })
-        // .addCase(fetchAllSeatPattern.fulfilled, (state,action) => {
-        //     if(action.payload?.status) {
-        //         const { data, status } = action.payload
-        //         if(status !== 200) {
-        //             console.log("failed to fetch all seatPattern")
-        //             state.status = 'fetch_failed'
-        //             return;
-        //         }
-        //         state.seatTypePatterns = data
-        //         state.status = 'success'
-        //     }
-        // })
-        // .addCase(fetchAllSeatPattern.rejected, (state,action) => {
-        //     state.status = 'fetch_failed'
-        //     state.error = action.error
-        // })
+        .addCase(fetchAllSeatPattern.pending, (state) => {
+            state.status = 'loading'
+        })
+        .addCase(fetchAllSeatPattern.fulfilled, (state,action) => {
+            if(action.payload?.status) {
+                const { data, status } = action.payload
+                if(status !== 200) {
+                    console.log("failed to fetch all seatPattern")
+                    state.status = 'fetch_failed'
+                    return;
+                }
+                state.seatTypePatterns = data
+                state.status = 'fetch_success'
+            }
+        })
+        .addCase(fetchAllSeatPattern.rejected, (state,action) => {
+            state.status = 'fetch_failed'
+            state.error = action.error
+        })
         .addCase(fetchAllSeatTypePatternByTheater.pending, (state) => {
             state.status = 'loading'
         })
@@ -170,6 +170,6 @@ const SeatSlice = createSlice({
 export default SeatSlice.reducer;
 export const getSeatTypePatternStatus = state => state.seat.status
 export const getSeatTypePatternError = state => state.seat.error
-export const getAllSeatTypePatternByTheater = state => state.seat.seatTypePatterns
+export const getAllSeatTypePattern = state => state.seat.seatTypePatterns
 export const getSeatTypePatternById = (state,seatTypePatternId) => state.seat.seatTypePatterns.find( sp => sp.id === Number(seatTypePatternId))
 export const { setSeatSliceStatusToIdle } = SeatSlice.actions

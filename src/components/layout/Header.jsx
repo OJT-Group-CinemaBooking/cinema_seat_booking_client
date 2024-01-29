@@ -8,7 +8,7 @@ const Header = () => {
     <Navbar id='navbar' expand="lg" className={classes.navbar}>
     <Container fluid>
       <Navbar.Brand as={Link} to={'/'} >
-        <Image src='./images/kyi-mal-high-resolution-logo-transparent.png' className={classes.nav_logo} alt='logo' />
+        <Image src={`${process.env.PUBLIC_URL}/images/kyimal.png`} className={classes.nav_logo} alt='logo' />
       </Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav"/>
       <Navbar.Collapse id="basic-navbar-nav" className={classes.nav_link_holder}>

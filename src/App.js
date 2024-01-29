@@ -35,9 +35,9 @@ function App() {
         <Route path="movie" >
           <Route index element={<MoviePage/>} />
           <Route path=":movieId/detail" element={<MovieDetailPage/>}/>
+          <Route path=":movieId/theater/:theaterId/show-time/:showTimeId/seat" element={<SeatBookingPage/>} />
         </Route>
 
-        <Route path="book-seat" element={<SeatBookingPage/>} />
         <Route path="checkout" element={<CheckOutPage/>} />
         <Route path="confirmation" element={<BookingConfirmationPage/>}/>
         <Route path="login" element={<LoginPage/>} />
