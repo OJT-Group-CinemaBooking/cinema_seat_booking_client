@@ -15,6 +15,14 @@ export const fetchAllShowTimeByMovieId = createAsyncThunk('fetchAllShowTimeByMov
     }
 })
 
+export const fetchAllShowTimeByTheaterId = createAsyncThunk('fetchAllShowTimeByTheaterId', async(theaterId) => {
+    const response = await axios.get(`${SHOW_TIME_URL}/theater/${theaterId}`)
+    return {
+        data : response.data,
+        status : response.status
+    }
+})
+
 export const createNewShowTime = createAsyncThunk('createNewShowTime', async(data) => {
     const response = await axios.post(`${SHOW_TIME_URL}/${data.theaterId}/${data.movieId}/create`,
     data.showTime, 
@@ -71,6 +79,25 @@ const ShowTimeSlice = createSlice({
             }
         })
         .addCase(fetchAllShowTimeByMovieId.rejected, (state,action) => {
+            state.status = 'fetch_failed'
+            state.error = action.error
+        })
+        .addCase(fetchAllShowTimeByTheaterId.pending, (state) => {
+            state.status = 'loading'
+        })
+        .addCase(fetchAllShowTimeByTheaterId.fulfilled, (state,action) => {
+            if(action.payload?.status) {
+                const { data, status } = action.payload
+                if(status !== 200) {
+                    console.log('failed to fetch showTimes by movieId')
+                    state.status = 'fetch_failed'
+                    return;
+                }
+                state.showTimes = data
+                state.status = 'fetch_success'
+            }
+        })
+        .addCase(fetchAllShowTimeByTheaterId.rejected, (state,action) => {
             state.status = 'fetch_failed'
             state.error = action.error
         })

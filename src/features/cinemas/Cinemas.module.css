@@ -1,0 +1,31 @@
+.wapper{
+    margin-top: 2rem;
+    border: 1px solid #b89723;
+    color: whitesmoke;
+}
+
+.cinema{
+    margin-top: 1rem;
+}
+
+.cinema_img{
+    margin-left: 0.5rem;
+}
+
+.cinema_img img{
+    width: 100%;
+    aspect-ratio: 2/1;
+    object-fit: cover;
+}
+
+.theater{
+    display: inline-block;
+    border: 1px solid red;
+    margin: 0.5rem 0.5rem;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+}
+
+.theater button{
+    margin-top: 1rem;
+}
