@@ -48,7 +48,7 @@ function App() {
         <Route path="checkout" element={<CheckOutPage/>} />
         <Route path="contact-us" element={<ContactUsPage />} />
         <Route path="cinemas" element={<CinemasPage />} />
-        <Route path="show-movie" element={<ShowTimeMovie />} />
+        <Route path="show-movie/:theaterId" element={<ShowTimeMovie />} />
       </Route>
 
       {/* admin pannel */}

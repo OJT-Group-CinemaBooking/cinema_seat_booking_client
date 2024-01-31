@@ -5,7 +5,6 @@ import { IMAGE_URL } from '../config/baseURL';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { fetchAllShowTimeByTheaterId } from '../../slice/ShowTimeSlice';
-import { fetchAllMovie } from '../../slice/MovieSlice';
 
 const Cinemas = ({ allCinema,alltheater }) => {
 
@@ -14,7 +13,7 @@ const Cinemas = ({ allCinema,alltheater }) => {
 
     const onNavigate = (theaterId) => {
         dispatch(fetchAllShowTimeByTheaterId(theaterId))
-        navigate('/show-movie')
+        navigate(`/show-movie/${theaterId}`)
         console.log("onNavigate")
     }
         

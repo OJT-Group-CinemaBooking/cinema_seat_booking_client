@@ -1,19 +1,29 @@
 import React from 'react'
 import classes from './ShowTimeMovie.module.css'
-import { useSelector } from 'react-redux'
-import { Button, Card, Col, Container, Image, Row, Spinner } from 'react-bootstrap'
+import { useDispatch, useSelector } from 'react-redux'
+import { Col, Container, Image, Row, Spinner } from 'react-bootstrap'
 import { getAllShowTime, getShowTimeStatus } from '../../slice/ShowTimeSlice'
 import { getAllMovies } from '../../slice/MovieSlice'
 import { IMAGE_URL } from '../config/baseURL'
 import { ClockFill, GlobeCentralSouthAsia, StarFill } from 'react-bootstrap-icons'
+import { useNavigate, useParams } from 'react-router-dom'
+import { emptySelectedSeats, setBookSeatStatusToIdle } from '../../slice/BookSeatSlice'
 
 const ShowTimeMovie = () => {
 
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
+
     const showTimes = useSelector(getAllShowTime)
     const showTimeStatus = useSelector(getShowTimeStatus)
+    const { theaterId } = useParams()
     const allMovie = useSelector(getAllMovies)
-    
-    console.log(showTimes)
+
+    const seatBookingHandler = (showTimeId,movieId) => {
+      dispatch(emptySelectedSeats())
+      dispatch(setBookSeatStatusToIdle())
+      navigate(`/movie/${movieId}/theater/${Number(theaterId)}/show-time/${showTimeId}/seat`)
+    }
 
     const filterMovies = showTimes.map((showtime) => allMovie.filter(m => m.id === showtime.connectMovie))
 
@@ -53,7 +63,7 @@ const ShowTimeMovie = () => {
                   <div className={classes.date}>{showDate}</div>
                   {
                     showTimes.filter(st => st.showDate === showDate && st.connectMovie === movie.id).map( st => (
-                      <div key={st.id} className={classes.time}>
+                      <div key={st.id} className={classes.time} onClick={() => seatBookingHandler(st.id,movie.id)}>
                         {st.showTime}
                       </div>
                     ))
