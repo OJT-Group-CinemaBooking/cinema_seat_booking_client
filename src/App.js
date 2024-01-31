@@ -24,6 +24,8 @@ import AdminTheaterDetailPage from "./page/AdminTheaterDetailPage";
 import ContactUsPage from "./page/ContactUsPage";
 import AdminCouponPage from "./page/AdminCouponPage";
 import MovieSchedule from "./features/admin/movie/MovieSchedule";
+import CinemasPage from "./page/CinemasPage";
+import ShowTimeMovie from "./features/cinemas/ShowTimeMovie";
 
 function App() {
   return (
@@ -45,6 +47,8 @@ function App() {
         <Route path="sign-up" element={<SignUpPage/>} />
         <Route path="checkout" element={<CheckOutPage/>} />
         <Route path="contact-us" element={<ContactUsPage />} />
+        <Route path="cinemas" element={<CinemasPage />} />
+        <Route path="show-movie/:theaterId" element={<ShowTimeMovie />} />
       </Route>
 
       {/* admin pannel */}
