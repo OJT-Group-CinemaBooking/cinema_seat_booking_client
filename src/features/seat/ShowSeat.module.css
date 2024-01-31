@@ -51,3 +51,8 @@
     max-width: none;
  }   
 }
+
+.seat_types{
+    display: flex;
+    justify-content: center;
+}

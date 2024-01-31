@@ -1,51 +1,146 @@
 import React from 'react'
-import NomalSeatRow from './NomalSeatRow'
 import classes from './ShowSeat.module.css'
 import { Container } from 'react-bootstrap'
-import PremiumSeatRow from './PremiumSeatRow'
-import TwinSeatRow from './TwinSeatRow'
+// import PremiumSeatRow from './PremiumSeatRow'
+// import TwinSeatRow from './TwinSeatRow'
+// import ShowSeatType from './ShowSeatType'
+import SeatRow from './SeatRow'
 import ShowSeatType from './ShowSeatType'
 
-const ShowSeat = ({seat}) => {
-  const alphabet = ["A","B","C","D","E","F","G","H","I","J","K","L","N","O"]
+const ShowSeat = ({ seatPatternList, theater }) => {
+  const alphabet = ["A","B","C","D","E","F","G","H","I","J","K","L","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"]
   
   
   const alphabetRows = []
-  for(let i = 0;i < seat.reduce((totalRows, s) => totalRows + s.rows, 0);i++){
+  for(let i = 0;i < seatPatternList.reduce((totalRows, sp) => totalRows + sp.rowCount, 0);i++){
     alphabetRows.push(
       <p key={i}>{alphabet[i]}</p>
     )
   }
 
-  const normalRows = []
-  for(let i=0;i<(seat[0]).rows;i++){
-    normalRows.push(<NomalSeatRow key={`normal-${i}`} column={seat[0].column} alphabet={alphabet[i]}/>)
+  const uniqueTypeSeatPatternList = Object.values(seatPatternList.reduce((uniqueSeatPatterns, sp) => {
+    if (!uniqueSeatPatterns[sp.seatType]) {
+      uniqueSeatPatterns[sp.seatType] = sp;
+    }
+    return uniqueSeatPatterns;
+  }, {}));
+
+  const standardSeatPattern = seatPatternList.filter(sp => sp.seatType === 'STANDARD')
+  const premiumSeatPattern = seatPatternList.filter(sp => sp.seatType === 'PREMIUM')
+  const twinSeatPattern = seatPatternList.filter(sp => sp.seatType === 'TWIN')
+  const reclinerSeatPattern = seatPatternList.filter(sp => sp.seatType === 'RECLINER')
+  const vipSeatPattern = seatPatternList.filter(sp => sp.seatType === 'VIP')
+
+  const sortedStandardSp = standardSeatPattern.sort((sp1,sp2) => sp1.rowsOrder - sp2.rowsOrder)
+  const sortedPremiumSp = premiumSeatPattern.sort((sp1,sp2) => sp1.rowsOrder - sp2.rowsOrder)
+  const sortedTwinSp = twinSeatPattern.sort((sp1,sp2) => sp1.rowsOrder - sp2.rowsOrder)
+  const sortedReclinerSp = reclinerSeatPattern.sort((sp1,sp2) => sp1.rowsOrder - sp2.rowsOrder)
+  const sortedVipSp = vipSeatPattern.sort((sp1,sp2) =>  sp1.rowsOrder - sp2.rowsOrder)
+
+  let alphabetCount = 0;
+  
+  const standardRows = []
+  for (const standardSp of sortedStandardSp) {
+    for( let i = 0; i < standardSp.rowCount; i++ ) {
+      const seats = standardSp.seats
+      standardRows.push(
+        <SeatRow 
+        key={`S${standardSp.rowsOrder}${i}`} 
+        seats={seats.filter(s => s.rowNo === (1+i))} 
+        alphabet={alphabet[alphabetCount]} 
+        />
+      )
+      alphabetCount += 1
+    }
   }
 
   const premiumRows = []
-  for(let i=0;i<(seat[1]).rows;i++){
-    normalRows.push(<PremiumSeatRow key={`premium-${i}`} column={seat[1].column}/>)
+  for (const premiumSp of sortedPremiumSp) {
+    for( let i = 0; i < premiumSp.rowCount; i++ ) {
+      const seats = premiumSp.seats
+      premiumRows.push(
+        <SeatRow 
+        key={`S${premiumSp.rowsOrder}${i}`} 
+        seats={seats.filter(s => s.rowNo === (1+i))} 
+        alphabet={alphabet[alphabetCount]} 
+        />
+      )
+      alphabetCount += 1
+    }
+  }
+
+  const reclinerRows = []
+  for (const reclinerSp of sortedReclinerSp) {
+    for( let i = 0; i < reclinerSp.rowCount; i++ ) {
+      const seats = reclinerSp.seats
+      reclinerRows.push(
+        <SeatRow 
+        key={`S${reclinerSp.rowsOrder}${i}`} 
+        seats={seats.filter(s => s.rowNo === (1+i))} 
+        alphabet={alphabet[alphabetCount]} 
+        />
+      )
+      alphabetCount += 1
+    }
   }
 
   const twinRows = []
-  for(let i=0;i<(seat[2]).rows;i++){
-    normalRows.push(<TwinSeatRow key={`twin-${i}`} column={seat[2].column}/>)
+  for (const twinSp of sortedTwinSp) {
+    for( let i = 0; i < twinSp.rowCount; i++ ) {
+      const seats = twinSp.seats
+      twinRows.push(
+        <SeatRow 
+        key={`S${twinSp.rowsOrder}${i}`} 
+        seats={seats.filter(s => s.rowNo === (1+i))} 
+        alphabet={alphabet[alphabetCount]} 
+        />
+      )
+      alphabetCount += 1
+    }
   }
+  
+  const vipRows = []
+  for (const vipSp of sortedVipSp) {
+    for( let i = 0; i < vipSp.rowCount; i++ ) {
+      const seats = vipSp.seats
+      vipRows.push(
+        <SeatRow 
+        key={`S${vipSp.rowsOrder}${i}`} 
+        seats={seats.filter(s => s.rowNo === (1+i))} 
+        alphabet={alphabet[alphabetCount]} 
+        />
+      )
+      alphabetCount += 1
+    }
+  }
+
   return (
     <>
     <Container className={classes.wapper}>
-        <div className={classes.screen}>Screen</div>
+        <div className={classes.screen}>{theater?.screen}</div>
         <div className={classes.alphabet_left}>
           {alphabetRows}
         </div>
         <div className={classes.alphabet_right}>
           {alphabetRows}
         </div>
-          {normalRows}
+          {standardRows}
           {premiumRows}
+          {reclinerRows}
+          {vipRows}
           {twinRows}
 
-          <ShowSeatType seat={seat}/>  
+          <div className={classes.seat_types}>
+            {
+              uniqueTypeSeatPatternList.map(seatPattern => 
+                <ShowSeatType 
+                  key={seatPattern.id} 
+                  seatType={seatPattern.seatType} 
+                  seatPrice={seatPattern.seatPrice} 
+                />
+              )
+            }
+          </div>
     </Container>
     
     </>

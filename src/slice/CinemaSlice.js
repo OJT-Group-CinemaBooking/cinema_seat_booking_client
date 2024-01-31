@@ -89,7 +89,7 @@ const CinemaSlice = createSlice({
     name : 'cinemaSlice',
     initialState,
     reducers : {
-        setCinemaToIdle : (state) => {
+        setCinemaStatusToIdle : (state) => {
             state.status = 'idle'
         }
     },
@@ -166,4 +166,4 @@ export const getAllCinema = (state) => state.cinema.cinemas
 export const getCinemaStatus = (state) => state.cinema.status
 export const getError = (state) => state.cinema.error
 export const getCinemaById = (state,cinemaId) => state.cinema.cinemas.find((c) => c.id === Number(cinemaId))
-export const { setCinemaToIdle } = CinemaSlice.actions
+export const { setCinemaStatusToIdle } = CinemaSlice.actions

@@ -13,7 +13,7 @@ const Header = () => {
       <Container>
         <Navbar.Brand as={Link} to={'/'}>
           <Image
-            src="./images/kyi-mal-high-resolution-logo-transparent.png"
+            src={`${process.env.PUBLIC_URL}/images/kyimal.png`}
             className={classes.nav_logo}
             alt="logo"
           />
