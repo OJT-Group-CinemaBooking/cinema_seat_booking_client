@@ -8,6 +8,8 @@ import TicketSlice from "../slice/TicketSlice"
 import CouponSlice from "../slice/CouponSlice"
 import ShowTimeSlice from "../slice/ShowTimeSlice"
 import BookSeatSlice from "../slice/BookSeatSlice"
+import PaymentSlice from "../slice/PaymentSlice"
+import CheckOutSlice from "../slice/CheckOutSlice"
 
 export const store = configureStore({
     reducer : {
@@ -20,5 +22,7 @@ export const store = configureStore({
         bookseat : BookSeatSlice,
         ticket : TicketSlice,
         coupon : CouponSlice,
+        payment : PaymentSlice,
+        checkout : CheckOutSlice,
     }
 })

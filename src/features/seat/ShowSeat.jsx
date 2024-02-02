@@ -115,35 +115,32 @@ const ShowSeat = ({ seatPatternList, theater }) => {
   }
 
   return (
-    <>
     <Container className={classes.wapper}>
-        <div className={classes.screen}>{theater?.screen}</div>
-        <div className={classes.alphabet_left}>
-          {alphabetRows}
-        </div>
-        <div className={classes.alphabet_right}>
-          {alphabetRows}
-        </div>
-          {standardRows}
-          {premiumRows}
-          {reclinerRows}
-          {vipRows}
-          {twinRows}
+      <div className={classes.screen}>{theater?.screen}</div>
+      <div className={classes.alphabet_left}>
+        {alphabetRows}
+      </div>
+      <div className={classes.alphabet_right}>
+        {alphabetRows}
+      </div>
+        {standardRows}
+        {premiumRows}
+        {reclinerRows}
+        {vipRows}
+        {twinRows}
 
-          <div className={classes.seat_types}>
-            {
-              uniqueTypeSeatPatternList.map(seatPattern => 
-                <ShowSeatType 
-                  key={seatPattern.id} 
-                  seatType={seatPattern.seatType} 
-                  seatPrice={seatPattern.seatPrice} 
-                />
-              )
-            }
-          </div>
+      <div className={classes.seat_types}>
+        {
+          uniqueTypeSeatPatternList.map(seatPattern => 
+            <ShowSeatType 
+              key={seatPattern.id} 
+              seatType={seatPattern.seatType} 
+              seatPrice={seatPattern.seatPrice} 
+            />
+          )
+        }
+      </div>
     </Container>
-    
-    </>
   )
 }
 

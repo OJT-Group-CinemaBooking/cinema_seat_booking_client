@@ -5,14 +5,12 @@ import MovieDetailPage from "./page/MovieDetailPage";
 import AdminLayout from "./components/ui/AdminLayout";
 import AdminMovieTablePage from "./page/AdminMovieTablePage";
 import SeatBookingPage from "./page/SeatBookingPage";
-import CheckOutPage from "./page/CheckOutPage";
 import AdminMovieCrewPage from "./page/AdminMovieCrewPage";
 import AdminMovieCrewDetailPage from "./page/AdminMovieCrewDetailPage";
 import AdminNewMovieFromPage from "./page/AdminNewMovieFromPage";
 import AdminUpdateMovieFormPage from "./page/AdminUpdateMovieFormPage";
 import LoginPage from "./page/LoginPage";
 import SignUpPage from "./page/SignUpPage";
-import BookingConfirmationPage from "./page/BookingConfirmationPage";
 import HomePage from "./page/HomePage";
 import SeatTypePatternOfTheater from "./features/admin/seatPattern/SeatTypePatternOfTheater";
 import SeatPatternAddForm from "./features/admin/seatPattern/SeatPatternAddForm";
@@ -24,6 +22,7 @@ import AdminTheaterDetailPage from "./page/AdminTheaterDetailPage";
 import ContactUsPage from "./page/ContactUsPage";
 import AdminCouponPage from "./page/AdminCouponPage";
 import MovieSchedule from "./features/admin/movie/MovieSchedule";
+import ConfirmationPage from "./page/ConfirmationPage";
 
 function App() {
   return (
@@ -39,11 +38,9 @@ function App() {
           <Route path=":movieId/theater/:theaterId/show-time/:showTimeId/seat" element={<SeatBookingPage/>} />
         </Route>
 
-        <Route path="checkout" element={<CheckOutPage/>} />
-        <Route path="confirmation" element={<BookingConfirmationPage/>}/>
+        <Route path="ticket/:ticketId" element={<ConfirmationPage/>}/>
         <Route path="login" element={<LoginPage/>} />
         <Route path="sign-up" element={<SignUpPage/>} />
-        <Route path="checkout" element={<CheckOutPage/>} />
         <Route path="contact-us" element={<ContactUsPage />} />
       </Route>
 
