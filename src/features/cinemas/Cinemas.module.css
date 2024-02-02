@@ -1,6 +1,7 @@
 .wapper{
-    margin-top: 2rem;
-    border: 1px solid #b89723;
+    margin-top: 2.5rem;
+    border: 1px solid #b89823a6;
+    border-radius: 1rem;
     color: whitesmoke;
 }
 
@@ -15,7 +16,7 @@
 .cinema_img img{
     width: 100%;
     aspect-ratio: 2/1;
-    object-fit: cover;
+    object-fit: contain;
 }
 
 .theater{

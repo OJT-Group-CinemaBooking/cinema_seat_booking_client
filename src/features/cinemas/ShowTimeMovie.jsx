@@ -57,7 +57,7 @@ const ShowTimeMovie = () => {
                 </Col>
               </Row>
               <div className={classes.schedule_scroll}>
-              {[...new Set(showTimes.filter((st) => st.connectMovie === movie.id).map((st) => st.showDate))]
+              {[...new Set(showTimes.filter((st) => st.connectMovie === movie.id ).map((st) => st.showDate))]
               .map((showDate, index) => (
                 <div key={index} className={classes.schedule_item}>
                   <div className={classes.date}>{showDate}</div>
