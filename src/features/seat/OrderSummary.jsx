@@ -1,86 +1,199 @@
-import React from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import classes from './OrderSummary.module.css'
-import { Clock, VolumeUp } from 'react-bootstrap-icons'
-import { Button } from 'react-bootstrap'
+import { ChevronRight, Clock, VolumeUp } from 'react-bootstrap-icons'
+import { Accordion, Button, Col, Form } from 'react-bootstrap'
 import { IMAGE_URL } from '../config/baseURL'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { getAllSelectedSeatList } from '../../slice/BookSeatSlice'
+import { getCheckedCoupon, getCouponStatus, setCouponStatusToFetchSuccess, submitCoupon } from '../../slice/CouponSlice'
+import InfoModal from '../../components/ui/InfoModal'
+import PaymentForm from '../checkout/PaymentForm'
+import { createCheckOut, getCheckoutStatus, getCheckoutTicket, setCheckoutStatusToIdle } from '../../slice/CheckOutSlice'
+import { useNavigate } from 'react-router-dom'
 
-const OrderSummary = ({ movie, theater, showTime }) => {
+const OrderSummary = ({ movie, theater, showTime, allCoupon }) => {
+
+  const couponStatus = useSelector(getCouponStatus)
+  const checkoutStatus = useSelector(getCheckoutStatus)
 
   const selectedSeatList = useSelector(getAllSelectedSeatList)
-  
+  const usedCoupon = useSelector(getCheckedCoupon)
+  const checkoutTicket = useSelector(getCheckoutTicket)
+
+  const [ info, setInfo ] = useState('')
+  const [ show, setShow ] = useState(false)
+  const [ confirm, setConfirm ] = useState(false)
+
+  const inputRef = useRef()
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if(checkoutStatus === 'create_success') {
+      navigate(`/ticket/${checkoutTicket.id}`)
+      dispatch(setCheckoutStatusToIdle())
+    }
+    if(checkoutStatus === 'create_failed') {
+      console.log('failed to create ticket')
+    }
+  })
+
+  const handleUseCode = () => {
+    const couponCode = allCoupon.find(cp => cp.couponCode === inputRef.current.value)
+    if(couponCode !== undefined) {
+      if(new Date(couponCode.expiryDate) <= new Date()) {
+        setInfo('coupon is expired!')
+        setShow(true)
+        return
+      }
+      if(couponCode.userCount <= 0) {
+        setInfo('coupon is limited!')
+        setShow(true)
+        return
+      }
+      if(couponCode?.userCoupons.some(uc => uc.id === 1)/** user.userCoupon.id */) { // DUMMY DATA 
+        setInfo('already used!')
+        setShow(true)
+        return
+      }
+      const data = {
+        couponId : couponCode.id,
+        userId : 1                                    // DUMMY DATA
+      }
+      dispatch(submitCoupon(data))
+      setInfo(`you get ${couponCode.discount}MK discount.`)
+      setShow(true)
+    }else{
+      setInfo('wrong coupon!')
+      setShow(true)
+    }
+  }
+
+  const handleClose = () => {
+    setShow(false)
+    if(couponStatus === 'use_success') {
+      setConfirm(true)
+    }
+    dispatch(setCouponStatusToFetchSuccess())
+  }
+
+  const handleCheckout = () => {
+    dispatch(createCheckOut({
+      boughtSeatList : selectedSeatList,
+      showtimeId : showTime.id,
+      couponId : ((Object.keys(usedCoupon).length > 0)? usedCoupon.id : 0)
+    }))
+  }
+
   return (
-    <div className={classes.summary}>
-      <h2 className={classes.header}>Summary</h2>
-      <div className={classes.wapper}>
-        <img 
-        src={`${IMAGE_URL}/movie/${movie.id}.jpg`} 
-        alt="movie poster" 
-        />
-        <div className={classes.movie_details}>
-          <h6>{movie.title}</h6>
-          
-          <p className={classes.language}>
-          <VolumeUp/>
-            {movie.language}
-          </p>
-
-          <p className={classes.duration}>
-          <Clock/>
-            {
-              (movie.duration > 60)? `${Math.floor(movie.duration / 60)} hr ${movie.duration % 60} mins` :
-              `${movie.duration} mins`
-            }
-          </p>
-        </div>
-        <div className={classes.show_details}>
-          <h3 className={classes.show_time}>Show Time</h3>
-          <p className={classes.show_time_date}>
-            {/* {theater.cinema.name} Cinema */}
-            <span>
+    <>
+    <Col xs='3' className={classes.summary_container}>
+      <InfoModal 
+        show={show} 
+        information={info} 
+        color={couponStatus === 'use_success'? 'success' : 'danger'} 
+        handleClose={handleClose} 
+      />
+      <div className={classes.summary}>
+        <div className={classes.wapper}>
+          <div className='w-100 d-flex justify-content-evenly'>
+            <img 
+            src={`${IMAGE_URL}/movie/${movie.id}.jpg`} 
+            alt="movie poster" 
+            className={classes.poster}
+            />
+            <div className={classes.movie_details}>
+              <h5>{movie.title}</h5>
+              <p className={classes.movie_info}>
+                <VolumeUp/>
+                {movie.language}
+              </p>
+              <p className={classes.movie_info}>
+                <Clock/>
+                {
+                  (movie.duration > 60)? `${Math.floor(movie.duration / 60)} hr ${movie.duration % 60} mins` :
+                  `${movie.duration} mins`
+                }
+              </p>
+            </div>
+          </div>
+          <div className={classes.show_details}>
+            <p className={classes.show_time_place}>
+              {theater.cinema.name} Cinema
+              <ChevronRight className='mx-1' />
+              {theater.name}
+            </p>
+            <p className={classes.show_details_time}>
               {showTime.showDate}
-            </span>
-          </p>
-          <p className={classes.show_details_time}>
-            {theater.name}
-            <span>
-              {showTime.showTime}
-            </span>
-          </p>
-        </div>
+              <span>
+                {showTime.showTime}
+              </span>
+            </p>
+          </div>
 
-        <div className={classes.show_seat}>
-          <h5>Seat</h5>
+          <div className={classes.bookseat_header}>
+            <h5>Seat</h5>
+            <h5>Price</h5>
+          </div>
+
           {
             selectedSeatList?.map(seat => 
-              <p key={seat.id}>{`${seat.name} - ${seat.type}`}</p>  
+              <div key={seat.id} className={classes.bookseat}>
+                <p>{`${seat.name} - ${seat.type}`}</p> 
+                <p>{`${seat.price} MMK`}</p>
+              </div>
             )
           }
+          
+          <hr className={classes.hr} />
+
+          <div className={classes.total}>
+            <h5>Total</h5>
+            {
+              !confirm && 
+              <p>
+                {`${selectedSeatList?.reduce((totalprice, seat) => totalprice + seat.price, 0)} MMK`}
+              </p>
+            }
+            {
+              confirm && 
+              <p>
+                <del>
+                {selectedSeatList?.reduce((totalprice, seat) => totalprice + seat.price, 0)}
+                </del>
+                {` ${selectedSeatList?.reduce((totalprice, seat) => totalprice + seat.price, -usedCoupon?.discount)} MMK`}
+              </p>
+            }
+          </div>
+          
+          <Accordion className={classes.accordion}>
+            <Accordion.Item className={classes.accordion_item} eventKey="0">
+              <Accordion.Header className={classes.accordion_header}>Have a cupon code?</Accordion.Header>
+              <Accordion.Body className={classes.accordion_body}>
+              <Form>
+                <Form.Control
+                  type="text" 
+                  className={classes.input}
+                  ref={inputRef}
+                  placeholder="Cupon code"
+                />
+                <Button 
+                className={classes.use_btn}
+                onClick={handleUseCode}
+                disabled={confirm}
+                >
+                  Use Cupon
+                </Button>
+                </Form>
+              </Accordion.Body>
+            </Accordion.Item>
+          </Accordion>
+          
         </div>
-        <div className={classes.show_price}>
-          <h5>Price</h5>
-          {
-            selectedSeatList?.map(seat => 
-              <p key={seat.id}>{`${seat.price} MMK`}</p>  
-            )
-          }
-        </div>
-        <div className={classes.hrline}>
-          <hr />
-        </div>
-        <div className={classes.total}>
-         <h5>Total</h5>
-         <span>
-          {`${selectedSeatList?.reduce((totalprice, seat) => totalprice + seat.price, 0)} MMK`}
-         </span>
-        </div>
-        <div className={classes.btn}>
-        <Button>Buy Now</Button>
-        </div>
-        
       </div>
-    </div>
+    </Col>
+    <PaymentForm handleCheckout={handleCheckout} />
+    </>
   )
 }
 

@@ -1,0 +1,19 @@
+.modal > div {
+    max-width: 20rem;
+}
+
+.modal > div > div{
+    background-color: rgb(252, 252, 252);
+}
+
+.modal_header{
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 3rem;
+}

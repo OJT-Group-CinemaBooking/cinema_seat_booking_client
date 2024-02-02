@@ -27,6 +27,14 @@ export const createCoupon = createAsyncThunk('createCoupon', async(data) => {
     
 })
 
+export const submitCoupon = createAsyncThunk('submitCoupon', async(data) => {
+    const response = await axios.get(`${COUPON_URL}/${data.couponId}/${data.userId}/use`)
+    return {
+        data : response.data,
+        status : response.status
+    }
+})
+
 export const checkCoupon = createAsyncThunk('checkCoupon', async(couponCode) => {
     const response = await axios.get(`${COUPON_URL}/find/${couponCode}`)
     return {
@@ -56,6 +64,9 @@ const CouponSlice = createSlice({
     reducers : {
         setCouponToIdle : (state) => {
             state.status = 'idle'
+        },
+        setCouponStatusToFetchSuccess : (state) => {
+            state.status = 'fetch_success'
         }
     },
     extraReducers(builder) {
@@ -110,7 +121,6 @@ const CouponSlice = createSlice({
             state.status = 'check_coupon_failed'
             state.error = action.error
         })
-        
         .addCase(deleteCoupon.fulfilled, (state,action) => {
             if(action.payload?.status) {
                 const {data,status} = action.payload
@@ -125,6 +135,20 @@ const CouponSlice = createSlice({
             state.status = 'delete_failed'
             state.error = action.error
         })
+        .addCase(submitCoupon.fulfilled, (state,action) => {
+            if(action.payload?.status) {
+                const { data, status } = action.payload
+                if(status !== 200) {
+                    console.log('fail to use coupon')
+                }
+                state.coupon = data
+                state.status = 'use_success'
+            }
+        })
+        .addCase(submitCoupon.rejected,(state,action) => {
+            state.status = 'use_failed'
+            state.error = action.error
+        })
     }
 })
 
@@ -133,4 +157,4 @@ export const getAllCoupon = (state) => state.coupon.coupons
 export const getCheckedCoupon = (state) => state.coupon.coupon
 export const getCouponStatus = (state) => state.coupon.status
 export const getCouponError = (state) => state.coupon.error
-export const { setCouponToIdle } = CouponSlice.actions
+export const { setCouponToIdle, setCouponStatusToFetchSuccess } = CouponSlice.actions

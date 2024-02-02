@@ -3,19 +3,13 @@ import classes from './Confirmation.module.css'
 import { CheckCircle } from 'react-bootstrap-icons'
 import { Col, Container, Row } from 'react-bootstrap'
 
-const Confirmation = () => {
+const Confirmation = ({ ticket }) => {
 
-    const ticketId = 1
-
-    const today = new Date().toISOString().split('T')[0]
-
-    const seatPrice = 28000
-    const total = (seatPrice + 500 + 100)
   return (
     <>
         <h3 className={classes.headder}>Booking Confirmation</h3>
         <Container className={classes.date}>
-            <p>{today}</p>
+            <p>{new Date(ticket.createdAt).toDateString()}</p>
         </Container>
 
         <Container className={classes.success}>
@@ -26,25 +20,49 @@ const Confirmation = () => {
             <Row className={classes.first_row}>
                 <Col className={classes.ticket_details}>
                     <h4>
-                        Booking ID : {ticketId}
+                        Booking ID : {ticket.id}
                     </h4>
-                    <h4 className={classes.movie_name}>Migration</h4>
-                    <p>ENG ( MMR )</p>
-                    <p>Mingalar Cinema</p>
-                    <p>Therator - 1</p>
+                    <h4 className={classes.movie_name}>
+                        {ticket.movieTitle}
+                    </h4>
+                    <p>{`Cinema : ${ticket.showTime.theater.cinema.name}`}</p>
+                    <p>{`Theater : ${ticket.showTime.theater.name}`}</p>
 
 
-                    <p>Nomal - <span>C3,C4</span></p>
-                    <p>Premium - <span>F6</span></p>
+                    <p>STANDARD - 
+                        {
+                            ticket.boughtSeats.filter(bs => bs.seatType === 'STANDARD').map(bs => <span key={bs.id}>{bs.name}</span>)
+                        }
+                    </p>
+                    <p>PREMIUM - 
+                        {
+                            ticket.boughtSeats.filter(bs => bs.seatType === 'PREMIUM').map(bs => <span key={bs.id}>{bs.name}</span>)
+                        }
+                    </p>
+                    <p>RECLINER - 
+                        {
+                            ticket.boughtSeats.filter(bs => bs.seatType === 'RECLINER').map(bs => <span key={bs.id}>{bs.name}</span>)
+                        }
+                    </p>
+                    <p>TWIN - 
+                        {
+                            ticket.boughtSeats.filter(bs => bs.seatType === 'TWIN').map(bs => <span key={bs.id}>{bs.name}</span>)
+                        }
+                    </p>
+                    <p>VIP - 
+                        {
+                            ticket.boughtSeats.filter(bs => bs.seatType === 'VIP').map(bs => <span key={bs.id}>{bs.name}</span>)
+                        }
+                    </p>
                 </Col>
                 <Col className={classes.date_time}>
                     <p>
-                        Friday, 26th January
+                        {ticket.showTime.showDate}
                     </p>
                     <p style={{marginBottom : '1rem'}}>
-                        8:00 PM
+                        {ticket.showTime.showTime}
                     </p>
-                    <img src={`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${ticketId}`} alt="QR code" />
+                    <img src={`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${ticket.id}`} alt="QR code" />
                 </Col>
             </Row>
             
@@ -65,25 +83,16 @@ const Confirmation = () => {
                     </Col>
                     
                     <Col className={classes.fee_price}>
-                        <p>28000 MMK</p>
+                        <p>{`${ticket.totalPrice} MMK`}</p>
                     </Col>
                 </Row>
                 <Row className={classes.extra_fee}>
                     <Col className={classes.fee}>
-                        <p>Convenience Fee</p>
+                        <p>Coupon Discount : </p>
                     </Col>
                     
                     <Col className={classes.fee_price}>
-                        <p>500 MMK</p>
-                    </Col>
-                </Row>
-                <Row className={classes.extra_fee}>
-                    <Col className={classes.fee}>
-                        <p>Service Tax</p>
-                    </Col>
-                    
-                    <Col className={classes.fee_price}>
-                        <p>100 MMK</p>
+                        <p>{`${ticket.actualPrice - ticket.totalPrice} MMK`}</p>
                     </Col>
                 </Row>
             
@@ -93,7 +102,7 @@ const Confirmation = () => {
                     <h4>Total</h4>
                 </Col>
                 <Col className={classes.fee_price}>
-                    <p>{total} MMK</p>
+                    <p>{`${ticket.actualPrice} MMK`}</p>
                 </Col>
             </Row>
 

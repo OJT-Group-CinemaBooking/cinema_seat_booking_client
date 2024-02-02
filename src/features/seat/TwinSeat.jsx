@@ -27,9 +27,9 @@ const TwinSeat = ({ seat, seatName }) => {
         setSelect(true)
         setSelect(true)
        dispatch(addSelectedSeat({
-        id : bookSeat.id,
+        bookedSeatId : bookSeat.id,
         name : seatName,
-        type : seat.type,
+        seatType : seat.type,
         price : seat.price,
        }))
       }

@@ -1,16 +1,16 @@
 .seat img{
-    width: 2rem;
+    width: 2.5vw;
     cursor: pointer;
 }
 
 .seat{
     display: flex;
     justify-content: center;
-    margin-bottom: 10px;
+    margin-bottom: 1vw;
 }
 
-@media (max-width: 991px) and (min-width: 768px){
+@media (max-width: 575px){
     .seat img{
-        width: 1.5rem;
+        width: 3.2vw;
     }
 }

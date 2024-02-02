@@ -14,11 +14,9 @@ const SeatRow = ({ seats, alphabet }) => {
     );
   }
   return (
-    <>
     <div className={classes.seat}>
       {seatList}
     </div>
-    </>
   )
 }
 
