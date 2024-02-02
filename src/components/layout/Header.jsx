@@ -11,7 +11,7 @@ const Header = () => {
       className={`bg-body-tertiary ${classes.navbar}`}
     >
       <Container>
-        <Navbar.Brand href="#home">
+        <Navbar.Brand as={Link} to={'/'}>
           <Image
             src={`${process.env.PUBLIC_URL}/images/kyimal.png`}
             className={classes.nav_logo}
@@ -32,8 +32,8 @@ const Header = () => {
             <Link className={classes.nav_link} as={Link} to={"/movie"}>
               Movie
             </Link>
-            <Link className={classes.nav_link} as={Link} to={"/"}>
-              Cinema
+            <Link className={classes.nav_link} as={Link} to={"/cinemas"}>
+              Cinemas
             </Link>
             <Link className={classes.nav_link} as={Link} to={"/contact-us"}>
               ContactUs
@@ -41,7 +41,6 @@ const Header = () => {
           </Nav>
           <Nav>
             <Link className={classes.person} as={Link} to={"/"}>
-              {" "}
               <PersonCircle />
             </Link>
           </Nav>
