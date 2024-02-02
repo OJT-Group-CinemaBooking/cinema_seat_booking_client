@@ -7,11 +7,18 @@
     width: 0;
 }
 
+.header{
+    margin-top: 3rem;
+    margin-left: 1.1rem;
+    color: whitesmoke;
+}
+
 .new{
     display: flex;
     justify-content: center;
     align-items: center;
     height: 18rem;
+    margin-top: 1rem;
 }
 
 .card{
@@ -23,10 +30,11 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
 }
 
-.add{
-    cursor: pointer;
+.back_arrow{
+    padding-left: 1.5rem;
 }
 
 .back_arrow > svg{
@@ -34,5 +42,5 @@
     display: inline-block;
     width: fit-content;
     position: relative;
-    bottom: -1rem;
+    top: 1.5rem;
 }

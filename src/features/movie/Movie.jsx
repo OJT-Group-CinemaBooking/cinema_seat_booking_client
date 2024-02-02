@@ -3,12 +3,16 @@ import classes from './Movie.module.css'
 import { Card, Col } from 'react-bootstrap'
 import { Clock, Mic, PlayCircle, Tags } from 'react-bootstrap-icons'
 import { useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { setShowTimeStatusToIdle } from '../../slice/ShowTimeSlice'
 
 const Movie = ({ title, duration, releaseDate, image, genere, language }) => {
   const navigate = useNavigate()
+  const dispatch = useDispatch()
 
   const onLookDetail = () => {
-    navigate('/movie/detail/'+1)
+    dispatch(setShowTimeStatusToIdle())
+    navigate(`/movie/${1}/detail`)
   }
 
   return (

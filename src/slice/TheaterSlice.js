@@ -62,7 +62,9 @@ const TheaterSlice = createSlice({
     name : 'theaterSlice',
     initialState,
     reducers : {
-
+        setTheaterStatusToIdle : (state) => {
+            state.status = 'idle'
+        }
     },
     extraReducers(builder) {
         builder
@@ -79,6 +81,10 @@ const TheaterSlice = createSlice({
                 state.status = 'fetch_success'
             }
         })
+        .addCase(fetchAllTheater.rejected,(state,action) => {
+            state.status = 'fetch_failed'
+            state.error = action.error
+        })
         .addCase(fetchTheaterByCinemaId.pending,(state) => {
             state.status = 'loading'
         })
@@ -92,8 +98,8 @@ const TheaterSlice = createSlice({
                 state.status = 'fetch_success'
             }
         })
-        .addCase(fetchAllTheater.rejected,(state,action) => {
-            state.status = 'fetch_fail'
+        .addCase(fetchTheaterByCinemaId.rejected,(state,action) => {
+            state.status = 'fetch_failed'
             state.error = action.error
         })
         .addCase(createTheater.fulfilled,(state,action) => {
@@ -147,4 +153,6 @@ export default TheaterSlice.reducer
 export const getAllTheater = (state) => state.theater.theaters
 export const getTheaterStatus = (state) => state.theater.status
 export const getTheaterError = (state) => state.theater.error
-export const getTheaterById = (state,theaterId) => state.theater.theaters.find((t) => t.id === Number(theaterId))
+export const getTheaterById = (state,theaterId) => 
+    state.theater.theaters.find((t) => t.id === Number(theaterId))
+export const { setTheaterStatusToIdle } = TheaterSlice.actions

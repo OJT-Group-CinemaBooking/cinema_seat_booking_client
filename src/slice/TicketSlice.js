@@ -5,20 +5,29 @@ import { TICKET_URL } from "../features/config/baseURL";
 const FETCH_URL = `${TICKET_URL}/all`;
 const CREATE_URL = `${TICKET_URL}/create`;
 
-export const fetchAllTickets = createAsyncThunk("fetchAllTickets", async (showTime) => {
-  const response = await axios.get(FETCH_URL, showTime, {
-    headers: {
-        'Content-Type': 'application/json',
-    }
+export const fetchAllTickets = createAsyncThunk("fetchAllTickets", async () => {
+    const response = await axios.get(FETCH_URL);
+    
+    return {
+      data: response.data,
+      status: response.status,
+    };
   });
-  return {
-    data: response.data,
-    status: response.status,
-  };
-});
 
-export const createTicket = createAsyncThunk("createTicket", async (ticketRequest) => {
-    const response = await axios.post(CREATE_URL, ticketRequest, {
+// export const fetchAllTickets = createAsyncThunk("fetchAllTickets", async (showTime) => {
+//   const response = await axios.get(FETCH_URL, showTime, {
+//     headers: {
+//         'Content-Type': 'application/json',
+//     }
+//   });
+//   return {
+//     data: response.data,
+//     status: response.status,
+//   };
+// });
+
+export const createTicket = createAsyncThunk("createTicket", async (data) => {
+    const response = await axios.post(`${CREATE_URL}/${data.showtimeId}`, data.ticket, {
       headers: {
         "Content-Type": "application/json",
       },
@@ -32,6 +41,7 @@ export const createTicket = createAsyncThunk("createTicket", async (ticketReques
 
 const initialState = {
     tickets: [],
+    createdTicket: {},
     status: "idle",
     error: null
 }
@@ -39,7 +49,14 @@ const initialState = {
 const TicketSlice = createSlice({
     name: 'TicketSlice',
     initialState,
-    reducers: {},
+    reducers: {
+        setTicketStatusToIdle : (state) => {
+            state.status = 'idle'
+        },
+        emptyCreatedTicket : (state) => {
+            state.createdTicket = {}
+        },
+    },
     extraReducers(builder){
         builder.addCase(fetchAllTickets.pending, (state) => {
             state.status = 'loading'
@@ -69,7 +86,7 @@ const TicketSlice = createSlice({
                     console.log("Fail to create ticket")
                     return;
                 }
-                state.tickets = [data, ...state.tickets]
+                state.createdTicket = data
                 state.status = 'create_success'
             }
         })
@@ -81,3 +98,8 @@ const TicketSlice = createSlice({
 })
 
 export default TicketSlice.reducer
+export const getTicketStatus = (state) => state.ticket.status
+export const getAllTicket = (state) => state.ticket.tickets
+export const getTicketById = (state,ticketId) => state.ticket.tickets.find(t => t.id === ticketId)
+export const getCreatedTicket = (state) => state.ticket.createdTicket
+export const { setTicketStatusToIdle, emptyCreatedTicket } = TicketSlice.actions

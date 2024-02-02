@@ -74,6 +74,9 @@ const NewCinemaForm = ({ allCinema }) => {
     <Container>
       <Row xs={1} md={2} className="d-flex justify-content-evenly">
         <Col xs="7" className={classes.cinema_table}>
+          <Row className='text-light'>
+            <h3>Cinema</h3>
+          </Row>
           <Row xs={1}>
             <Table className={classes.table}>
               <thead>

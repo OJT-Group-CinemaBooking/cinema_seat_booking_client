@@ -1,8 +1,5 @@
 .wapper{
-    width: 60rem;
-    display: inline-block;
-    margin-left: 2rem;
-    margin-top: 1rem;
+    width: 100%;
 }
 
 .screen{
@@ -18,7 +15,6 @@
 }
 
 .alphabet_left{
-    position: absolute;
     float: left;
     color: whitesmoke;
 }
@@ -30,24 +26,26 @@
 
 .alphabet_right p,
 .alphabet_left p{
-    height: 32px;
+    height: 3.5vw;
     margin: 0;
-    margin-bottom: 10px;
-    line-height: 32px;
+    font-size: 1.5vw;
 }
 
-@media (max-width: 991px) and (min-width: 768px){
- .alphabet_right p,
-.alphabet_left p{
-    height: 24px;
-    line-height: normal;
-    margin-bottom: 10px;
+.seat_types{
+    display: flex;
+    justify-content: center;
 }
-} 
 
-
- @media (max-width: 767px){
- .wapper{
-    max-width: none;
- }   
+@media (max-width: 575px){
+    .wapper{
+        padding: 0;
+    }
+    .seat img{
+        width: 3.2vw;
+    }
+    .alphabet_right p,
+    .alphabet_left p{
+        height: 4.2vw;
+        font-size: 2.2vw;
+    }
 }

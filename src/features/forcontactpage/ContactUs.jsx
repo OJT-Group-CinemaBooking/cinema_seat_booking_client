@@ -1,29 +1,29 @@
 import React from 'react'
 import { ToastContainer } from 'react-bootstrap'
-import "./ContactUs.css"
+import classes from './ContactUs.module.css'
+import { Link } from 'react-router-dom'
 
 const CU = () => {
   return (
-    <section className="contact-section">
+    <section className={`${classes.contact_section} ${classes.contactUsCss}`}>
     <div className="container">
       <ToastContainer position="top-center" />
       <div className="row justify-content-center">
         <div className="col-md-10">
-          <div className="wrapper">
+          <div className={classes.wrapper}>
             <div className="row no-gutters">
               <div className="col-md-6">
-                <div className="contact-wrap w-100 p-lg-5 p-4">
-                  <h3 className="mb-4">Send us a message</h3>
+                <div className={`${classes.contact_wrap} w-100 p-lg-5 p-4`}>
+                  <h3 className={`mb-4 ${classes.header}`}>Send us a message</h3>
                   <form
-                    id="contactForm"
-                    className="contactForm"
+                    className={classes.contactForm}
                   >
                     <div className="row">
                       <div className="col-md-12">
                         <div className="form-group">
                           <input
                             type="text"
-                            className="form-control"
+                            className={`form-control ${classes.form_control}`}
                             name="name"
                             placeholder="Name"
                           />
@@ -33,7 +33,7 @@ const CU = () => {
                         <div className="form-group">
                           <input
                             type="email"
-                            className="form-control"
+                            className={`form-control ${classes.form_control}`}
                             name="email"
                             placeholder="Email"
                           />
@@ -43,7 +43,7 @@ const CU = () => {
                         <div className="form-group">
                           <input
                             type="text"
-                            className="form-control"
+                            className={`form-control ${classes.form_control}`}
                             name="subject"
                             placeholder="Subject"
                           />
@@ -52,8 +52,7 @@ const CU = () => {
                       <div className="col-md-12">
                         <div className="form-group">
                           <textarea
-                            type="text"
-                            className="form-control"
+                            className={`form-control ${classes.form_control}`}
                             name="message"
                             placeholder="Message"
                             cols="30"
@@ -66,7 +65,7 @@ const CU = () => {
                           <input
                             type="submit"
                             value="Send Message"
-                            className="btn btn-primary"
+                            className={`${classes.btn} ${classes.btn_primary}`}
                           />
                         </div>
                       </div>
@@ -75,53 +74,51 @@ const CU = () => {
                 </div>
               </div>
               <div className="col-md-6 d-flex align-items-stretch">
-                <div className="info-wrap w-100 p-lg-5 p-4 img">
-                  <h3 className='text-warning'>Contact us</h3>
+                <div className={`${classes.info_wrap} w-100 p-lg-5 p-4 ${classes.img}`}>
+                  <h2 className={classes.header} style={{textDecoration:'underline', textDecorationColor:'#d62196'}}>Contact us</h2>
                   <p className="mb-4 text-warning">
                     We're open for any suggestion or just to have a chat
                   </p>
-                  <div className="dbox w-100 d-flex align-items-start">
-                    <div className="icon d-flex align-items-center justify-content-center">
+                  <div className={`${classes.dbox} w-100 d-flex align-items-start`}>
+                    <div className={`${classes.icon} d-flex align-items-center justify-content-center`}>
                       <span className="fa fa-map-marker"></span>
                     </div>
-                    <div className="text pl-3">
+                    <div className={`${classes.text} pl-3`}>
                       <p className='text-warning'>
                         <span>Address:</span> W37R+9W8, Mandalay, Myanmar
                       </p>
                     </div>
                   </div>
-                  <div className="dbox w-100 d-flex align-items-center">
-                    <div className="icon d-flex align-items-center justify-content-center">
+                  <div className={`${classes.dbox} w-100 d-flex align-items-start`}>
+                    <div className={`${classes.icon} d-flex align-items-center justify-content-center`}>
                       <span className="fa fa-phone"></span>
                     </div>
-                    <div className="text pl-3">
+                    <div className={`${classes.text} pl-3`}>
                       <p className='text-warning'>
-                        <span>Phone:</span>
-                        <a href="#">959 456 325 659</a>
+                        <span>Phone : </span>
+                        <span className={classes.link}> 959 456 325 659</span>
                       </p>
                     </div>
                   </div>
-                  <div className="dbox w-100 d-flex align-items-center">
-                    <div className="icon d-flex align-items-center justify-content-center">
+                  <div className={`${classes.dbox} w-100 d-flex align-items-start`}>
+                    <div className={`${classes.icon} d-flex align-items-center justify-content-center`}>
                       <span className="fa fa-paper-plane"></span>
                     </div>
-                    <div className="text pl-3">
+                    <div className={`${classes.text} pl-3`}>
                       <p className='text-warning'>
-                        <span>Email:</span>
-                        <a href="mailto:blabla@gmail.com">
-                        kyimal@cinema.com
-                        </a>
+                        <span>Email : </span>
+                       <span className={classes.link}> kyimal@cinema.com</span>
                       </p>
                     </div>
                   </div>
-                  <div className="dbox w-100 d-flex align-items-center">
-                    <div className="icon d-flex align-items-center justify-content-center">
+                  <div className={`${classes.dbox} w-100 d-flex align-items-start`}>
+                    <div className={`${classes.icon} d-flex align-items-center justify-content-center`}>
                       <span className="fa fa-globe"></span>
                     </div>
-                    <div className="text pl-3">
+                    <div className={`${classes.text} pl-3`}>
                       <p className='text-warning'>
-                        <span>Website:</span>
-                        <a href="#">KyiMal</a>
+                        <span>Website : </span>
+                        <Link to={'/'} className={classes.link}>KyiMal</Link>
                       </p>
                     </div>
                   </div>

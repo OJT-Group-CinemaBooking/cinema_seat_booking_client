@@ -1,13 +1,16 @@
 import React, { useState } from 'react'
 import classes from './Theater.module.css'
 import { Button, Col, Container, Form, Row, Table } from 'react-bootstrap'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { createTheater } from '../../../slice/TheaterSlice'
 import SingleTheater from './SingleTheater'
-import { ArrowLeft } from 'react-bootstrap-icons'
+import { ArrowLeft, ChevronRight } from 'react-bootstrap-icons'
 import { useNavigate } from 'react-router-dom'
+import { getCinemaById } from '../../../slice/CinemaSlice'
 
-const Theater = ({theater,cinemaId}) => {
+const Theater = ({ cinemaId, theaterList }) => {
+  
+  const cinema = useSelector(state => getCinemaById(state,cinemaId))
 
   const [name, setName] = useState('')
   const [screen, setScreen] = useState('')
@@ -29,7 +32,8 @@ const Theater = ({theater,cinemaId}) => {
         theater : {
           name,
           screen
-        },cinemaId
+        },
+        cinemaId
       }
       dispatch(createTheater(data))
       setName('')
@@ -43,13 +47,15 @@ const Theater = ({theater,cinemaId}) => {
   }
 
   return (
-    <Container>
+    <Container className='min-vh-100'>
       <Row className={classes.back_arrow}>
-              <ArrowLeft color="#D4AF37" size={30} onClick={onHandleBackArrow}/>
+        <ArrowLeft color="#D4AF37" size={30} onClick={onHandleBackArrow}/>
       </Row>
       <Row xs={1} md={2} className="d-flex justify-content-evenly">
         <Col xs="7" className={classes.theater_table}>
-
+          <Row className='text-light'>
+            <h3>{cinema?.name} Cinema <ChevronRight /> Theater</h3>
+          </Row>
           <Row xs={1}>
             <Table className={classes.table}>
               <thead>
@@ -61,9 +67,9 @@ const Theater = ({theater,cinemaId}) => {
                 </tr>
               </thead>
               <tbody>
-                { theater.map((theater) => (
+                { theaterList.map((theater) => (
                   <SingleTheater 
-                  key={theater.id}
+                    key={theater.id}
                     theater={theater} 
                     cinemaId={cinemaId}
                   />
@@ -75,7 +81,7 @@ const Theater = ({theater,cinemaId}) => {
 
         <Col xs="4" className={classes.form_col}>
           <Form onSubmit={onSubmit} className={classes.form}>
-            <h3>NEW Theater</h3>
+            <h3>ADD THEATER</h3>
             <Form.Group>
               <Form.Label>Name *</Form.Label>
               <Form.Control

@@ -3,12 +3,13 @@ import { useNavigate } from 'react-router-dom'
 import { CameraReels, FileEarmarkXFill, PencilSquare } from 'react-bootstrap-icons'
 import { IMAGE_URL } from '../../config/baseURL'
 import ConfirmModal from '../../../components/ui/ConfirmModal'
-import { deleteCinema } from '../../../slice/CinemaSlice'
+import { deleteCinema, getCinemaStatus, setCinemaStatusToIdle } from '../../../slice/CinemaSlice'
 import { Image } from 'react-bootstrap'
-import { useDispatch } from 'react-redux'
-import { fetchTheaterByCinemaId } from '../../../slice/TheaterSlice'
+import { useDispatch, useSelector } from 'react-redux'
 
 const SingleCinema = ({ cinema }) => {
+
+  const status = useSelector(getCinemaStatus)
 
     const [ showModal, setShowModal ] = useState(false)
     const navigate = useNavigate()
@@ -26,12 +27,14 @@ const SingleCinema = ({ cinema }) => {
       }
     
       const onNavigateDetail = () => {
-        navigate(`/admin/cinema-detail/${cinema.id}`)
+        if(status === 'update_success') {
+          dispatch(setCinemaStatusToIdle())
+        }
+        navigate(`/admin/cinema/${cinema.id}/update`)
       }
       
     const navigateToTheater = () => {
-      navigate(`/admin/theater/${cinema.id}`)
-      dispatch(fetchTheaterByCinemaId(cinema.id))
+      navigate(`/admin/cinema/${cinema.id}/theater`)
     }
   return (
     <tr key={cinema.id}>

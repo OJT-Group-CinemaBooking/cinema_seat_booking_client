@@ -1,9 +1,18 @@
 .form{
-    width: 50rem;
+    width: 90%;
     margin-top: 2rem;
     margin-left: 2rem;
     color: whitesmoke;
     display: inline-block;
+}
+
+.flags_select button{
+    color: whitesmoke;
+    padding: 0;
+    display: flex;
+    justify-content: space-around;
+    border: 1px solid #D4AF37;
+    background: rgba(86, 101, 115, 0.2);
 }
 
 .form input,
@@ -32,7 +41,7 @@
     color: whitesmoke;
     border: 1px solid #D4AF37;
 }
-
+/* 
 @media (max-width: 1312px){
     .form{
         width: 45rem;
@@ -61,4 +70,4 @@
     .form{
         width: 32rem;
     }
-}
+} */

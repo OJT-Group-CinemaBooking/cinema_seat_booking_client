@@ -1,21 +1,44 @@
 import React, { useState } from 'react'
 import { Image } from 'react-bootstrap'
 import classes from './TwinSeat.module.css'
+import { addSelectedSeat, getAllBookSeatList, removeSelectedSeat } from '../../slice/BookSeatSlice'
+import { useDispatch, useSelector } from 'react-redux'
 
-const TwinSeat = () => {
-    const [selectSeat,setSelectSeat] = useState('./images/twin-seat.png')
-    const imageClick = () => {
-      console.log("image Click")
-      if(selectSeat === './images/twin-seat.png'){
-      setSelectSeat('./images/white-seat.png')
+const TwinSeat = ({ seat, seatName }) => {
+  
+  const bookSeatList = useSelector(getAllBookSeatList)
+
+  const bookSeat = bookSeatList.find(bs => bs.seat.id === seat.id)
+
+    const [ select, setSelect ] = useState(false)
+    
+    const dispatch = useDispatch()
+    
+    const twinSeat = `${process.env.PUBLIC_URL}/images/twin-seat.png`
+    const selectedSeat = `${process.env.PUBLIC_URL}/images/selected-seat.png`
+    const bookedSeatImage = `${process.env.PUBLIC_URL}/images/booked-seat.png`
+
+    const onSelect = () => {
+      if(select) {
+        setSelect(false)
+        dispatch(removeSelectedSeat(bookSeat.id))
+  
       }else{
-        setSelectSeat('./images/twin-seat.png')
+        setSelect(true)
+        setSelect(true)
+       dispatch(addSelectedSeat({
+        bookedSeatId : bookSeat.id,
+        name : seatName,
+        seatType : seat.type,
+        price : seat.price,
+       }))
       }
     }
+
     return (
-      <div onClick={imageClick} className={classes.seat}>
-         <Image src={selectSeat} alt='seat' />
-         <Image src={selectSeat} alt='seat' />
+      <div onClick={onSelect} className={classes.seat}>
+        <Image src={bookSeat.taken? bookedSeatImage : (!select? twinSeat : selectedSeat)} alt='seat' />
+        <Image src={bookSeat.taken? bookedSeatImage : (!select? twinSeat : selectedSeat)} alt='seat' />
       </div>
     )
 }

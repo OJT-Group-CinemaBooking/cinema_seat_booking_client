@@ -1,12 +1,15 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import classes from './TheaterDetail.module.css'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { updateTheater } from '../../../slice/TheaterSlice'
+import { getTheaterStatus, updateTheater } from '../../../slice/TheaterSlice'
 import { Button, Col, Container, Form, Row } from 'react-bootstrap'
 import { ArrowLeft } from 'react-bootstrap-icons'
+import InfoAlert from '../../../components/ui/InfoAlert'
 
 const TheaterDetail = ({theater,cinemaId}) => {
+
+  const status = useSelector(getTheaterStatus)
 
   const [name, setName] = useState(theater?.name)
   const [screen, setScreen] = useState(theater?.screen)
@@ -32,16 +35,34 @@ const TheaterDetail = ({theater,cinemaId}) => {
       }
       dispatch(updateTheater(data))
       setCanRequest(true)
-      navigate(`/admin/theater/${cinemaId}`)
     }
+  }
+  
+  const [ showAlert, setShowAlert ] = useState(false)
+
+  useEffect(() => {
+    if(status === 'update_success' || status === 'update_failed') {
+      setShowAlert(true)
+    }
+  },[status])
+  
+  const onHide = () => {
+    setShowAlert(false)
   }
 
   const onHandleBackArrow = () => {
-    navigate(`/admin/theater/${cinemaId}`)
+    navigate(`/admin/cinema/${cinemaId}/theater`)
   }
 
   return (
     <Container className='min-vh-100 px-5' fluid>
+      {
+        showAlert && <InfoAlert 
+          onHide={onHide}
+          variant={(status === 'update_success')? 'success' : 'danger'}
+          information={(status === 'update_success')? 'Successifully updated!' : 'Update Failed!'}
+        />
+      }
       <Row className={classes.back_arrow}>
               <ArrowLeft color="#D4AF37" size={30} onClick={onHandleBackArrow}/>
       </Row>
@@ -49,7 +70,7 @@ const TheaterDetail = ({theater,cinemaId}) => {
         
         <Col sm='4' className={classes.theater_update}>
         <Form onSubmit={onSubmit} className={classes.form}>
-            <h3>EDIT FORM</h3>
+            <h3>EDIT THEATER INFO</h3>
             <Form.Group>
               <Form.Label>Name *</Form.Label>
               <Form.Control

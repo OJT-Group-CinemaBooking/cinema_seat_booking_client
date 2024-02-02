@@ -1,22 +1,34 @@
 import React, { useState } from 'react'
-import { CalendarPlusFill, FileEarmarkXFill, PencilSquare } from 'react-bootstrap-icons'
+import { CalendarWeek, FileEarmarkXFill, PencilSquare } from 'react-bootstrap-icons'
 import ConfirmModal from '../../../components/ui/ConfirmModal'
 import { useNavigate } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
-import { deleteMovie } from '../../../slice/MovieSlice'
+import { useDispatch, useSelector } from 'react-redux'
+import { deleteMovie, getMovieStatus, setMovieStatusToIdle } from '../../../slice/MovieSlice'
+import { setShowTimeStatusToIdle } from '../../../slice/ShowTimeSlice'
 
 const SingleMovie = ({ movie }) => {
+
+    const movieStatus = useSelector(getMovieStatus)
+
     const [ showModal, setShowModal ] = useState(false)
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
     const onUpdate = () => {
-        navigate(`/admin/update-movie/${movie.id}`)
+        if(movieStatus === 'update_success') {
+            dispatch(setMovieStatusToIdle())
+        }
+        navigate(`/admin/movie/${movie.id}/update`)
     }
 
     const onDelete = () => {
         setShowModal(true)
+    }
+
+    const handleSchedule = () => {
+        dispatch(setShowTimeStatusToIdle())
+        navigate(`/admin/movie/${movie.id}/schedule`)
     }
 
     const onModalClose = () => {
@@ -34,10 +46,11 @@ const SingleMovie = ({ movie }) => {
         <td className={`text-${movie.showing? 'success' : 'secondary'}`}>{movie.showing ? 'SHOWING' : 'SHOW OFF'}</td>
         <td>
             <div className='w-100 d-flex justify-content-evenly'>
-                <CalendarPlusFill 
+                <CalendarWeek 
                     style={{cursor: 'pointer'}}
-                    color='gold' 
+                    color='rgb(127, 168, 184)' 
                     size={20} 
+                    onClick={handleSchedule}
                 />
                 <PencilSquare 
                     style={{cursor: 'pointer'}}
