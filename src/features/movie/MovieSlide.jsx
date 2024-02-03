@@ -4,7 +4,7 @@ import Movie from './Movie'
 import { Col, Row } from 'react-bootstrap'
 import { ArrowLeftShort, ArrowRightShort } from 'react-bootstrap-icons'
 
-const MovieSlide = ({ movie }) => {
+const MovieSlide = ({ movieList }) => {
 
     const [ showLeft, setShowLeft ] = useState(false)
 
@@ -31,16 +31,18 @@ const MovieSlide = ({ movie }) => {
         </div>
         <Col className={classes.card_container} ref={scrollRef}>
             <Row className={classes.card_wapper}>
-                {Array.from({ length: 7 }).map((_, idx) => (
-                <Movie key={idx}
+                {
+                    movieList.map(movie => 
+                    <Movie key={movie.id} 
+                    movieId={movie.id}
                     title={movie.title} 
                     releaseDate={movie.releaseDate} 
                     duration={movie.duration} 
-                    genere={movie.genere} 
-                    image={movie.image} 
+                    genere={movie.movieGenere.map(mg => mg.genere)} 
                     language={movie.language}
-                />
-                ))}
+                    />    
+                    )
+                }
             </Row>
         </Col>
         <div className={classes.slide_btn+' '+classes.slide_btn_right} onClick={onScrollRight}>

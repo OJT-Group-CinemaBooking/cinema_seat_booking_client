@@ -54,7 +54,11 @@ const Seat = ({ seat, seatName }) => {
 
   return (
     <>
-       <Image src={bookSeat.taken? bookedSeatImage : (!select? seatimage : selectedSeat)} onClick={onSelect} alt='seat' />
+      {
+        (!bookSeat.taken)? 
+        <Image src={!select? seatimage : selectedSeat} onClick={onSelect} alt='seat' /> : 
+        <Image src={bookedSeatImage} alt='seat' />
+      }
     </>
   )
 }

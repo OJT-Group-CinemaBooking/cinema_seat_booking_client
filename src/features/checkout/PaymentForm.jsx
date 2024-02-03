@@ -2,12 +2,14 @@ import React, { useState } from 'react'
 import { Button, Col, Form, InputGroup, Row } from 'react-bootstrap'
 import classes from './PaymentForm.module.css'
 import { CreditCard } from 'react-bootstrap-icons'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { createPayment } from '../../slice/PaymentSlice'
 import ReactFlagsSelect from 'react-flags-select'
+import { getAllSelectedSeatList } from '../../slice/BookSeatSlice'
 
 const PaymentForm = ({ handleCheckout }) => {
 
+  const selectedSeatList = useSelector(getAllSelectedSeatList)
   const currentYear = new Date().getFullYear()
 
   const [ street, setStreet ] = useState('')
@@ -32,7 +34,7 @@ const PaymentForm = ({ handleCheckout }) => {
 
   const dispatch = useDispatch()
 
-  const canCreate = [ street, country, city, zip, cardNumber, cardType, expiryMonth, expiryYear, canRequest ].every(Boolean)
+  const canCreate = [ street, country, city, zip, cardNumber, cardType, expiryMonth, expiryYear, cvv, canRequest ].every(Boolean)
 
   const onSubmit = (event) => {
     event.preventDefault()
@@ -55,7 +57,7 @@ const PaymentForm = ({ handleCheckout }) => {
   }
 
   return (
-    <Col xs='9' className='d-flex justify-content-center my-5'>
+    <Col xs='8' sm='9' className='d-flex justify-content-center'>
       <Form 
         onSubmit={onSubmit}
         className={classes.form}
@@ -185,7 +187,9 @@ const PaymentForm = ({ handleCheckout }) => {
       <Button 
       variant='success' 
       type="submit" 
-      disabled={!canCreate}
+      disabled={
+        (canCreate)? (selectedSeatList.length <= 0) : true
+      }
       >
       Checkout Now
       </Button>

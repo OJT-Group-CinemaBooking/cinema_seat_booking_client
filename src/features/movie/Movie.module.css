@@ -66,8 +66,9 @@
 }
 
 .hover_more_info{
-    margin-top: 6vw;
-    width: 100%;
+    position: absolute;
+    bottom: 1vw;
+    width: 87%;
     display: flex;
     justify-content: center;
 }

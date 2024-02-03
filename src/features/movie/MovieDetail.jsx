@@ -4,6 +4,7 @@ import { Col, Container, Image, Row } from "react-bootstrap";
 import MovieInformation from "./MovieInformation";
 import MovieShowTime from "./MovieShowTime";
 import { IMAGE_URL } from "../config/baseURL";
+import { ClockFill, GlobeCentralSouthAsia, StarFill } from "react-bootstrap-icons";
 
 const MovieDetail = ({ movie, cinemas }) => {
 
@@ -14,12 +15,15 @@ const MovieDetail = ({ movie, cinemas }) => {
   return (
     <Container fluid>
       <Row xs={1} className="d-flex justify-content-end">
-        <Col xs="12" className={classes.background}>
-          <Image
-            className={classes.background_image}
-            src={`${IMAGE_URL}/movie/${movie.id}B.jpg`}
-            alt="movie banner"
-          />
+        <Col xs="12" 
+        className={classes.background}
+        style={{
+          backgroundImage : `url(${IMAGE_URL}/movie/${movie.id}B.jpg)`,
+          backgroundSize : 'cover',
+          backgroundPosition : 'center',
+          backgroundAttachment : 'fixed',
+        }}
+        >
         </Col>
       </Row>
       <Row xs={1} className={classes.movie_container}>
@@ -30,10 +34,12 @@ const MovieDetail = ({ movie, cinemas }) => {
             alt="movie poster"
           />
         </Col>
-        <Col xs="4 offset-1">
-          <p className={classes.movie_release_date}>{movie.releaseDate}</p>
+        <Col xs="4 offset-1" className={classes.movie_info}>
+          <h6 className={classes.movie_release_date}>{movie.releaseDate}</h6>
           <h3 className={classes.movie_title}>{movie.title}</h3>
-          
+          <p> <ClockFill/> {movie.duration} - min</p>
+          <p> <GlobeCentralSouthAsia/> {movie.language}</p>
+          <p> <StarFill/> {movie.rating}</p>
         </Col>
       </Row>
       <Row xs={2} className={classes.btn_group}>

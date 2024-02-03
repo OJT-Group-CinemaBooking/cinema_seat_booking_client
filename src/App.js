@@ -50,7 +50,7 @@ function App() {
         <Route path="login" element={<LoginPage/>} />
         <Route path="sign-up" element={<SignUpPage/>} />
         <Route path="contact-us" element={<ContactUsPage />} />
-        <Route path="cinemas" element={<CinemasPage />} />
+        <Route path="cinema" element={<CinemasPage />} />
         <Route path="show-movie/:theaterId" element={<ShowTimeMovie />} />
       </Route>
 

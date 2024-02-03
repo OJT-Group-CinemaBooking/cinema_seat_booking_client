@@ -32,7 +32,7 @@ const Header = () => {
             <Link className={classes.nav_link} as={Link} to={"/movie"}>
               Movie
             </Link>
-            <Link className={classes.nav_link} as={Link} to={"/cinemas"}>
+            <Link className={classes.nav_link} as={Link} to={"/cinema"}>
               Cinemas
             </Link>
             <Link className={classes.nav_link} as={Link} to={"/contact-us"}>

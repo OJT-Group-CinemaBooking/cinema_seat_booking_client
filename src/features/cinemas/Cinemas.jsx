@@ -14,7 +14,6 @@ const Cinemas = ({ allCinema,alltheater }) => {
     const onNavigate = (theaterId) => {
         dispatch(fetchAllShowTimeByTheaterId(theaterId))
         navigate(`/show-movie/${theaterId}`)
-        console.log("onNavigate")
     }
         
   return (

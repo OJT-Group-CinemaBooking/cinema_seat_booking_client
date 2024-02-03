@@ -35,7 +35,7 @@ const BookSeatSlice = createSlice({
             state.selectedSeats = [...state.selectedSeats,action.payload]
         },
         removeSelectedSeat : (state,action) => {
-            state.selectedSeats = state.selectedSeats.filter(seat => seat.id !== action.payload)
+            state.selectedSeats = state.selectedSeats.filter(seat => seat.bookedSeatId !== action.payload)
         },
     },
     extraReducers(builder) {
