@@ -25,6 +25,7 @@ import MovieSchedule from "./features/admin/movie/MovieSchedule";
 import ConfirmationPage from "./page/ConfirmationPage";
 import CinemasPage from "./page/CinemasPage";
 import ShowTimeMovie from "./features/cinemas/ShowTimeMovie";
+import ProfilePage from "./page/ProfilePage";
 
 function App() {
   return (
@@ -32,6 +33,11 @@ function App() {
       {/* client view */}
       <Route path="/" element={<Layout/>}>
         <Route index element={<HomePage />} />
+
+        {/* for profile */}
+        <Route path="profile">
+          <Route index  element={<ProfilePage />} />
+        </Route>
 
         {/* for movie */}
         <Route path="movie" >
