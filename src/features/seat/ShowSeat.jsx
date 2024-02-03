@@ -130,6 +130,18 @@ const ShowSeat = ({ seatPatternList, theater }) => {
         {twinRows}
 
       <div className={classes.seat_types}>
+
+      <div className={classes.seat_type}>
+        <img src={`${process.env.PUBLIC_URL}/images/booked-seat.png`} alt="seat" />
+          <br />
+          Booked Seat
+      </div>
+
+      <div className={classes.seat_type}>
+        <img src={`${process.env.PUBLIC_URL}/images/selected-seat.png`} alt="seat" />
+          <br />
+          Selected Seat
+      </div>
         {
           uniqueTypeSeatPatternList.map(seatPattern => 
             <ShowSeatType 

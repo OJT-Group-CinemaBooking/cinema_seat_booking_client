@@ -217,3 +217,10 @@
         --fs-bookseat : 1.5vw;
     }
 }
+
+@media(max-width: 575px) {
+    .summary{
+        width: 90%;
+        margin-left: auto;
+    }
+}

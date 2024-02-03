@@ -22,6 +22,7 @@ const OrderSummary = ({ movie, theater, showTime, allCoupon }) => {
 
   const [ info, setInfo ] = useState('')
   const [ show, setShow ] = useState(false)
+  const [ open, setOpen ] = useState(false)
   const [ confirm, setConfirm ] = useState(false)
 
   const inputRef = useRef()
@@ -47,7 +48,7 @@ const OrderSummary = ({ movie, theater, showTime, allCoupon }) => {
         return
       }
       if(couponCode.userCount <= 0) {
-        setInfo('coupon is limited!')
+        setInfo('coupon is out of limit!')
         setShow(true)
         return
       }
@@ -73,8 +74,17 @@ const OrderSummary = ({ movie, theater, showTime, allCoupon }) => {
     setShow(false)
     if(couponStatus === 'use_success') {
       setConfirm(true)
+      setOpen(false)
     }
     dispatch(setCouponStatusToFetchSuccess())
+  }
+
+  const handleAccordion = () => {
+    if(open) {
+      setOpen(false)
+    }else{
+      setOpen(true)
+    }
   }
 
   const handleCheckout = () => {
@@ -87,7 +97,7 @@ const OrderSummary = ({ movie, theater, showTime, allCoupon }) => {
 
   return (
     <>
-    <Col xs='3' className={classes.summary_container}>
+    <Col xs='4' sm='3' className={classes.summary_container}>
       <InfoModal 
         show={show} 
         information={info} 
@@ -138,8 +148,8 @@ const OrderSummary = ({ movie, theater, showTime, allCoupon }) => {
 
           {
             selectedSeatList?.map(seat => 
-              <div key={seat.id} className={classes.bookseat}>
-                <p>{`${seat.name} - ${seat.type}`}</p> 
+              <div key={seat.name} className={classes.bookseat}>
+                <p>{`${seat.name} - ${seat.seatType}`}</p> 
                 <p>{`${seat.price} MMK`}</p>
               </div>
             )
@@ -166,9 +176,14 @@ const OrderSummary = ({ movie, theater, showTime, allCoupon }) => {
             }
           </div>
           
-          <Accordion className={classes.accordion}>
+          <Accordion activeKey={open && '0'} className={classes.accordion}>
             <Accordion.Item className={classes.accordion_item} eventKey="0">
-              <Accordion.Header className={classes.accordion_header}>Have a cupon code?</Accordion.Header>
+              <Accordion.Header 
+              className={classes.accordion_header} 
+              onClick={handleAccordion}
+              >
+                Use cupon code.
+              </Accordion.Header>
               <Accordion.Body className={classes.accordion_body}>
               <Form>
                 <Form.Control

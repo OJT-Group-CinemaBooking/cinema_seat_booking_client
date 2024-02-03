@@ -55,7 +55,7 @@ const PaymentForm = ({ handleCheckout }) => {
   }
 
   return (
-    <Col xs='9' className='d-flex justify-content-center my-5'>
+    <Col xs='8' sm='9' className='d-flex justify-content-center'>
       <Form 
         onSubmit={onSubmit}
         className={classes.form}

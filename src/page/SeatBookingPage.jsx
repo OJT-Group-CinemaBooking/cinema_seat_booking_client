@@ -80,7 +80,7 @@ const SeatBookingPage = () => {
   return (
     <Container fluid>
       <Row xs={1} sm={2} className='mt-3'>
-        <Col xs='12' sm='9'>
+        <Col xs='12' sm='9' className='mb-5'>
           {content}
         </Col>
         {orderSummary}

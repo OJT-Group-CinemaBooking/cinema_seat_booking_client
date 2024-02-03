@@ -5,20 +5,25 @@ import { Clock, Mic, PlayCircle, Tags } from 'react-bootstrap-icons'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { setShowTimeStatusToIdle } from '../../slice/ShowTimeSlice'
+import { IMAGE_URL } from '../config/baseURL'
 
-const Movie = ({ title, duration, releaseDate, image, genere, language }) => {
+const Movie = ({ movieId, title, duration, releaseDate, genere, language }) => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
   const onLookDetail = () => {
     dispatch(setShowTimeStatusToIdle())
-    navigate(`/movie/${1}/detail`)
+    navigate(`/movie/${movieId}/detail`)
   }
 
   return (
     <Col className='d-flex justify-content-center'>
         <Card className={classes.card}>
-            <Card.Img className={classes.card_image} variant="center" src={image} />
+            <Card.Img 
+            className={classes.card_image} 
+            variant="center" 
+            src={`${IMAGE_URL}/movie/${movieId}.jpg`} 
+            />
             <div className={classes.card_image_hover}>
               <div className={classes.card_play}>
                 <PlayCircle onClick={onLookDetail}/><p className={classes.card_play_title}>{title}</p>
