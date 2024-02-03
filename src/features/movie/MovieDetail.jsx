@@ -33,6 +33,7 @@ const MovieDetail = ({ movie, cinemas }) => {
         <Col xs="4 offset-1">
           <p className={classes.movie_release_date}>{movie.releaseDate}</p>
           <h3 className={classes.movie_title}>{movie.title}</h3>
+          
         </Col>
       </Row>
       <Row xs={2} className={classes.btn_group}>
@@ -57,7 +58,7 @@ const MovieDetail = ({ movie, cinemas }) => {
       </Row>
       <Row>
         {change === "information" && 
-          <MovieInformation movieCrew={movie.movieCrew} synopsis={movie.synopsis} />
+          <MovieInformation movieCrew={movie.movieCrew} synopsis={movie.synopsis} trailer={movie.trailer} />
         }
         {change === "showtime" && 
           <MovieShowTime movieId={movie.id} cinemas={cinemas} />
