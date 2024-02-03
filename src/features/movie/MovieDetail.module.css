@@ -56,3 +56,13 @@
 .active{
     color: #ffff;
 }
+
+.trailer{
+    position: relative;
+    width: 100%;
+}
+
+.trailer iframe{
+    position: absolute;
+    width: 100%;
+}
