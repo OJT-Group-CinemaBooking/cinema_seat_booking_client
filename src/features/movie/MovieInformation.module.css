@@ -13,3 +13,8 @@
     font-size: 1rem;
     color: #ffffff;
 }
+
+.trailer{
+    display: flex;
+    justify-content: center;
+}
