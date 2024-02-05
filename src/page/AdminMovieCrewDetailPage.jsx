@@ -20,13 +20,13 @@ const AdminMovieCrewDetailPage = () => {
     let content = ''
     if(status === 'loading') {
         content = (
-            <div className="w-100 mt-5 d-flex justify-content-center">
+        <div className="w-100 mt-5 d-flex justify-content-center">
             <Spinner animation="border" variant="secondary" />
         </div>
         )
     }
 
-    if(status.includes('_success')) {
+    if(status === 'success') {
         content = <MovieCrewDetail crew={crew}/>
     }
   return (
