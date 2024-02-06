@@ -9,11 +9,12 @@ import { getMovieById } from '../slice/MovieSlice'
 const AdminUpdateMovieFormPage = () => {
     const { movieId } = useParams()
     const movie = useSelector((state) => getMovieById(state, movieId))
-
+    
     const crewStatus = useSelector(getCrewStatus)
     const starrings = useSelector(getAllStarrings)
     const directors = useSelector(getAllDirectors)
     const dispatch = useDispatch()
+    
     useEffect( () => {
         if(crewStatus === 'idle') {
             dispatch(fetchAllCrew())
@@ -83,7 +84,7 @@ const AdminUpdateMovieFormPage = () => {
             </div>
         )
     }
-    if(crewStatus.includes('_success')) {
+    if(crewStatus === 'success') {
         content = <UpdateMovieForm movie={movie} existedGeneres={existedGeneres} existedCrews={existedCrews} generes={generes} starrings={starrings} directors={directors}/>
     }
   return (

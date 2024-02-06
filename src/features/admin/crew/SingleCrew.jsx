@@ -46,8 +46,10 @@ const SingleCrew = ({ crew, newCrew }) => {
 
 
   return (
-    <tr key={crew.id}>
-        <td className="ps-3">
+    <tr 
+    key={crew.id}
+    >
+        <td className="ps-3" >
             { showImg?
               <Image
               src={`${IMAGE_URL}/crew/${crew.id}.jpg`}

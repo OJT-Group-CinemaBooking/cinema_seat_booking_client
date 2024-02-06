@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import classes from "./MovieCrew.module.css";
 import { Button, Col, Container, Form, Image, InputGroup, Row, Table } from "react-bootstrap";
-import { Search } from "react-bootstrap-icons";
 import { useDispatch, useSelector } from "react-redux";
 import { createNewCrew, getCreatedCrew, getCrewCreateStatus, getCrewDeleteStatus, getCrewUpdateStatus, getUpdatedCrew, setCrewCreateStatusToIdle, setCrewDeleteStatusToIdle } from "../../../slice/CrewSlice";
 import SingleCrew from "./SingleCrew";
@@ -91,6 +90,13 @@ const MovieCrew = ({ crews }) => {
     }
   };
 
+  const handleChange = (event) => {
+    const enterValue = (event.target.value).toUpperCase()
+    setAllCrew(crews.filter(crew => 
+      (crew.name).toUpperCase().includes(enterValue)
+    ))
+  }
+
   return (
     <Container>
       <Row xs={1} md={2} className="d-flex justify-content-evenly">
@@ -104,11 +110,8 @@ const MovieCrew = ({ crews }) => {
               </Form.Select>
             </Col>
             <Form as={Col} xs="6">
-              <InputGroup size="sm">
-                <Form.Control type="search" placeholder="Enter Name" />
-                <Button variant="outline-secondary" id="button-addon">
-                  <Search size={20} />
-                </Button>
+              <InputGroup size="sm" className={classes.search}>
+                <Form.Control type="search" placeholder="Search With Name" onChange={handleChange} />
               </InputGroup>
             </Form>
           </Row>

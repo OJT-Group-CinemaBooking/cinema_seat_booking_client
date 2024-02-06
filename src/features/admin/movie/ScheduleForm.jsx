@@ -38,8 +38,7 @@ const ScheduleForm = ({ cinemaName, theater, showTimeList, movieId, movieTitle }
     if(canCreate) {
       const data = {
       showTime : {
-        showDate,
-        showTime
+        movieTime : `${showDate}T${showTime}`,
       },
       theaterId : theater.id,
       movieId
@@ -61,7 +60,9 @@ const ScheduleForm = ({ cinemaName, theater, showTimeList, movieId, movieTitle }
       <div className={classes.theater_body}>
           
         {
-          showTimeList.map(st => <MovieScheduleTime key={st.id} showTime={st}/>)
+          showTimeList
+          .sort((st1,st2) => new Date(st1.movieTime) - new Date(st2.movieTime))
+          .map(st => <MovieScheduleTime key={st.id} showTime={st}/>)
         }
         
         <div 
