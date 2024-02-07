@@ -8,6 +8,12 @@ import { Provider } from 'react-redux';
 import { store } from './store/store';
 import ScrollToTop from './components/layout/ScrollToTop';
 
+
+// const userId = localStorage.getItem('userId')
+// if(token && userId){
+//   store.dispatch(getUserWithRoles(userId))
+// }
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
