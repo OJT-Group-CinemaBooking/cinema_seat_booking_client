@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import ShowSeat from '../features/seat/ShowSeat'
 import OrderSummary from '../features/seat/OrderSummary'
 import { 
@@ -7,13 +7,14 @@ import {
   getSeatTypePatternStatus 
 } from '../slice/SeatSlice'
 import { useDispatch, useSelector } from 'react-redux'
-import { Col, Container, Row, Spinner } from 'react-bootstrap'
+import { Col, Container, Modal, Row, Spinner } from 'react-bootstrap'
 import { fetchAllTheater, getAllTheater, getTheaterStatus } from '../slice/TheaterSlice'
 import { fetchAllMovie, getMovieById, getMovieStatus } from '../slice/MovieSlice'
 import { fetchAllShowTimeByMovieId, getShowTimeById, getShowTimeStatus } from '../slice/ShowTimeSlice'
 import { fetchAllBookSeatByShowTimeId, getBookSeatStatus } from '../slice/BookSeatSlice'
 import { useParams } from 'react-router-dom'
 import { fetchAllCoupon, getAllCoupon, getCouponStatus } from '../slice/CouponSlice'
+import { getCheckoutStatus } from '../slice/CheckOutSlice'
 
 const SeatBookingPage = () => {
 
@@ -25,6 +26,7 @@ const SeatBookingPage = () => {
   const showTimeStatus = useSelector(getShowTimeStatus)
   const bookSeatStatus = useSelector(getBookSeatStatus)
   const couponStatus = useSelector(getCouponStatus)
+  const checkoutStatus = useSelector(getCheckoutStatus)
 
   const allSeatTypePattern = useSelector(getAllSeatTypePattern)
   const allTheater = useSelector(getAllTheater)
@@ -77,10 +79,32 @@ const SeatBookingPage = () => {
     content = <p>Failed! Try again.</p>
   }
 
+  const [show, setShow] = useState(false);
+
+  let modal = <>
+
+  <Modal
+    show={show}
+    backdrop="static"
+    keyboard={false}
+  >
+    <Modal.Body>
+      Loading... Please wait a moment.
+    </Modal.Body>
+  </Modal>
+</>
+
+  useEffect(() => {
+    if (checkoutStatus === 'loading') {
+      setShow(true);
+    }
+  }, [checkoutStatus])
+
   return (
     <Container fluid>
       <Row xs={1} sm={2} className='mt-3'>
         <Col xs='12' sm='9' className='mb-5'>
+          {modal}
           {content}
         </Col>
         {orderSummary}

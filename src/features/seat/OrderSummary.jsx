@@ -10,6 +10,7 @@ import InfoModal from '../../components/ui/InfoModal'
 import PaymentForm from '../checkout/PaymentForm'
 import { createCheckOut, getCheckoutStatus, getCheckoutTicket, setCheckoutStatusToIdle } from '../../slice/CheckOutSlice'
 import { useNavigate } from 'react-router-dom'
+import { setTicketStatusToIdle } from '../../slice/TicketSlice'
 
 const OrderSummary = ({ movie, theater, showTime, allCoupon }) => {
 
@@ -93,6 +94,7 @@ const OrderSummary = ({ movie, theater, showTime, allCoupon }) => {
       showtimeId : showTime.id,
       couponId : ((Object.keys(usedCoupon).length > 0)? usedCoupon.id : 0)
     }))
+    dispatch(setTicketStatusToIdle())
   }
 
   return (

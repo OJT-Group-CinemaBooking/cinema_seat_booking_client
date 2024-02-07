@@ -26,6 +26,7 @@ import ConfirmationPage from "./page/ConfirmationPage";
 import CinemasPage from "./page/CinemasPage";
 import ShowTimeMovie from "./features/cinemas/ShowTimeMovie";
 import ProfilePage from "./page/ProfilePage";
+import OTPForm from "./features/user/OTPForm";
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
       {/* client view */}
       <Route path="/" element={<Layout/>}>
         <Route index element={<HomePage />} />
+        <Route path="user/otp" element={<OTPForm/>} />
 
         {/* for profile */}
         <Route path="profile">
