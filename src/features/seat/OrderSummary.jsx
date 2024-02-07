@@ -11,11 +11,13 @@ import PaymentForm from '../checkout/PaymentForm'
 import { createCheckOut, getCheckoutStatus, getCheckoutTicket, setCheckoutStatusToIdle } from '../../slice/CheckOutSlice'
 import { useNavigate } from 'react-router-dom'
 import { setTicketStatusToIdle } from '../../slice/TicketSlice'
+import { getPaymentStatus, setPaymentStatusToIdle } from '../../slice/PaymentSlice'
 
 const OrderSummary = ({ movie, theater, showTime, allCoupon }) => {
 
   const couponStatus = useSelector(getCouponStatus)
   const checkoutStatus = useSelector(getCheckoutStatus)
+  const paymentStatus = useSelector(getPaymentStatus)
 
   const selectedSeatList = useSelector(getAllSelectedSeatList)
   const usedCoupon = useSelector(getCheckedCoupon)
@@ -32,13 +34,24 @@ const OrderSummary = ({ movie, theater, showTime, allCoupon }) => {
 
   useEffect(() => {
     if(checkoutStatus === 'create_success') {
+      dispatch(setTicketStatusToIdle())
       navigate(`/ticket/${checkoutTicket.id}`)
       dispatch(setCheckoutStatusToIdle())
     }
     if(checkoutStatus === 'create_failed') {
       console.log('failed to create ticket')
     }
-  })
+    if(paymentStatus === 'create_success'){
+      dispatch(createCheckOut({
+        boughtSeatList : selectedSeatList,
+        showtimeId : showTime.id,
+        couponId : ((Object.keys(usedCoupon).length > 0)? usedCoupon.id : 0)
+      }))
+      dispatch(setPaymentStatusToIdle())
+    }
+  },[paymentStatus,checkoutStatus,dispatch,checkoutTicket.id,navigate,selectedSeatList,showTime.id,usedCoupon])
+
+  console.log(paymentStatus)
 
   const handleUseCode = () => {
     const couponCode = allCoupon.find(cp => cp.couponCode === inputRef.current.value)
@@ -89,12 +102,7 @@ const OrderSummary = ({ movie, theater, showTime, allCoupon }) => {
   }
 
   const handleCheckout = () => {
-    dispatch(createCheckOut({
-      boughtSeatList : selectedSeatList,
-      showtimeId : showTime.id,
-      couponId : ((Object.keys(usedCoupon).length > 0)? usedCoupon.id : 0)
-    }))
-    dispatch(setTicketStatusToIdle())
+   
   }
 
   return (

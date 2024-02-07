@@ -56,8 +56,11 @@ const Confirmation = ({ ticket }) => {
                     </p>
                 </Col>
                 <Col className={classes.date_time}>
+                <p>
+                        {new Date(ticket.showTime.movieTime).toLocaleDateString()}
+                    </p>
                     <p>
-                        {ticket.showTime.showDate}
+                        {new Date(ticket.showTime.movieTime).toLocaleTimeString()}
                     </p>
                     <p style={{marginBottom : '1rem'}}>
                         {ticket.showTime.showTime}
