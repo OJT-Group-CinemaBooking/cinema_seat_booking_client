@@ -2,7 +2,7 @@ import React from 'react'
 import classes from './ShowTimeMovie.module.css'
 import { useDispatch, useSelector } from 'react-redux'
 import { Col, Container, Image, Row, Spinner } from 'react-bootstrap'
-import { getAllShowTime, getShowTimeStatus } from '../../slice/ShowTimeSlice'
+import { getAllShowTime, getShowTimeStatusByTheater } from '../../slice/ShowTimeSlice'
 import { getAllMovies } from '../../slice/MovieSlice'
 import { IMAGE_URL } from '../config/baseURL'
 import { ClockFill, GlobeCentralSouthAsia, StarFill } from 'react-bootstrap-icons'
@@ -15,7 +15,7 @@ const ShowTimeMovie = () => {
     const navigate = useNavigate()
 
     const showTimes = useSelector(getAllShowTime)
-    const showTimeStatus = useSelector(getShowTimeStatus)
+    const showTimeStatus = useSelector(getShowTimeStatusByTheater)
     const { theaterId } = useParams()
     const allMovie = useSelector(getAllMovies)
 
@@ -57,16 +57,30 @@ const ShowTimeMovie = () => {
                 </Col>
               </Row>
               <div className={classes.schedule_scroll}>
-              {[...new Set(showTimes.filter((st) => st.connectMovie === movie.id).map((st) => st.showDate))]
+              {[...new Set(showTimes
+              .filter((st) => st.connectMovie === movie.id)
+              .map((st) => new Date(st.movieTime).toLocaleDateString()))
+              .sort((date1,date2) => (new Date(date1) - new Date(date2)))
+              ]
               .map((showDate, index) => (
                 <div key={index} className={classes.schedule_item}>
                   <div className={classes.date}>{showDate}</div>
                   {
-                    showTimes.filter(st => st.showDate === showDate && st.connectMovie === movie.id).map( st => (
-                      <div key={st.id} className={classes.time} onClick={() => seatBookingHandler(st.id,movie.id)}>
-                        {st.showTime}
-                      </div>
-                    ))
+                    showTimes
+                    .filter(st => 
+                      new Date(st.movieTime).toLocaleDateString() === showDate && st.connectMovie === movie.id)
+                    .sort((st1,st2) => (new Date(st1) - new Date(st2)))
+                    .map( st => {
+                      if (new Date(st.movieTime) >= new Date()) {
+                        return <div key={st.id} className={classes.time} onClick={() => seatBookingHandler(st.id,movie.id)}>
+                          {new Date(st.movieTime).toLocaleTimeString()}
+                        </div>
+                      }else {
+                        return <div key={st.id} className={classes.time_over}>
+                          {new Date(st.movieTime).toLocaleTimeString()}
+                        </div>
+                      }
+                    })
                   }
                 </div>
               ))}

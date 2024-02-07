@@ -50,6 +50,7 @@ export const deleteShowtTime = createAsyncThunk('deleteShowtTime', async(showTim
 const initialState = {
     showTimes : [],
     status : 'idle',
+    statusByTheater : 'idle',
     error : null,
 }
 
@@ -83,7 +84,7 @@ const ShowTimeSlice = createSlice({
             state.error = action.error
         })
         .addCase(fetchAllShowTimeByTheaterId.pending, (state) => {
-            state.status = 'loading'
+            state.statusByTheater = 'loading'
         })
         .addCase(fetchAllShowTimeByTheaterId.fulfilled, (state,action) => {
             if(action.payload?.status) {
@@ -94,11 +95,11 @@ const ShowTimeSlice = createSlice({
                     return;
                 }
                 state.showTimes = data
-                state.status = 'fetch_success'
+                state.statusByTheater = 'fetch_success'
             }
         })
         .addCase(fetchAllShowTimeByTheaterId.rejected, (state,action) => {
-            state.status = 'fetch_failed'
+            state.statusByTheater = 'fetch_failed'
             state.error = action.error
         })
         .addCase(createNewShowTime.pending, (state) => {
@@ -140,6 +141,7 @@ const ShowTimeSlice = createSlice({
 export default ShowTimeSlice.reducer
 export const { setShowTimeStatusToIdle } = ShowTimeSlice.actions
 export const getShowTimeStatus = (state) => state.showtime.status
+export const getShowTimeStatusByTheater = (state) => state.showtime.statusByTheater
 export const getAllShowTime = (state) => state.showtime.showTimes
 export const getShowTimeById = (state,showTimeId) => 
     state.showtime.showTimes.find(st => st.id === showTimeId)
