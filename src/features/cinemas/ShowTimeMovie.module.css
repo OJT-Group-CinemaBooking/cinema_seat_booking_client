@@ -43,7 +43,8 @@
     background-color: rgba(243, 157, 18, 0.664);
 }
 
-.time{
+.time,
+.time_over{
     width: fit-content;
     height: fit-content;
     font-size: .7rem;
@@ -51,8 +52,14 @@
     margin: .4rem 0 .4rem .5rem;
     border: 1px solid whitesmoke;
     border-radius: 1rem;
+}
+
+.time{
     color: whitesmoke;
-    cursor: pointer;
+}
+
+.time_over{
+    color: rgba(133, 133, 133, 0.87);
 }
 
 .time:hover{
