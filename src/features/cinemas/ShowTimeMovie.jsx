@@ -57,11 +57,10 @@ const ShowTimeMovie = () => {
                 </Col>
               </Row>
               <div className={classes.schedule_scroll}>
-              {[...new Set(showTimes
+              { Array.from(new Set(showTimes
               .filter((st) => st.connectMovie === movie.id)
-              .map((st) => new Date(st.movieTime).toLocaleDateString()))
-              .sort((date1,date2) => (new Date(date1) - new Date(date2)))
-              ]
+              .sort((st1,st2) => (new Date(st1.movieTime) - new Date(st2.movieTime)))
+              .map((st) => new Date(st.movieTime).toLocaleDateString())))
               .map((showDate, index) => (
                 <div key={index} className={classes.schedule_item}>
                   <div className={classes.date}>{showDate}</div>
@@ -69,7 +68,7 @@ const ShowTimeMovie = () => {
                     showTimes
                     .filter(st => 
                       new Date(st.movieTime).toLocaleDateString() === showDate && st.connectMovie === movie.id)
-                    .sort((st1,st2) => (new Date(st1) - new Date(st2)))
+                    .sort((st1,st2) => (new Date(st1.movieTime) - new Date(st2.movieTime)))
                     .map( st => {
                       if (new Date(st.movieTime) >= new Date()) {
                         return <div key={st.id} className={classes.time} onClick={() => seatBookingHandler(st.id,movie.id)}>
