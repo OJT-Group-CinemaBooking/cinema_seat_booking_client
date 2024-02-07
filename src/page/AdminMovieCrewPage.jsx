@@ -26,11 +26,11 @@ const AdminMovieCrewPage = () => {
     )
   }
 
-  if(status.includes('_success')) {
-    content = <MovieCrew crews={allCrews}/>
+  if(status === ('success')) {
+    content = <MovieCrew crews={allCrews} />
   }
 
-  if(status === 'fetch_failed') {
+  if(status === 'failed') {
     content = <p>{error}</p>
   }
   

@@ -6,7 +6,7 @@ const TicketDetail = ({ ticketId, movieTitle, showTime, boughtSeats }) => {
 
     const navigate = useNavigate()
     const onCardClick = () => {
-        navigate(`ticket/${ticketId}`)
+        navigate(`/ticket/${ticketId}`)
     }
 
   return (

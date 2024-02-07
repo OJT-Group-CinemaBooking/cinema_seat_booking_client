@@ -28,9 +28,9 @@ export const createNewCrew = createAsyncThunk('createNewCrew', async(data) => {
                 "Content-Type" : "multipart/form-data"
             }
         })
-        if(uploadResponse.status !== 200) {console.log("failed to upload crew image")}
-    }else {
-        console.log("failed to create new crew")
+        if(uploadResponse.status !== 200){
+            console.log("failed to upload crew image")
+        }
     }
 
     return {
@@ -55,10 +55,7 @@ export const updateCrew = createAsyncThunk('updateCrew', async(data) => {
             })
             if(uploadResponse.status !== 200) {console.log("failed to upload crew image")}
         }
-    }else {
-        console.log("failed to update crew")
     }
-
     return {
         data : response.data,
         status : response.status
@@ -79,7 +76,12 @@ const initialState = {
     starrings : [],
     directors : [],
     status : 'idle',
+    createStatus : 'idle',
+    updateStatus : 'idle',
+    deleteStatus : 'idle',
     error : null,
+    createdCrew : {},
+    updatedCrew : {},
 }
 
 const CrewSlice = createSlice({
@@ -88,7 +90,19 @@ const CrewSlice = createSlice({
     reducers : {
         setCrewStatusToIdle : (state) => {
             state.status = 'idle'
-        }
+        },
+        setCrewStatusToSuccess : (state) => {
+            state.status = 'success'
+        },
+        setCrewCreateStatusToIdle : (state) => {
+            state.createStatus = 'idle'
+        },
+        setCrewUpdateStatusToIdle : (state) => {
+            state.updateStatus = 'idle'
+        },
+        setCrewDeleteStatusToIdle : (state) => {
+            state.deleteStatus = 'idle'
+        },
     },
     extraReducers(builder) {
         builder
@@ -104,15 +118,15 @@ const CrewSlice = createSlice({
                 state.crews = data;
                 state.starrings = state.crews.filter(c => c.role === 'Starring')
                 state.directors = state.crews.filter(c => c.role === 'Director')
-                state.status = 'fetch_success';
+                state.status = 'success';
             }
         })
         .addCase(fetchAllCrew.rejected, (state, action) => {
-            state.status = 'fetch_failed';
+            state.status = 'failed';
             state.error = action.error;
         })
         .addCase(createNewCrew.pending, (state) => {
-            state.status = 'loading';
+            state.createStatus = 'loading';
         })
         .addCase(createNewCrew.fulfilled, (state, action) => {
             if(action.payload?.status){
@@ -121,33 +135,36 @@ const CrewSlice = createSlice({
                     console.log("failed to create crew")
                 }
                 state.crews = [data, ...state.crews];
-                state.status = 'create_success';
+                state.createdCrew = data;
+                state.createStatus = 'success';
             }
         })
         .addCase(createNewCrew.rejected, (state,action) => {
-            state.status = 'create_failed';
+            state.createStatus = 'failed';
             state.error = action.error;
         })
         .addCase(updateCrew.pending, (state) => {
-            state.status = 'loading';
+            state.updateStatus = 'loading';
         })
         .addCase(updateCrew.fulfilled, (state, action) => {
             if(action.payload?.status){
                 const { data, status } = action.payload;
+                
                 if(status !== 200){
                     console.log("failed to create crew")
                 }
+                state.updatedCrew = data;
                 const crews = state.crews.filter(c => c.id !== data.id)
                 state.crews = [ data, ...crews ]
-                state.status = 'update_success';
+                state.updateStatus = 'success';
             }
         })
         .addCase(updateCrew.rejected, (state,action) => {
-            state.status = 'create_failed';
+            state.updateStatus = 'failed';
             state.error = action.error;
         })
         .addCase(deleteCrew.pending, (state) => {
-            state.status = 'loading';
+            state.deleteStatus = 'loading';
         })
         .addCase(deleteCrew.fulfilled, (state,action) => {
             if(action.payload?.status) {
@@ -156,11 +173,11 @@ const CrewSlice = createSlice({
                     console.log("failed to delete crew")
                 }
                 state.crews = state.crews.filter(crew => crew.id !== data)
-                state.status = 'delete_success'
+                state.deleteStatus = 'success'
             }
         })
         .addCase(deleteCrew.rejected, (state,action) => {
-            state.status = 'delete_failed';
+            state.deleteStatus = 'failed';
             state.error = action.error;
         })
     }
@@ -169,8 +186,19 @@ const CrewSlice = createSlice({
 export default CrewSlice.reducer
 export const getAllCrews = (state) => state.crew.crews
 export const getCrewStatus = (state) => state.crew.status
+export const getCrewCreateStatus = (state) => state.crew.createStatus
+export const getCrewUpdateStatus = (state) => state.crew.updateStatus
+export const getCrewDeleteStatus = (state) => state.crew.deleteStatus
 export const getError = (state) => state.crew.error
 export const getAllStarrings = (state) => state.crew.starrings
 export const getAllDirectors = (state) => state.crew.directors
+export const getCreatedCrew = (state) => state.crew.createdCrew
+export const getUpdatedCrew = (state) => state.crew.updatedCrew
 export const getCrewById = (state, crewId) => state.crew.crews.find((c) => c.id === Number(crewId))
-export const { setCrewStatusToIdle } = CrewSlice.actions
+export const { 
+    setCrewStatusToIdle, 
+    setCrewStatusToSuccess,
+    setCrewCreateStatusToIdle,
+    setCrewUpdateStatusToIdle,
+    setCrewDeleteStatusToIdle,
+} = CrewSlice.actions
