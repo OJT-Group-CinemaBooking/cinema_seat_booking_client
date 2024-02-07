@@ -15,17 +15,17 @@ const ConfirmModal = ({ onClose,onAction,title,body }) => {
 
   return (
     <Modal show={true} backdrop="static" className={classes.modal} keyboard={false}>
-      <Modal.Header>
+      <Modal.Header  closeButton onClick={onCancel} className={classes.header}>
         <Modal.Title>{ title }</Modal.Title>
       </Modal.Header>
-      <Modal.Body>
+      <Modal.Body className={classes.body}>
         { body }
       </Modal.Body>
-      <Modal.Footer>
+      <Modal.Footer className={classes.footer}>
         <Button variant="secondary" onClick={onCancel}>
           Cancel
         </Button>
-        <Button variant="primary" onClick={onOk}>Confirm</Button>
+        <Button variant="danger" onClick={onOk}>Delete</Button>
       </Modal.Footer>
     </Modal>
   );

@@ -8,6 +8,10 @@
     width: 0;
 }
 
+.search{
+    display: flex;
+}
+
 .crew_table input,
 .crew_table select{
     background-color: rgba(29, 43, 83, 0.3);

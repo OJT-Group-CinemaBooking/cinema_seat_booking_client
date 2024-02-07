@@ -51,14 +51,14 @@ const ComingSoonMovies = ({ comingSoonMoiveList }) => {
         <div className={classes.slide_list} ref={scrollRef}>
           {
             Array.from(releaseYears).map(year => 
-              <div key={year}>
-                <span className={classes.year}>{year}</span>
                 {
-                  releaseDates.filter(date => new Date(date).getFullYear() === year)
+                  return releaseDates.filter(date => new Date(date).getFullYear() === year)
                   .map(releaseDate => {
                     const date = new Date(releaseDate)
                     const month = monthNames[date.getMonth()]
-                    return <div key={date} 
+                    return <div key={date}>
+                    <span className={classes.year}>{year}</span>
+                    <div 
                     className={
                       `${classes.slide_item} 
                       ${(selectedMonth === `${month},${year}`) 
@@ -69,9 +69,9 @@ const ComingSoonMovies = ({ comingSoonMoiveList }) => {
                       month.substring(0,3)
                       }
                     </div>
+                  </div>
                   })
-                }
-              </div>  
+                }  
             )
           }
         </div>

@@ -1,6 +1,18 @@
 .modal > div > div{
-    background-color: #a71919;
+    background-color: #000000;
     border-radius: 0.3rem;
-    color: whitesmoke;
-    border: 1px solid whitesmoke;
+    color: rgb(219, 219, 219);
+    border: 1px solid rgba(109, 109, 109, 0.863);
+}
+
+.header{
+    border-bottom: thin solid rgba(109, 109, 109, 0.863);
+}
+
+.header > button{
+    background-color: rgb(219, 219, 219);
+}
+
+.footer{
+    border-top: none;
 }

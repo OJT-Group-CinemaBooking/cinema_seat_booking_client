@@ -11,14 +11,16 @@ const TheaterAccordion = ({ movieId, theater }) => {
   
   const allShowTime = useSelector(getAllShowTime)
 
-  const showTimes = allShowTime.filter(st => st.theater.id === theater.id && (new Date(st.showDate) >= new Date() ))
+  const showTimes = allShowTime.filter(st => 
+    st.theater.id === theater.id && (new Date(st.movieTime) >= new Date() ))
 
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
-  const uniqueShowTimeDates = new Set(showTimes.map( st => st.showDate))
+  const uniqueShowTimeDates = new Set(showTimes.map( st => 
+    new Date(st.movieTime).toLocaleDateString()))
 
-  const showTimeDates = [ ...uniqueShowTimeDates ]
+  const showTimeDates = [ ...uniqueShowTimeDates ].sort((date1,date2) => (new Date(date1) - new Date(date2)))
 
   const seatBookingHandler = (showTimeId) => {
     dispatch(emptySelectedSeats())
@@ -39,9 +41,13 @@ const TheaterAccordion = ({ movieId, theater }) => {
                 <div key={index} className={classes.schedule_item}>
                   <div className={classes.date}>{showDate}</div>
                   {
-                    showTimes.filter(st => st.showDate === showDate).map( st => (
+                    showTimes.filter(st => 
+                      new Date(st.movieTime).toLocaleString().includes(showDate)
+                      )
+                      .sort((st1,st2) => new Date(st1.movieTime) - new Date(st2.movieTime))
+                      .map( st => (
                       <div key={st.id} className={classes.time} onClick={() => seatBookingHandler(st.id)}>
-                        {st.showTime}
+                        {new Date(st.movieTime).toLocaleTimeString()}
                       </div>
                     ))
                   }
