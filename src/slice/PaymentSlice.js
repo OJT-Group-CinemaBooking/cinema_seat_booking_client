@@ -32,6 +32,9 @@ const PaymentSlice = createSlice({
             state.status = 'idle'
             state.payment = {}
         },
+        setPaymentStatusToIdle : (state) => {
+            state.status = 'idle'
+        },
     },
     extraReducers(builder) {
         builder
@@ -57,4 +60,4 @@ const PaymentSlice = createSlice({
 export default PaymentSlice.reducer
 export const getPaymentStatus = (state) => state.payment.status
 export const getPayment = (state) => state.payment.payment
-export const { emptyPayment } = PaymentSlice.actions
+export const { emptyPayment,setPaymentStatusToIdle } = PaymentSlice.actions
