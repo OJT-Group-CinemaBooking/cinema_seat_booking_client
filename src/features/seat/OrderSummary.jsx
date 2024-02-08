@@ -39,7 +39,7 @@ const OrderSummary = ({ movie, theater, showTime, allCoupon }) => {
       dispatch(setCheckoutStatusToIdle())
     }
     if(checkoutStatus === 'create_failed') {
-      console.log('failed to create ticket')
+      console.log('failed to create ticket',{replace : true})
     }
     if(paymentStatus === 'create_success'){
       dispatch(createCheckOut({
