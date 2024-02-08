@@ -26,36 +26,40 @@ import ConfirmationPage from "./page/ConfirmationPage";
 import CinemasPage from "./page/CinemasPage";
 import ShowTimeMovie from "./features/cinemas/ShowTimeMovie";
 import ProfilePage from "./page/ProfilePage";
+import ProtectedRoute from "./features/auth/ProtectedRoute";
 
 function App() {
   return (
     <Routes>
-      {/* client view */}
+      {/* client view */}{/** Public Route */}
       <Route path="/" element={<Layout/>}>
-        <Route index element={<HomePage />} />
-
-        {/* for profile */}
-        <Route path="profile">
-          <Route index  element={<ProfilePage />} />
-        </Route>
-
-        {/* for movie */}
-        <Route path="movie" >
-          <Route index element={<MoviePage/>} />
-          <Route path=":movieId/detail" element={<MovieDetailPage/>}/>
-          <Route path=":movieId/theater/:theaterId/show-time/:showTimeId/seat" element={<SeatBookingPage/>} />
-        </Route>
-
-        <Route path="ticket/:ticketId" element={<ConfirmationPage/>}/>
+        <Route index element={<HomePage/>} />
         <Route path="login" element={<LoginPage/>} />
         <Route path="sign-up" element={<SignUpPage/>} />
         <Route path="contact-us" element={<ContactUsPage />} />
         <Route path="cinema" element={<CinemasPage />} />
         <Route path="show-movie/:theaterId" element={<ShowTimeMovie />} />
+
+        {/* for movie */}
+        <Route path="movie" >
+          <Route index element={<MoviePage/>} />
+          <Route path=":movieId/detail" element={<MovieDetailPage/>}/>
+        </Route>
+
+        {/** USER_ROLE */}
+        <Route path="user" element={<ProtectedRoute allowedRoles={['ROLE_USER']} />}>
+          <Route path="movie/:movieId/theater/:theaterId/show-time/:showTimeId/seat" element={<SeatBookingPage/>} />
+          <Route path="ticket/:ticketId" element={<ConfirmationPage/>}/>
+          {/* for profile */}
+          <Route path="profile">
+            <Route index  element={<ProfilePage />} />
+          </Route>
+        </Route>
       </Route>
 
       {/* admin pannel */}
-      <Route path="/admin" element={<AdminLayout/>}>
+      <Route path="/admin" element={<ProtectedRoute allowedRoles={['ROLE_ADMIN']}/>} >
+      <Route path="dashboard" element={<AdminLayout/>}>
 
         {/* for movie */}
         <Route path="movie">
@@ -87,6 +91,8 @@ function App() {
         </Route>
         <Route path="coupon" element={<AdminCouponPage/>} />
       </Route>
+      </Route>
+
     </Routes>
   );
 }

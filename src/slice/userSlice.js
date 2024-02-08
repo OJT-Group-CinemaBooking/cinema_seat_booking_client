@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { USER_URL } from "../features/config/baseURL";
 import axios from "axios";
+import { token } from "../features/auth/getToken";
 
 export const registerNewUser = createAsyncThunk(
   "registerNewUser",
@@ -8,6 +9,7 @@ export const registerNewUser = createAsyncThunk(
     const response = await axios.post(`${USER_URL}/create`, user, {
       headers: {
         "Content-Type": "application/json",
+        Authorization : token
       },
     });
     return {
@@ -27,6 +29,7 @@ export const fetchAllUsers = createAsyncThunk("fetchAllUsers", async () => {
 
 const initialState = {
   users: [],
+  createStatus: "idle",
   status: "idle",
   error: null,
 };
@@ -42,7 +45,7 @@ const userSlice = createSlice({
   extraReducers(builder) {
     builder
       .addCase(registerNewUser.pending, (state) => {
-        state.status = "loading";
+        state.createStatus = "loading";
       })
       .addCase(registerNewUser.fulfilled, (state, action) => {
         if (action.payload?.status) {
@@ -54,11 +57,11 @@ const userSlice = createSlice({
             return;
           }
           state.users = [data, ...state.users];
-          state.status = "register_success";
+          state.createStatus = "success";
         }
       })
       .addCase(registerNewUser.rejected, (state, action) => {
-        state.status = "register_failed";
+        state.createStatus = "failed";
         state.error = action.error;
       })
       .addCase(fetchAllUsers.pending, (state) => {
@@ -85,4 +88,5 @@ const userSlice = createSlice({
 export default userSlice.reducer;
 export const getAllUsers = (state) => state.user.users;
 export const getStatus = (state) => state.user.status;
+export const getCreateStatus = (state) => state.user.createStatus
 export const getUserError = (state) => state.user.error;

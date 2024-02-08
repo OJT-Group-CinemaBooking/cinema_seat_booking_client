@@ -40,7 +40,7 @@ const Header = () => {
             </Link>
           </Nav>
           <Nav>
-            <Link className={classes.person} as={Link} to={"/profile"}>
+            <Link className={classes.person} as={Link} to={"/user/profile"}>
               <PersonCircle />
             </Link>
           </Nav>

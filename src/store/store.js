@@ -10,6 +10,7 @@ import ShowTimeSlice from "../slice/ShowTimeSlice"
 import BookSeatSlice from "../slice/BookSeatSlice"
 import PaymentSlice from "../slice/PaymentSlice"
 import CheckOutSlice from "../slice/CheckOutSlice"
+import authSlice from "../features/auth/authSlice"
 
 export const store = configureStore({
     reducer : {
@@ -24,5 +25,6 @@ export const store = configureStore({
         coupon : CouponSlice,
         payment : PaymentSlice,
         checkout : CheckOutSlice,
+        auth : authSlice
     }
 })
