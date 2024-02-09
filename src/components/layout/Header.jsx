@@ -48,7 +48,7 @@ const Header = () => {
             </Link>
           </Nav>
           <Nav>
-            { (loginStatus === 'success') ?
+             { (loginStatus === 'success') ?
             <Dropdown>
             <Dropdown.Toggle className={classes.person} variant="secondary" id="dropdown-basic">
               <PersonCircle />
@@ -62,8 +62,8 @@ const Header = () => {
             :
             <Link className={classes.person} as={Link} to={"/login"}>
             <PersonCircle />
-          </Link>
-            }
+          </Link> }
+           
             
           </Nav>
         </Navbar.Collapse>

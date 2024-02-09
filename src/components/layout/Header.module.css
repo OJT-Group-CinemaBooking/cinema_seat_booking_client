@@ -60,6 +60,10 @@
     background-color: transparent;
 }
 
+.person::after{
+    content: none;
+}
+
 .buger_btn{
     background-color: rgb(202, 207, 210);
 }
