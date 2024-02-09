@@ -7,7 +7,7 @@ import { createPayment } from '../../slice/PaymentSlice'
 import ReactFlagsSelect from 'react-flags-select'
 import { getAllSelectedSeatList } from '../../slice/BookSeatSlice'
 
-const PaymentForm = ({ handleCheckout }) => {
+const PaymentForm = () => {
 
   const selectedSeatList = useSelector(getAllSelectedSeatList)
   const currentYear = new Date().getFullYear()
@@ -53,7 +53,6 @@ const PaymentForm = ({ handleCheckout }) => {
     
     dispatch(createPayment(payment))
     setCanRequest(true)
-    handleCheckout()
   }
 
   return (

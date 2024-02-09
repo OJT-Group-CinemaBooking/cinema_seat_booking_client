@@ -12,7 +12,7 @@ const ProtectedRoute = ({ allowedRoles }) => {
         status === 'success' ?
            roles.find(role => allowedRoles.includes(role)) ? 
            <Outlet />
-           : <Navigate to='/user/unauthorized' state={{ from : location}} replace={true} />
+           : <Navigate to='/unauthorized' state={{ from : location}} replace={true} />
         : <Navigate to='/login' state={{ from : location}} replace={true} />
   )
 }

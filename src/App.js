@@ -28,6 +28,7 @@ import ShowTimeMovie from "./features/cinemas/ShowTimeMovie";
 import ProfilePage from "./page/ProfilePage";
 import OTPForm from "./features/user/OTPForm";
 import ProtectedRoute from "./features/auth/ProtectedRoute";
+import UnAuthorize from "./features/auth/UnAuthorize";
 
 function App() {
   return (
@@ -93,6 +94,10 @@ function App() {
         </Route>
         <Route path="coupon" element={<AdminCouponPage/>} />
       </Route>
+      </Route>
+
+      <Route path="/unauthorized" element={<ProtectedRoute allowedRoles={['ROLE_USER','ROLE_ADMIN']} />} >
+        <Route index element={<UnAuthorize />} />
       </Route>
 
     </Routes>
