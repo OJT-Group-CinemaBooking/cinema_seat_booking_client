@@ -7,6 +7,8 @@ const CREATE_URL = `${CREW_URL}/create`
 const UPDATE_URL = `${CREW_URL}/update`
 const UPLOAD_URL = `${IMAGE_URL}/upload/crew`
 
+const token = localStorage.getItem('token')
+
 export const fetchAllCrew = createAsyncThunk('fetchAllCrew', async() => {
     const response = await axios.get(FETCH_URL)
 
@@ -19,7 +21,8 @@ export const fetchAllCrew = createAsyncThunk('fetchAllCrew', async() => {
 export const createNewCrew = createAsyncThunk('createNewCrew', async(data) => {
     const response = await axios.post(CREATE_URL, data.crew, {
         headers : {
-            "Content-Type" : "application/json"
+            "Content-Type" : "application/json",
+            Authorization : token
         }
     })
     if(response.status === 200) {
@@ -43,7 +46,8 @@ export const createNewCrew = createAsyncThunk('createNewCrew', async(data) => {
 export const updateCrew = createAsyncThunk('updateCrew', async(data) => {
     const response = await axios.put(UPDATE_URL, data.crew, {
         headers : {
-            "Content-Type" : "application/json"
+            "Content-Type" : "application/json",
+            Authorization : token
         }
     })
     if(response.status === 200) {
@@ -63,7 +67,11 @@ export const updateCrew = createAsyncThunk('updateCrew', async(data) => {
 })
 
 export const deleteCrew = createAsyncThunk('deleteCrew', async(crewId) => {
-    const response = await axios.delete(`${CREW_URL}/${crewId}/delete`)
+    const response = await axios.delete(`${CREW_URL}/${crewId}/delete`,{
+        headers : {
+            Authorization : token
+        }
+    })
 
     return {
         data : response.data,

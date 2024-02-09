@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import classes from "./MovieCrew.module.css";
 import { Button, Col, Container, Form, Image, InputGroup, Row, Table } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { createNewCrew, getCreatedCrew, getCrewCreateStatus, getCrewDeleteStatus, getCrewUpdateStatus, getUpdatedCrew, setCrewCreateStatusToIdle, setCrewDeleteStatusToIdle } from "../../../slice/CrewSlice";
+import { createNewCrew, getCreatedCrew, getCrewCreateStatus, getCrewDeleteStatus, getCrewUpdateStatus, getUpdatedCrew, setCrewCreateStatusToIdle, setCrewDeleteStatusToIdle, setCrewUpdateStatusToIdle } from "../../../slice/CrewSlice";
 import SingleCrew from "./SingleCrew";
 
 const MovieCrew = ({ crews }) => {
@@ -29,6 +29,7 @@ const MovieCrew = ({ crews }) => {
     if(updateStatus === 'success') {
       setAllCrew(crews)
       setNewCrew(updatedCrew)
+      dispatch(setCrewUpdateStatusToIdle())
     }
   },[allCrew,dispatch,createStatus,crews,newCrew,createdCrew,updateStatus,updatedCrew,deleteStatus])
 
