@@ -4,7 +4,11 @@ import { Col, Container, Row } from 'react-bootstrap'
 import NowShowingMovies from './NowShowingMovies'
 import ComingSoonMovies from './ComingSoonMovies'
 
-const ShowMoviePage = () => {
+const ShowMoviePage = ({ allMovie }) => {
+
+  const nowShowingMoiveList = allMovie.filter(movie => movie.nowShowing)
+  const comingSoonMoiveList = allMovie.filter(movie => movie.comingSoon)
+
   const [ show, setShow ] = useState('now')
   const onSearchWith = (search) => {
     setShow(search)
@@ -24,8 +28,8 @@ const ShowMoviePage = () => {
         </Row>
         <Row xs={1} className='mt-4'>
           <Col>
-            {(show === 'now') && <NowShowingMovies/>}
-            {(show === 'soon') && <ComingSoonMovies/>}
+            {(show === 'now') && <NowShowingMovies nowShowingMoiveList={nowShowingMoiveList} />}
+            {(show === 'soon') && <ComingSoonMovies comingSoonMoiveList={comingSoonMoiveList} />}
           </Col>
         </Row>
     </Container>

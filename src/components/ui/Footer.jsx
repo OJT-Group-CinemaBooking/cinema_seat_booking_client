@@ -36,7 +36,7 @@ export default function Footer() {
                 </Link>
               </p>
               <p>
-                <Link to={'/'} className='text-reset'>
+                <Link to={'/cinema'} className='text-reset'>
                   Cinema
                 </Link>
               </p>

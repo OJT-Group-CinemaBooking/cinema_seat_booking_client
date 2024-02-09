@@ -4,57 +4,25 @@ import classes from './ComingSoonMovies.module.css'
 import { ArrowLeftCircle, ArrowRightCircle } from 'react-bootstrap-icons'
 import MonthlyMovies from './MonthlyMovies'
 
-const ComingSoonMovies = () => {
-  const months = [
-    {
-      id: 1,
-      name: 'January'
-    },
-    {
-      id: 2,
-      name: 'Fabruary'
-    },
-    {
-      id: 3,
-      name: 'March'
-    },
-    {
-      id: 4,
-      name: 'April'
-    },
-    {
-      id: 5,
-      name: 'May'
-    },
-    {
-      id: 6,
-      name: 'June'
-    },
-    {
-      id: 7,
-      name: 'July'
-    },
-    {
-      id: 8,
-      name: 'August'
-    },
-    {
-      id: 9,
-      name: 'September'
-    },
-    {
-      id: 10,
-      name: 'October'
-    },
-    {
-      id: 11,
-      name: 'November'
-    },
-    {
-      id: 12,
-      name: 'December'
-    },
+const ComingSoonMovies = ({ comingSoonMoiveList }) => {
+  const monthNames = [
+    'January',
+    'Fabruary',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December'
   ]
+
+  const releaseYears = new Set(comingSoonMoiveList.map(movie => new Date(movie.releaseDate).getFullYear()))
+  
+  const releaseDates = comingSoonMoiveList.map(movie => movie.releaseDate)
 
   const [ selectedMonth, setSelectedMonth ] = useState(' ')
   
@@ -68,8 +36,8 @@ const ComingSoonMovies = () => {
       scrollRef.current.scrollLeft += 100;
   }
 
-  const onMonthBtnClick = (name) => {
-    setSelectedMonth(name)
+  const onMonthBtnClick = (releaseDate) => {
+    setSelectedMonth(releaseDate)
   }
   
   return (
@@ -82,11 +50,29 @@ const ComingSoonMovies = () => {
         </div>
         <div className={classes.slide_list} ref={scrollRef}>
           {
-            months.map(month => 
-            <div key={month.id} className={`${classes.slide_item} ${(selectedMonth === month.name) && classes.active}`} 
-              onClick={() => {onMonthBtnClick(month.name)}} >
-              {(month.name).substring(0,3)}
-            </div>)
+            Array.from(releaseYears).map(year => 
+                {
+                  return releaseDates.filter(date => new Date(date).getFullYear() === year)
+                  .map(releaseDate => {
+                    const date = new Date(releaseDate)
+                    const month = monthNames[date.getMonth()]
+                    return <div key={date}>
+                    <span className={classes.year}>{year}</span>
+                    <div 
+                    className={
+                      `${classes.slide_item} 
+                      ${(selectedMonth === `${month},${year}`) 
+                      && classes.active}`
+                    } 
+                      onClick={() => {onMonthBtnClick(`${month},${year}`)}} >
+                      {
+                      month.substring(0,3)
+                      }
+                    </div>
+                  </div>
+                  })
+                }  
+            )
           }
         </div>
         <div className={classes.slide_btn+' '+classes.slide_btn_right}>
@@ -97,7 +83,28 @@ const ComingSoonMovies = () => {
     {/* slide */}
     <Container fluid>
       {
-        months.map( month => <MonthlyMovies key={month.id} month={month.name} selected={selectedMonth}/>)
+        Array.from(releaseYears).map( 
+          year => {
+          const dates = releaseDates.filter(date => new Date(date).getFullYear() === year)
+          const months = new Set(dates.map(date => new Date(date).getMonth()))
+          return Array.from(months).map(
+            monthIndex => 
+            {
+              const movies = comingSoonMoiveList.filter(
+                movie => 
+                new Date(movie.releaseDate).getFullYear() === year && 
+                new Date(movie.releaseDate).getMonth() === monthIndex
+              )
+              const month = monthNames[monthIndex]
+              return <MonthlyMovies 
+              key={`${month},${year}`} 
+              movies={movies}
+              year={year}
+              month={month} 
+              selected={selectedMonth}/>
+            }
+          )
+        })
       }
     </Container>
     </>

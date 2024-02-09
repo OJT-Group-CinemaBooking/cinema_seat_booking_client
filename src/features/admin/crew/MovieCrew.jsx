@@ -1,16 +1,42 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import classes from "./MovieCrew.module.css";
 import { Button, Col, Container, Form, Image, InputGroup, Row, Table } from "react-bootstrap";
-import { Search } from "react-bootstrap-icons";
 import { useDispatch, useSelector } from "react-redux";
-import { createNewCrew, getAllDirectors, getAllStarrings, setCrewStatusToIdle } from "../../../slice/CrewSlice";
+import { createNewCrew, getCreatedCrew, getCrewCreateStatus, getCrewDeleteStatus, getCrewUpdateStatus, getUpdatedCrew, setCrewCreateStatusToIdle, setCrewDeleteStatusToIdle, setCrewUpdateStatusToIdle } from "../../../slice/CrewSlice";
 import SingleCrew from "./SingleCrew";
 
 const MovieCrew = ({ crews }) => {
-  const starrings = useSelector(getAllStarrings)
-  const directors = useSelector(getAllDirectors)
+
+  const createStatus = useSelector(getCrewCreateStatus)
+  const updateStatus = useSelector(getCrewUpdateStatus)
+  const deleteStatus = useSelector(getCrewDeleteStatus)
+  const createdCrew = useSelector(getCreatedCrew)
+  const updatedCrew = useSelector(getUpdatedCrew)
   const dispatch = useDispatch();
   const [ allCrew, setAllCrew ] = useState(crews)
+  const [ newCrew, setNewCrew ] = useState({})
+
+  useEffect(() => {
+    if(createStatus === 'success') {
+      setAllCrew(crews)
+      setNewCrew(createdCrew)
+      dispatch(setCrewCreateStatusToIdle())
+    }
+    if(deleteStatus === 'success') {
+      setAllCrew(crews)
+      dispatch(setCrewDeleteStatusToIdle())
+    }
+    if(updateStatus === 'success') {
+      setAllCrew(crews)
+      setNewCrew(updatedCrew)
+      dispatch(setCrewUpdateStatusToIdle())
+    }
+  },[allCrew,dispatch,createStatus,crews,newCrew,createdCrew,updateStatus,updatedCrew,deleteStatus])
+
+  const [file, setFile] = useState(null)
+  const [name, setName] = useState("");
+  const [role, setRole] = useState("Starring");
+  const [canRequest, setCanRequest] = useState(true);
 
   const onSelectRole = (e) => {
     switch (e.target.value) {
@@ -18,21 +44,16 @@ const MovieCrew = ({ crews }) => {
         setAllCrew(crews)
         break;
       case 'starring':
-        setAllCrew(starrings)
+        setAllCrew(crews.filter(c => c.role === 'Starring'))
         break;
       case 'director':
-        setAllCrew(directors)
+        setAllCrew(crews.filter(c => c.role === 'Director'))
         break;
       default:
         setAllCrew(crews)
         break;
     }
   }
-
-  const [file, setFile] = useState(null)
-  const [name, setName] = useState("");
-  const [role, setRole] = useState("Starring");
-  const [canRequest, setCanRequest] = useState(true);
 
   const onNameChange = (e) => setName(e.target.value.toUpperCase())
   const onRoleChange = (e) => setRole(e.target.value)
@@ -63,12 +84,19 @@ const MovieCrew = ({ crews }) => {
         formData
       }
       dispatch(createNewCrew(data));
-      dispatch(setCrewStatusToIdle())
       setName("")
-      setRole("")
+      setRole("Starring")
+      setFile('')
       setCanRequest(true);
     }
   };
+
+  const handleChange = (event) => {
+    const enterValue = (event.target.value).toUpperCase()
+    setAllCrew(crews.filter(crew => 
+      (crew.name).toUpperCase().includes(enterValue)
+    ))
+  }
 
   return (
     <Container>
@@ -83,11 +111,8 @@ const MovieCrew = ({ crews }) => {
               </Form.Select>
             </Col>
             <Form as={Col} xs="6">
-              <InputGroup size="sm">
-                <Form.Control type="search" placeholder="Enter Name" />
-                <Button variant="outline-secondary" id="button-addon">
-                  <Search size={20} />
-                </Button>
+              <InputGroup size="sm" className={classes.search}>
+                <Form.Control type="search" placeholder="Search With Name" onChange={handleChange} />
               </InputGroup>
             </Form>
           </Row>
@@ -105,8 +130,9 @@ const MovieCrew = ({ crews }) => {
               <tbody>
                 { allCrew.map((crew) => 
                   <SingleCrew 
-                    key={crew.id}
-                    crew={crew}
+                    key={crew.id} 
+                    crew={crew} 
+                    newCrew={newCrew}
                   />
                 )}
               </tbody>
@@ -142,6 +168,7 @@ const MovieCrew = ({ crews }) => {
               <Form.Label>Name *</Form.Label>
               <Form.Control
                 type="text"
+                value={name}
                 onChange={onNameChange}
                 placeholder="Enter Name..."
                 required

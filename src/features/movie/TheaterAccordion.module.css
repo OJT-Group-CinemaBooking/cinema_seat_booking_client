@@ -2,6 +2,11 @@
 
 }
 
+.accordion_header button::after{
+    border-radius: .2rem;
+    background-color: rgb(243, 156, 18);
+}
+
 .accordion_item{
     background-color: rgba(39, 55, 70, 0.5);
 }

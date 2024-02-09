@@ -4,10 +4,13 @@ import axios from "axios";
 
 const CREATE_URL = `${PAYMENT_URL}/create`
 
+const token = localStorage.getItem('token')
+
 export const createPayment = createAsyncThunk('createPayment', async(payment) => {
     const response = await axios.post(CREATE_URL,payment,{
         headers:{
-            'Content-Type' : 'application/json'
+            'Content-Type' : 'application/json',
+            Authorization : token
         }
     })
 
@@ -31,6 +34,9 @@ const PaymentSlice = createSlice({
         emptyPayment : (state) => {
             state.status = 'idle'
             state.payment = {}
+        },
+        setPaymentStatusToIdle : (state) => {
+            state.status = 'idle'
         },
     },
     extraReducers(builder) {
@@ -57,4 +63,4 @@ const PaymentSlice = createSlice({
 export default PaymentSlice.reducer
 export const getPaymentStatus = (state) => state.payment.status
 export const getPayment = (state) => state.payment.payment
-export const { emptyPayment } = PaymentSlice.actions
+export const { emptyPayment,setPaymentStatusToIdle } = PaymentSlice.actions

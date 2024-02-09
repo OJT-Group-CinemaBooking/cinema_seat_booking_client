@@ -50,10 +50,18 @@
 .person{
     font-size: x-large;
     color: rgb(202, 207, 210);
+    border: none;
+    background-color: transparent;
 }
 
 .person:hover{
     color: white;
+    border: none;
+    background-color: transparent;
+}
+
+.person::after{
+    content: none;
 }
 
 .buger_btn{

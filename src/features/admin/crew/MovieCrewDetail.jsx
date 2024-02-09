@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react'
 import classes from './MovieCrewDetail.module.css'
-import { Button, Col, Container, Form, Image, Row, Spinner } from 'react-bootstrap'
+import { Button, Col, Container, Form, Image, Row } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux';
-import { getCrewStatus, updateCrew } from '../../../slice/CrewSlice';
+import { getCrewUpdateStatus, setCrewUpdateStatusToIdle, updateCrew } from '../../../slice/CrewSlice';
 import InfoAlert from '../../../components/ui/InfoAlert';
 import { IMAGE_URL } from '../../config/baseURL';
 import { ArrowLeft } from 'react-bootstrap-icons';
@@ -10,7 +10,7 @@ import { useNavigate } from 'react-router-dom';
 
 const MovieCrewDetail = ({ crew }) => {
 
-  const status = useSelector(getCrewStatus)
+  const status = useSelector(getCrewUpdateStatus)
 
   const [name, setName] = useState(crew?.name);
   const [role, setRole] = useState(crew?.role);
@@ -50,13 +50,14 @@ const MovieCrewDetail = ({ crew }) => {
       }
       dispatch(updateCrew(data))
       setCanRequest(true);
+      dispatch(setCrewUpdateStatusToIdle())
     }
   };
 
   const [ showAlert, setShowAlert ] = useState(false)
 
     useEffect(() => {
-      if(status === 'update_success' || status === 'update_failed') {
+      if(status === 'success' || status === 'failed') {
           setShowAlert(true)
       }
     },[status])
@@ -66,27 +67,20 @@ const MovieCrewDetail = ({ crew }) => {
     }
 
     const onHandleBackArrow = () => {
-      navigate('/admin/crew')
+      navigate('/admin/dashboard/crew')
     }
 
   return (
-    <>
-    {status === 'loading' && 
-      <div className="w-100 mt-5 d-flex justify-content-center">
-        <Spinner animation="border" variant="secondary" />
-      </div>
-    }
-    {status.includes('_success') && 
     <Container className='min-vh-100 px-5' fluid>
       {
         showAlert && <InfoAlert 
           onHide={onHide}
-          variant={(status === 'update_success')? 'success' : 'danger'}
-          information={(status === 'update_success')? 'Successifully updated!' : 'Update Failed!'}
+          variant={(status === 'success')? 'success' : 'danger'}
+          information={(status === 'success')? 'Successifully updated!' : 'Update Failed!'}
         />
       }
       <Row className={classes.back_arrow}>
-            <ArrowLeft color="#D4AF37" size={30} onClick={onHandleBackArrow}/>
+        <ArrowLeft color="#D4AF37" size={30} onClick={onHandleBackArrow}/>
       </Row>
       <Row className='d-flex justify-content-evenly py-5'>
       <Form onSubmit={onSubmit} className={classes.form}>
@@ -140,8 +134,6 @@ const MovieCrewDetail = ({ crew }) => {
         </Form>
       </Row>
     </Container>
-    }
-    </>
   )
 }
 

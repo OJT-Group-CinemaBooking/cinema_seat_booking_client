@@ -10,11 +10,18 @@ import InfoModal from '../../components/ui/InfoModal'
 import PaymentForm from '../checkout/PaymentForm'
 import { createCheckOut, getCheckoutStatus, getCheckoutTicket, setCheckoutStatusToIdle } from '../../slice/CheckOutSlice'
 import { useNavigate } from 'react-router-dom'
+import { setTicketStatusToIdle } from '../../slice/TicketSlice'
+import { getPaymentStatus, setPaymentStatusToIdle } from '../../slice/PaymentSlice'
+import { getUser } from '../auth/authSlice'
 
 const OrderSummary = ({ movie, theater, showTime, allCoupon }) => {
 
+  const user = useSelector(getUser)
+  const userCouponIds = user.userCupons.map(uc => uc.id)
+
   const couponStatus = useSelector(getCouponStatus)
   const checkoutStatus = useSelector(getCheckoutStatus)
+  const paymentStatus = useSelector(getPaymentStatus)
 
   const selectedSeatList = useSelector(getAllSelectedSeatList)
   const usedCoupon = useSelector(getCheckedCoupon)
@@ -22,6 +29,7 @@ const OrderSummary = ({ movie, theater, showTime, allCoupon }) => {
 
   const [ info, setInfo ] = useState('')
   const [ show, setShow ] = useState(false)
+  const [ open, setOpen ] = useState(false)
   const [ confirm, setConfirm ] = useState(false)
 
   const inputRef = useRef()
@@ -30,13 +38,22 @@ const OrderSummary = ({ movie, theater, showTime, allCoupon }) => {
 
   useEffect(() => {
     if(checkoutStatus === 'create_success') {
-      navigate(`/ticket/${checkoutTicket.id}`)
+      dispatch(setTicketStatusToIdle())
+      navigate(`/user/ticket/${checkoutTicket.id}`,{replace : true})
       dispatch(setCheckoutStatusToIdle())
     }
     if(checkoutStatus === 'create_failed') {
       console.log('failed to create ticket')
     }
-  })
+    if(paymentStatus === 'create_success'){
+      dispatch(createCheckOut({
+        boughtSeatList : selectedSeatList,
+        showtimeId : showTime.id,
+        couponId : ((Object.keys(usedCoupon).length > 0)? usedCoupon.id : 0)
+      }))
+      dispatch(setPaymentStatusToIdle())
+    }
+  },[paymentStatus,checkoutStatus,dispatch,checkoutTicket.id,navigate,selectedSeatList,showTime.id,usedCoupon])
 
   const handleUseCode = () => {
     const couponCode = allCoupon.find(cp => cp.couponCode === inputRef.current.value)
@@ -47,20 +64,17 @@ const OrderSummary = ({ movie, theater, showTime, allCoupon }) => {
         return
       }
       if(couponCode.userCount <= 0) {
-        setInfo('coupon is limited!')
+        setInfo('coupon is out of limit!')
         setShow(true)
         return
       }
-      if(couponCode?.userCoupons.some(uc => uc.id === 1)/** user.userCoupon.id */) { // DUMMY DATA 
+      if(couponCode?.userCoupons.some(uc => userCouponIds.includes(uc.id))) { 
         setInfo('already used!')
         setShow(true)
         return
       }
-      const data = {
-        couponId : couponCode.id,
-        userId : 1                                    // DUMMY DATA
-      }
-      dispatch(submitCoupon(data))
+
+      dispatch(submitCoupon(couponCode.id))
       setInfo(`you get ${couponCode.discount}MK discount.`)
       setShow(true)
     }else{
@@ -73,21 +87,22 @@ const OrderSummary = ({ movie, theater, showTime, allCoupon }) => {
     setShow(false)
     if(couponStatus === 'use_success') {
       setConfirm(true)
+      setOpen(false)
     }
     dispatch(setCouponStatusToFetchSuccess())
   }
 
-  const handleCheckout = () => {
-    dispatch(createCheckOut({
-      boughtSeatList : selectedSeatList,
-      showtimeId : showTime.id,
-      couponId : ((Object.keys(usedCoupon).length > 0)? usedCoupon.id : 0)
-    }))
+  const handleAccordion = () => {
+    if(open) {
+      setOpen(false)
+    }else{
+      setOpen(true)
+    }
   }
 
   return (
     <>
-    <Col xs='3' className={classes.summary_container}>
+    <Col xs='4' sm='3' className={classes.summary_container}>
       <InfoModal 
         show={show} 
         information={info} 
@@ -138,8 +153,8 @@ const OrderSummary = ({ movie, theater, showTime, allCoupon }) => {
 
           {
             selectedSeatList?.map(seat => 
-              <div key={seat.id} className={classes.bookseat}>
-                <p>{`${seat.name} - ${seat.type}`}</p> 
+              <div key={seat.name} className={classes.bookseat}>
+                <p>{`${seat.name} - ${seat.seatType}`}</p> 
                 <p>{`${seat.price} MMK`}</p>
               </div>
             )
@@ -166,9 +181,14 @@ const OrderSummary = ({ movie, theater, showTime, allCoupon }) => {
             }
           </div>
           
-          <Accordion className={classes.accordion}>
+          <Accordion activeKey={open && '0'} className={classes.accordion}>
             <Accordion.Item className={classes.accordion_item} eventKey="0">
-              <Accordion.Header className={classes.accordion_header}>Have a cupon code?</Accordion.Header>
+              <Accordion.Header 
+              className={classes.accordion_header} 
+              onClick={handleAccordion}
+              >
+                Use cupon code.
+              </Accordion.Header>
               <Accordion.Body className={classes.accordion_body}>
               <Form>
                 <Form.Control
@@ -192,7 +212,7 @@ const OrderSummary = ({ movie, theater, showTime, allCoupon }) => {
         </div>
       </div>
     </Col>
-    <PaymentForm handleCheckout={handleCheckout} />
+    <PaymentForm />
     </>
   )
 }

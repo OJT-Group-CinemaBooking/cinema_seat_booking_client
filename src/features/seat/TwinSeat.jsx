@@ -36,10 +36,19 @@ const TwinSeat = ({ seat, seatName }) => {
     }
 
     return (
-      <div onClick={onSelect} className={classes.seat}>
-        <Image src={bookSeat.taken? bookedSeatImage : (!select? twinSeat : selectedSeat)} alt='seat' />
-        <Image src={bookSeat.taken? bookedSeatImage : (!select? twinSeat : selectedSeat)} alt='seat' />
-      </div>
+      <>
+        {
+          (!bookSeat.taken)? 
+          <div onClick={onSelect} className={classes.seat}>
+            <Image src={!select? twinSeat : selectedSeat} alt='seat' />
+            <Image src={!select? twinSeat : selectedSeat} alt='seat' />
+          </div> : 
+          <div className={classes.seat}>
+            <Image src={bookedSeatImage} alt='seat' />
+            <Image src={bookedSeatImage} alt='seat' />
+          </div>
+        }
+      </>
     )
 }
 

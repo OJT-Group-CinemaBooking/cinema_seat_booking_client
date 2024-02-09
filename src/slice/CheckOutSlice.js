@@ -2,11 +2,14 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { BOOK_SEAT_URL } from "../features/config/baseURL";
 
+const token = localStorage.getItem('token')
+
 export const createCheckOut = createAsyncThunk('createCheckOut', async(data) => {
     
     const response = await axios.post(`${BOOK_SEAT_URL}/booked/${data.showtimeId}/${data.couponId}`, data.boughtSeatList, {
         headers : {
-            'Content-Type' : 'application/json'
+            'Content-Type' : 'application/json',
+            Authorization : token
         }
     })
     return {

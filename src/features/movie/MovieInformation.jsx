@@ -8,7 +8,6 @@ const MovieInformation = ({ movieCrew, synopsis ,trailer}) => {
 
   const starrings = movieCrew.filter(mc => mc.crew.role === 'Starring')
   const directors = movieCrew.filter(mc => mc.crew.role === 'Director')
-  console.log(typeof(trailer))
 
   const html = trailer
   const element = HTMLReactParser(html)
