@@ -37,6 +37,7 @@ function App() {
         <Route index element={<HomePage/>} />
         <Route path="login" element={<LoginPage/>} />
         <Route path="sign-up" element={<SignUpPage/>} />
+        <Route path="otp" element={<OTPForm />} />
         <Route path="contact-us" element={<ContactUsPage />} />
         <Route path="cinema" element={<CinemasPage />} />
         <Route path="show-movie/:theaterId" element={<ShowTimeMovie />} />
@@ -55,7 +56,6 @@ function App() {
           <Route path="profile">
             <Route index  element={<ProfilePage />} />
           </Route>
-          <Route path="otp" element={<OTPForm />} />
         </Route>
       </Route>
 

@@ -29,6 +29,7 @@ export const fetchAllUsers = createAsyncThunk("fetchAllUsers", async () => {
 
 const initialState = {
   users: [],
+  createdUser : {},
   createStatus: "idle",
   status: "idle",
   error: null,
@@ -38,8 +39,8 @@ const userSlice = createSlice({
   name: "userSlice",
   initialState,
   reducers: {
-    setUserStatusToIdle: (state) => {
-      state.status = "idle";
+    setUserCreateStatusToIdle: (state) => {
+      state.createStatus = "idle";
     },
   },
   extraReducers(builder) {
@@ -50,12 +51,13 @@ const userSlice = createSlice({
       .addCase(registerNewUser.fulfilled, (state, action) => {
         if (action.payload?.status) {
           const { data, status } = action.payload;
-          if (status !== 201) {
+          if (status !== 200) {
             console.log(
               `Failed to register new user with status code = ${status}`
             );
             return;
           }
+          state.createdUser = data
           state.users = [data, ...state.users];
           state.createStatus = "success";
         }
@@ -87,6 +89,8 @@ const userSlice = createSlice({
 
 export default userSlice.reducer;
 export const getAllUsers = (state) => state.user.users;
+export const getCreatedUser = (state) => state.user.createdUser
 export const getStatus = (state) => state.user.status;
 export const getCreateStatus = (state) => state.user.createStatus
 export const getUserError = (state) => state.user.error;
+export const { setUserCreateStatusToIdle } =  userSlice.actions

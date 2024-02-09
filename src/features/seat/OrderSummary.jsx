@@ -51,8 +51,6 @@ const OrderSummary = ({ movie, theater, showTime, allCoupon }) => {
     }
   },[paymentStatus,checkoutStatus,dispatch,checkoutTicket.id,navigate,selectedSeatList,showTime.id,usedCoupon])
 
-  console.log(paymentStatus)
-
   const handleUseCode = () => {
     const couponCode = allCoupon.find(cp => cp.couponCode === inputRef.current.value)
     if(couponCode !== undefined) {

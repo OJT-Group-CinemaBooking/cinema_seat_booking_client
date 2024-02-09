@@ -5,6 +5,7 @@ import { Eye, EyeSlash, PersonCircle } from 'react-bootstrap-icons'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { getCreateStatus, registerNewUser } from '../../slice/userSlice'
+import DelayModal from '../../components/ui/DelayModal'
 
 const SignUp = () => {
 
@@ -12,6 +13,9 @@ const SignUp = () => {
 
   const navigate = useNavigate()
   const dispatch = useDispatch()
+
+  const [ show, setShow ] = useState(false)
+  const [ failed, setFailed ] = useState(false)
 
   const [firstname,setFirstName] = useState("")
   const [lastname,setLastName] = useState("")
@@ -25,10 +29,17 @@ const SignUp = () => {
   const [eyeChange,setEyeChange] = useState(<Eye/>)
 
   useEffect(() => {
-    if(status === 'success') {
-      navigate('/user/otp', {replace : true})
+    if(status === 'loading') {
+      setShow(true)
     }
-  })
+    if(status === 'success') {
+      navigate('/otp', {replace : true})
+    }
+    if(status === 'failed') {
+      setShow(false)
+      setFailed(true)
+    }
+  },[status, navigate])
 
   const onFirstnameInputChange = (e) => { setFirstName(e.target.value) }
   const onLastnameInputChange = (e) => { setLastName(e.target.value) }
@@ -79,6 +90,11 @@ const SignUp = () => {
   }
 
   return (
+    <>
+    <DelayModal 
+    show={show} 
+    message={'Sending Mail.Please Wait..'}
+    />
     <div className={classes.signup}>
     
       <div className={`${classes.signup_card} bg-light`}>
@@ -101,6 +117,12 @@ const SignUp = () => {
               <Form.Group>
                 <Form.Label>Username</Form.Label>
                 <Form.Control type='text' placeholder='Username' onChange={onUserNameInputChange}/>
+                {
+                  failed && 
+                  <p className='text-danger text-bold p-0 m-0 '>
+                    username or email already exist!
+                  </p>
+                }
               </Form.Group>
               <Form.Group>
                 <Form.Label>Email</Form.Label>
@@ -115,7 +137,7 @@ const SignUp = () => {
                 </InputGroup>
               </Form.Group>
               
-              <Button type='submit' disabled={!canLogin}>Login</Button>
+              <Button type='submit' disabled={!canLogin}>Sign up</Button>
               <Form.Group className="mt-1" controlId="formBasicCheckbox">
                 <p>
                   Already have an account?
@@ -130,6 +152,7 @@ const SignUp = () => {
 
       </div>
     </div>
+    </>
   )
 }
 

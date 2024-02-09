@@ -45,6 +45,9 @@ const authSlice = createSlice({
             state.roles = []
             state.user = {}
             localStorage.clear()
+        },
+        setLoginStatusToIdle : (state) => {
+            state.status = 'idle'
         }
     },
     extraReducers(builder){
@@ -76,7 +79,7 @@ const authSlice = createSlice({
 })
 
 export default authSlice.reducer
-export const { logout } = authSlice.actions
 export const getRoles = state => state.auth.roles
 export const getLoginStatus = state => state.auth.status
 export const getUser = state => state.auth.user
+export const { logout, setLoginStatusToIdle } = authSlice.actions

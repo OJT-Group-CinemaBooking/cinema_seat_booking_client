@@ -1,8 +1,14 @@
 import React from "react";
 import { Button, Card, Col } from "react-bootstrap";
 import classes from "./UserDetail.module.css";
+import { useDispatch } from "react-redux";
+import { logout } from "../auth/authSlice";
 
 const UserDetail = () => {
+  const dispatch = useDispatch()
+  const handleLogout = () => {
+    dispatch(logout())
+  }
   return (
     <Col className="m-3 mx-auto" md={5}>
       <Card style={{ borderRadius: "20%" }}>
@@ -74,6 +80,7 @@ const UserDetail = () => {
               <span>Email: </span>
               Hnin@gmail.com
             </p>
+            <Button onClick={handleLogout}>Logout</Button>
           </div>
         </div>
       </Card>
