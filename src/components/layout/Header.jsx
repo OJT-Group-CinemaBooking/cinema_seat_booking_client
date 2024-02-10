@@ -1,9 +1,17 @@
 import classes from "./Header.module.css";
-import { Container, Image, Nav, Navbar } from "react-bootstrap";
+import { Container, Dropdown, Image, Nav, Navbar } from "react-bootstrap";
 import { PersonCircle } from "react-bootstrap-icons";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { getLoginStatus, logout } from "../../features/auth/authSlice";
 
 const Header = () => {
+
+  const dispatch = useDispatch()
+  const loginStatus = useSelector(getLoginStatus)
+  const handleLogout = () => {
+    dispatch(logout())
+  }
   return (
     <Navbar
       collapseOnSelect
@@ -40,9 +48,23 @@ const Header = () => {
             </Link>
           </Nav>
           <Nav>
-            <Link className={classes.person} as={Link} to={"/profile"}>
+             { (loginStatus === 'success') ?
+            <Dropdown>
+            <Dropdown.Toggle className={classes.person} variant="secondary" id="dropdown-basic">
               <PersonCircle />
-            </Link>
+            </Dropdown.Toggle>
+
+            <Dropdown.Menu>
+              <Dropdown.Item as={Link} to={"/user/profile"}>Profile</Dropdown.Item>
+              <Dropdown.Item onClick={handleLogout}>Logout</Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown> 
+            :
+            <Link className={classes.person} as={Link} to={"/login"}>
+            <PersonCircle />
+          </Link> }
+           
+            
           </Nav>
         </Navbar.Collapse>
       </Container>

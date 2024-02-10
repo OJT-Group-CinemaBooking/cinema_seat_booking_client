@@ -25,7 +25,7 @@ const TheaterAccordion = ({ movieId, theater }) => {
   const seatBookingHandler = (showTimeId) => {
     dispatch(emptySelectedSeats())
     dispatch(setBookSeatStatusToIdle())
-    navigate(`/movie/${movieId}/theater/${theater.id}/show-time/${showTimeId}/seat`)
+    navigate(`/user/movie/${movieId}/theater/${theater.id}/show-time/${showTimeId}/seat`)
   }
 
   return (

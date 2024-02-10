@@ -27,37 +27,42 @@ import CinemasPage from "./page/CinemasPage";
 import ShowTimeMovie from "./features/cinemas/ShowTimeMovie";
 import ProfilePage from "./page/ProfilePage";
 import OTPForm from "./features/user/OTPForm";
+import ProtectedRoute from "./features/auth/ProtectedRoute";
+import UnAuthorize from "./features/auth/UnAuthorize";
 
 function App() {
   return (
     <Routes>
-      {/* client view */}
+      {/* client view */}{/** Public Route */}
       <Route path="/" element={<Layout/>}>
-        <Route index element={<HomePage />} />
-        <Route path="user/otp" element={<OTPForm/>} />
-
-        {/* for profile */}
-        <Route path="profile">
-          <Route index  element={<ProfilePage />} />
-        </Route>
+        <Route index element={<HomePage/>} />
+        <Route path="login" element={<LoginPage/>} />
+        <Route path="sign-up" element={<SignUpPage/>} />
+        <Route path="otp" element={<OTPForm />} />
+        <Route path="contact-us" element={<ContactUsPage />} />
+        <Route path="cinema" element={<CinemasPage />} />
+        <Route path="show-movie/:theaterId" element={<ShowTimeMovie />} />
 
         {/* for movie */}
         <Route path="movie" >
           <Route index element={<MoviePage/>} />
           <Route path=":movieId/detail" element={<MovieDetailPage/>}/>
-          <Route path=":movieId/theater/:theaterId/show-time/:showTimeId/seat" element={<SeatBookingPage/>} />
         </Route>
 
-        <Route path="ticket/:ticketId" element={<ConfirmationPage/>}/>
-        <Route path="login" element={<LoginPage/>} />
-        <Route path="sign-up" element={<SignUpPage/>} />
-        <Route path="contact-us" element={<ContactUsPage />} />
-        <Route path="cinema" element={<CinemasPage />} />
-        <Route path="show-movie/:theaterId" element={<ShowTimeMovie />} />
+        {/** USER_ROLE */}
+        <Route path="user" element={<ProtectedRoute allowedRoles={['ROLE_USER']} />}>
+          <Route path="movie/:movieId/theater/:theaterId/show-time/:showTimeId/seat" element={<SeatBookingPage/>} />
+          <Route path="ticket/:ticketId" element={<ConfirmationPage/>}/>
+          {/* for profile */}
+          <Route path="profile">
+            <Route index  element={<ProfilePage />} />
+          </Route>
+        </Route>
       </Route>
 
       {/* admin pannel */}
-      <Route path="/admin" element={<AdminLayout/>}>
+      <Route path="/admin" element={<ProtectedRoute allowedRoles={['ROLE_ADMIN']}/>} >
+      <Route path="dashboard" element={<AdminLayout/>}>
 
         {/* for movie */}
         <Route path="movie">
@@ -89,6 +94,12 @@ function App() {
         </Route>
         <Route path="coupon" element={<AdminCouponPage/>} />
       </Route>
+      </Route>
+
+      <Route path="/unauthorized" element={<ProtectedRoute allowedRoles={['ROLE_USER','ROLE_ADMIN']} />} >
+        <Route index element={<UnAuthorize />} />
+      </Route>
+
     </Routes>
   );
 }

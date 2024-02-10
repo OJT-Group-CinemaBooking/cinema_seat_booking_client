@@ -12,8 +12,12 @@ import { createCheckOut, getCheckoutStatus, getCheckoutTicket, setCheckoutStatus
 import { useNavigate } from 'react-router-dom'
 import { setTicketStatusToIdle } from '../../slice/TicketSlice'
 import { getPaymentStatus, setPaymentStatusToIdle } from '../../slice/PaymentSlice'
+import { getUser } from '../auth/authSlice'
 
 const OrderSummary = ({ movie, theater, showTime, allCoupon }) => {
+
+  const user = useSelector(getUser)
+  const userCouponIds = user.userCupons.map(uc => uc.id)
 
   const couponStatus = useSelector(getCouponStatus)
   const checkoutStatus = useSelector(getCheckoutStatus)
@@ -35,7 +39,7 @@ const OrderSummary = ({ movie, theater, showTime, allCoupon }) => {
   useEffect(() => {
     if(checkoutStatus === 'create_success') {
       dispatch(setTicketStatusToIdle())
-      navigate(`/ticket/${checkoutTicket.id}`)
+      navigate(`/user/ticket/${checkoutTicket.id}`,{replace : true})
       dispatch(setCheckoutStatusToIdle())
     }
     if(checkoutStatus === 'create_failed') {
@@ -51,8 +55,6 @@ const OrderSummary = ({ movie, theater, showTime, allCoupon }) => {
     }
   },[paymentStatus,checkoutStatus,dispatch,checkoutTicket.id,navigate,selectedSeatList,showTime.id,usedCoupon])
 
-  console.log(paymentStatus)
-
   const handleUseCode = () => {
     const couponCode = allCoupon.find(cp => cp.couponCode === inputRef.current.value)
     if(couponCode !== undefined) {
@@ -66,16 +68,13 @@ const OrderSummary = ({ movie, theater, showTime, allCoupon }) => {
         setShow(true)
         return
       }
-      if(couponCode?.userCoupons.some(uc => uc.id === 1)/** user.userCoupon.id */) { // DUMMY DATA 
+      if(couponCode?.userCoupons.some(uc => userCouponIds.includes(uc.id))) { 
         setInfo('already used!')
         setShow(true)
         return
       }
-      const data = {
-        couponId : couponCode.id,
-        userId : 1                                    // DUMMY DATA
-      }
-      dispatch(submitCoupon(data))
+
+      dispatch(submitCoupon(couponCode.id))
       setInfo(`you get ${couponCode.discount}MK discount.`)
       setShow(true)
     }else{
@@ -99,10 +98,6 @@ const OrderSummary = ({ movie, theater, showTime, allCoupon }) => {
     }else{
       setOpen(true)
     }
-  }
-
-  const handleCheckout = () => {
-   
   }
 
   return (
@@ -217,7 +212,7 @@ const OrderSummary = ({ movie, theater, showTime, allCoupon }) => {
         </div>
       </div>
     </Col>
-    <PaymentForm handleCheckout={handleCheckout} />
+    <PaymentForm />
     </>
   )
 }

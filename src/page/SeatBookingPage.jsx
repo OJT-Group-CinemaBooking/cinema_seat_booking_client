@@ -7,7 +7,7 @@ import {
   getSeatTypePatternStatus 
 } from '../slice/SeatSlice'
 import { useDispatch, useSelector } from 'react-redux'
-import { Col, Container, Modal, Row, Spinner } from 'react-bootstrap'
+import { Col, Container, Row, Spinner } from 'react-bootstrap'
 import { fetchAllTheater, getAllTheater, getTheaterStatus } from '../slice/TheaterSlice'
 import { fetchAllMovie, getMovieById, getMovieStatus } from '../slice/MovieSlice'
 import { fetchAllShowTimeByMovieId, getShowTimeById, getShowTimeStatus } from '../slice/ShowTimeSlice'
@@ -15,6 +15,7 @@ import { fetchAllBookSeatByShowTimeId, getBookSeatStatus } from '../slice/BookSe
 import { useParams } from 'react-router-dom'
 import { fetchAllCoupon, getAllCoupon, getCouponStatus } from '../slice/CouponSlice'
 import { getCheckoutStatus } from '../slice/CheckOutSlice'
+import DelayModal from '../components/ui/DelayModal'
 
 const SeatBookingPage = () => {
 
@@ -81,19 +82,6 @@ const SeatBookingPage = () => {
 
   const [show, setShow] = useState(false);
 
-  let modal = <>
-
-  <Modal
-    show={show}
-    backdrop="static"
-    keyboard={false}
-  >
-    <Modal.Body>
-      Loading... Please wait a moment.
-    </Modal.Body>
-  </Modal>
-</>
-
   useEffect(() => {
     if (checkoutStatus === 'loading') {
       setShow(true);
@@ -104,7 +92,10 @@ const SeatBookingPage = () => {
     <Container fluid>
       <Row xs={1} sm={2} className='mt-3'>
         <Col xs='12' sm='9' className='mb-5'>
-          {modal}
+          <DelayModal 
+          show={show} 
+          message={'Loading... Please wait a moment.'} 
+          />
           {content}
         </Col>
         {orderSummary}

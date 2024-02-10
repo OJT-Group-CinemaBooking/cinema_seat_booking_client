@@ -5,6 +5,9 @@ import axios from "axios"
 const FETCH_URL = `${COUPON_URL}/all`
 const CREATE_URL = `${COUPON_URL}/create`
 
+const token = localStorage.getItem('token')
+console.log(token)
+
 export const fetchAllCoupon = createAsyncThunk('fetchAllCoupon', async() => {
     const response = await axios.get(FETCH_URL)
     return {
@@ -16,7 +19,8 @@ export const fetchAllCoupon = createAsyncThunk('fetchAllCoupon', async() => {
 export const createCoupon = createAsyncThunk('createCoupon', async(data) => {
     const response = await axios.post(CREATE_URL,data.coupon,{
         headers:{
-            'Content-Type' : 'application/json'
+            'Content-Type' : 'application/json',
+            Authorization : token
         }
     })
 
@@ -27,8 +31,12 @@ export const createCoupon = createAsyncThunk('createCoupon', async(data) => {
     
 })
 
-export const submitCoupon = createAsyncThunk('submitCoupon', async(data) => {
-    const response = await axios.get(`${COUPON_URL}/${data.couponId}/${data.userId}/use`)
+export const submitCoupon = createAsyncThunk('submitCoupon', async(couponId) => {
+    const response = await axios.get(`${COUPON_URL}/${couponId}/use`,{
+        headers : {
+            Authorization : token
+        }
+    })
     return {
         data : response.data,
         status : response.status
@@ -36,7 +44,11 @@ export const submitCoupon = createAsyncThunk('submitCoupon', async(data) => {
 })
 
 export const checkCoupon = createAsyncThunk('checkCoupon', async(couponCode) => {
-    const response = await axios.get(`${COUPON_URL}/find/${couponCode}`)
+    const response = await axios.get(`${COUPON_URL}/find/${couponCode}`,{
+        headers : {
+            Authorization : token
+        }
+    })
     return {
         data : response.data,
         status : response.status
@@ -44,7 +56,11 @@ export const checkCoupon = createAsyncThunk('checkCoupon', async(couponCode) => 
 })
 
 export const deleteCoupon = createAsyncThunk('deleteCoupon', async(couponId) => {
-    const response = await axios.delete(`${COUPON_URL}/${couponId}/delete`)
+    const response = await axios.delete(`${COUPON_URL}/${couponId}/delete`,{
+        headers : {
+            Authorization : token
+        }
+    })
     return {
         data : response.data,
         status : response.status

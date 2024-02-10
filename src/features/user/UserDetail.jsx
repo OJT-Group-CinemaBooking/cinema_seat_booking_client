@@ -3,6 +3,7 @@ import { Button, Card, Col } from "react-bootstrap";
 import classes from "./UserDetail.module.css";
 
 const UserDetail = () => {
+  
   return (
     <Col className="m-3 mx-auto" md={5}>
       <Card style={{ borderRadius: "20%" }}>
