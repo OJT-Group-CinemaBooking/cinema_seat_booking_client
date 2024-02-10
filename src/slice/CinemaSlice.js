@@ -17,7 +17,8 @@ export const fetchAllCinema = createAsyncThunk('fetchAllCinema', async() => {
 export const createCinema = createAsyncThunk('createCinema', async(data) => {
     const response = await axios.post(CREATE_URL,data.cinema,{
         headers:{
-            'Content-Type' : 'application/json'
+            'Content-Type' : 'application/json',
+            Authorization : localStorage.getItem('token')
         }
     })
     if(response.status === 200){
@@ -42,7 +43,8 @@ export const createCinema = createAsyncThunk('createCinema', async(data) => {
 export const updateCinema = createAsyncThunk('updateCinema', async(data) => {
     const response = await axios.put(UPDATE_URL,data.cinema,{
         headers:{
-            'Content-Type' : 'application/json'
+            'Content-Type' : 'application/json',
+            Authorization : localStorage.getItem('token')
         }
     })
     if(response.status === 200){
@@ -70,7 +72,11 @@ export const updateCinema = createAsyncThunk('updateCinema', async(data) => {
 })
 
 export const deleteCinema = createAsyncThunk('deleteCinema', async(cinemaId) => {
-    const response = await axios.delete(`${CINEMA_URL}/${cinemaId}/delete`)
+    const response = await axios.delete(`${CINEMA_URL}/${cinemaId}/delete`,{
+        headers : {
+            Authorization : localStorage.getItem('token')
+        }
+    })
     return {
         data : response.data,
         status : response.status

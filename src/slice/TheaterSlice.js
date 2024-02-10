@@ -23,7 +23,8 @@ export const fetchTheaterByCinemaId = createAsyncThunk('fetchTheaterByCinemaId',
 export const createTheater = createAsyncThunk('createTheater', async(data) => {
     const response = await axios.post(`${THEATER_URL}/${data.cinemaId}/create`,data.theater,{
         headers : {
-            "Content-Type" : "application/json"
+            "Content-Type" : "application/json",
+            Authorization : localStorage.getItem('token')
         }
     })
     return {
@@ -35,7 +36,8 @@ export const createTheater = createAsyncThunk('createTheater', async(data) => {
 export const updateTheater = createAsyncThunk('updateTheater', async(data) => {
     const response = await axios.put(`${THEATER_URL}/${data.cinemaId}/update`,data.theater,{
         headers : {
-            "Content-Type" : "application/json"
+            "Content-Type" : "application/json",
+            Authorization : localStorage.getItem('token')
         }
     })
     return {
@@ -45,7 +47,9 @@ export const updateTheater = createAsyncThunk('updateTheater', async(data) => {
 })
 
 export const deleteTheater = createAsyncThunk('deleteTheater', async(theaterId) => { 
-    const response = await axios.delete(`${THEATER_URL}/${theaterId}/delete`)
+    const response = await axios.delete(`${THEATER_URL}/${theaterId}/delete`,{
+        Authorization : localStorage.getItem('token')
+    })
     return {
         data : response.data,
         status : response.status

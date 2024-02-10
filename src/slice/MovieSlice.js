@@ -18,19 +18,22 @@ export const fetchAllMovie = createAsyncThunk('fetchAllMovie', async() => {
 export const createNewMovie = createAsyncThunk('createNewMovie', async(data) => {
     const response = await axios.post(CREATE_URL,data.movie,{
         headers : {
-            'Content-Type' : 'application/json'
+            'Content-Type' : 'application/json',
+            Authorization : localStorage.getItem('token')
         }
     })
     if(response.status === 200){
         const addGenereResponse = await axios.post(`${MOVIE_URL}/${response.data.id}/addgenere`,data.genereList,{
             headers : {
-                'Content-Type' : 'application/json'
+                'Content-Type' : 'application/json',
+                Authorization : localStorage.getItem('token')
             }
         })
         if(addGenereResponse.status !== 200) {console.log("failed to add genere")}
         const addCrewResponse = await axios.post(`${MOVIE_URL}/${response.data.id}/addcrew`,data.crewList,{
             headers : {
-                'Content-Type' : 'application/json'
+                'Content-Type' : 'application/json',
+                Authorization : localStorage.getItem('token')
             }
         })
         if(addCrewResponse.status !== 200) {console.log("failed to add crew")}
@@ -58,19 +61,22 @@ export const createNewMovie = createAsyncThunk('createNewMovie', async(data) => 
 export const updateMovie = createAsyncThunk('updateMovie', async(data) => {
     const response = await axios.put(UPDATE_URL,data.movie,{
         headers : {
-            'Content-Type' : 'application/json'
+            'Content-Type' : 'application/json',
+            Authorization : localStorage.getItem('token')
         }
     })
     if(response.status === 200){
         const addGenereResponse = await axios.post(`${MOVIE_URL}/${response.data.id}/addgenere`,data.genereList,{
             headers : {
-                'Content-Type' : 'application/json'
+                'Content-Type' : 'application/json',
+                Authorization : localStorage.getItem('token')
             }
         })
         if(addGenereResponse.status !== 200) {console.log("failed to add genere")}
         const addCrewResponse = await axios.post(`${MOVIE_URL}/${response.data.id}/addcrew`,data.crewList,{
             headers : {
-                'Content-Type' : 'application/json'
+                'Content-Type' : 'application/json',
+                Authorization : localStorage.getItem('token')
             }
         })
         if(addCrewResponse.status !== 200) {console.log("failed to add crew")}
@@ -101,7 +107,9 @@ export const updateMovie = createAsyncThunk('updateMovie', async(data) => {
 
 export const deleteMovie = createAsyncThunk('deleteMovie', async(movieId) => {
     const response = await axios.delete(`${MOVIE_URL}/${movieId}/delete`, {
-        headers : {}
+        headers : {
+            Authorization : localStorage.getItem('token')
+        }
     })
     return {
         data : response.data,

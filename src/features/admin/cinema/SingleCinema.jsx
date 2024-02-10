@@ -30,11 +30,11 @@ const SingleCinema = ({ cinema }) => {
         if(status === 'update_success') {
           dispatch(setCinemaStatusToIdle())
         }
-        navigate(`/admin/cinema/${cinema.id}/update`)
+        navigate(`/admin/dashboard/cinema/${cinema.id}/update`)
       }
       
     const navigateToTheater = () => {
-      navigate(`/admin/cinema/${cinema.id}/theater`)
+      navigate(`/admin/dashboard/cinema/${cinema.id}/theater`)
     }
   return (
     <tr key={cinema.id}>

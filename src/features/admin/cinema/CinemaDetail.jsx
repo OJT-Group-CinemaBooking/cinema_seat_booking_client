@@ -68,7 +68,7 @@ const CinemaDetail = ({cinema}) => {
     }
 
     const onHandleBackArrow = () => {
-      navigate('/admin/cinema')
+      navigate('/admin/dashboard/cinema')
     }
 
   return (

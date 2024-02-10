@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { OTP_URL } from "../features/config/baseURL";
 import axios from "axios";
-import { token } from "../features/auth/getToken";
 
 export const validateOTP = createAsyncThunk(
   "validateOTP",
@@ -9,7 +8,7 @@ export const validateOTP = createAsyncThunk(
     const response = await axios.post(`${OTP_URL}/validate/${data.username}`, data.otp, {
       headers: {
         "Content-Type": "application/json",
-        Authorization : token
+        Authorization : localStorage.getItem('token')
       },
     });
     return {

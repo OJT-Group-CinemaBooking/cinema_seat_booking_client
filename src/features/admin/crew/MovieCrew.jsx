@@ -2,16 +2,18 @@ import React, { useEffect, useRef, useState } from "react";
 import classes from "./MovieCrew.module.css";
 import { Button, Col, Container, Form, Image, InputGroup, Row, Table } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { createNewCrew, getCreatedCrew, getCrewCreateStatus, getCrewDeleteStatus, getCrewUpdateStatus, getUpdatedCrew, setCrewCreateStatusToIdle, setCrewDeleteStatusToIdle, setCrewUpdateStatusToIdle } from "../../../slice/CrewSlice";
+import { createNewCrew, fetchAllCrew, getAllCrews, getCreatedCrew, getCrewCreateStatus, getCrewDeleteStatus, getCrewUpdateStatus, getUpdatedCrew, setCrewCreateStatusToIdle, setCrewDeleteStatusToIdle, setCrewUpdateStatusToIdle } from "../../../slice/CrewSlice";
 import SingleCrew from "./SingleCrew";
 
-const MovieCrew = ({ crews }) => {
+const MovieCrew = () => {
 
   const createStatus = useSelector(getCrewCreateStatus)
   const updateStatus = useSelector(getCrewUpdateStatus)
   const deleteStatus = useSelector(getCrewDeleteStatus)
+  const crews = useSelector(getAllCrews)
   const createdCrew = useSelector(getCreatedCrew)
   const updatedCrew = useSelector(getUpdatedCrew)
+
   const dispatch = useDispatch();
   const [ allCrew, setAllCrew ] = useState(crews)
   const [ newCrew, setNewCrew ] = useState({})
@@ -20,6 +22,7 @@ const MovieCrew = ({ crews }) => {
     if(createStatus === 'success') {
       setAllCrew(crews)
       setNewCrew(createdCrew)
+      dispatch(fetchAllCrew)
       dispatch(setCrewCreateStatusToIdle())
     }
     if(deleteStatus === 'success') {
@@ -29,6 +32,7 @@ const MovieCrew = ({ crews }) => {
     if(updateStatus === 'success') {
       setAllCrew(crews)
       setNewCrew(updatedCrew)
+      dispatch(fetchAllCrew)
       dispatch(setCrewUpdateStatusToIdle())
     }
   },[allCrew,dispatch,createStatus,crews,newCrew,createdCrew,updateStatus,updatedCrew,deleteStatus])
@@ -86,7 +90,7 @@ const MovieCrew = ({ crews }) => {
       dispatch(createNewCrew(data));
       setName("")
       setRole("Starring")
-      setFile('')
+      setFile(null)
       setCanRequest(true);
     }
   };

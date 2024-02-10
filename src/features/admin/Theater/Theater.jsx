@@ -43,7 +43,7 @@ const Theater = ({ cinemaId, theaterList }) => {
   }
 
   const onHandleBackArrow = () => {
-    navigate(`/admin/cinema`)
+    navigate(`/admin/dashboard/cinema`)
   }
 
   return (

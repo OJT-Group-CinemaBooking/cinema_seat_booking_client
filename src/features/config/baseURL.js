@@ -11,3 +11,5 @@ export const COUPON_URL = 'http://localhost:8383/api/coupon'
 export const PAYMENT_URL = 'http://localhost:8383/api/userpayment'
 export const USER_URL = 'http://localhost:8383/api/user'
 export const OTP_URL = 'http://localhost:8383/api/otp'
+export const MAIL_URL = 'http://localhost:8383/api/mail'
+

@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { USER_URL } from "../features/config/baseURL";
 import axios from "axios";
-import { token } from "../features/auth/getToken";
 
 export const registerNewUser = createAsyncThunk(
   "registerNewUser",
@@ -9,7 +8,7 @@ export const registerNewUser = createAsyncThunk(
     const response = await axios.post(`${USER_URL}/create`, user, {
       headers: {
         "Content-Type": "application/json",
-        Authorization : token
+        Authorization : localStorage.getItem('token')
       },
     });
     return {

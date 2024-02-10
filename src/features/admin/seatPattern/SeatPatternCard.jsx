@@ -18,7 +18,7 @@ const SeatPatternCard = ({ cinemaId, seatTypePattern, theaterId }) => {
     if(status === 'update_success') {
       dispatch(setSeatSliceStatusToIdle())
     }
-    navigate(`/admin/cinema/${cinemaId}/theater/${theaterId}/seat-pattern/${seatTypePattern.id}/update`)
+    navigate(`/admin/dashboard/cinema/${cinemaId}/theater/${theaterId}/seat-pattern/${seatTypePattern.id}/update`)
   }
 
   const onDelete = () => {

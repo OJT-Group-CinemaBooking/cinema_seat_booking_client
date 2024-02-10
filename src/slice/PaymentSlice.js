@@ -4,13 +4,11 @@ import axios from "axios";
 
 const CREATE_URL = `${PAYMENT_URL}/create`
 
-const token = localStorage.getItem('token')
-
 export const createPayment = createAsyncThunk('createPayment', async(payment) => {
     const response = await axios.post(CREATE_URL,payment,{
         headers:{
             'Content-Type' : 'application/json',
-            Authorization : token
+            Authorization : localStorage.getItem('token')
         }
     })
 

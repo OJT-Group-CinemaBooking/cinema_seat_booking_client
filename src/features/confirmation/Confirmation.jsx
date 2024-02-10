@@ -25,8 +25,8 @@ const Confirmation = ({ ticket }) => {
                     <h4 className={classes.movie_name}>
                         {ticket.movieTitle}
                     </h4>
-                    <p>{`Cinema : ${ticket.showTime.theater.cinema.name}`}</p>
-                    <p>{`Theater : ${ticket.showTime.theater.name}`}</p>
+                    <p>{`Cinema : ${ticket.cinema}`}</p>
+                    <p>{`Theater : ${ticket.theater}`}</p>
 
 
                     <p>STANDARD - 
@@ -56,14 +56,11 @@ const Confirmation = ({ ticket }) => {
                     </p>
                 </Col>
                 <Col className={classes.date_time}>
-                <p>
-                        {new Date(ticket.showTime.movieTime).toLocaleDateString()}
+                    <p>
+                        {new Date(ticket.movieTime).toLocaleDateString()}
                     </p>
                     <p>
-                        {new Date(ticket.showTime.movieTime).toLocaleTimeString()}
-                    </p>
-                    <p style={{marginBottom : '1rem'}}>
-                        {ticket.showTime.showTime}
+                        {new Date(ticket.movieTime).toLocaleTimeString()}
                     </p>
                     <img src={`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${ticket.id}`} alt="QR code" />
                 </Col>

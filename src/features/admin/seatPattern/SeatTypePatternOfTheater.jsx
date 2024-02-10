@@ -46,14 +46,14 @@ const SeatTypePatternOfTheater = () => {
     },[seatPatternStatus,cinemaStatus,theaterStatus,dispatch])
 
     const onHandleBackArrow = () => {
-        navigate(`/admin/cinema/${cinemaId}/theater`)
+        navigate(`/admin/dashboard/cinema/${cinemaId}/theater`)
     }
 
     const onAddNew = () => {
         if(seatPatternStatus === 'create_success') {
             dispatch(setSeatSliceStatusToIdle())
         }
-        navigate(`/admin/cinema/${cinemaId}/theater/${theaterId}/seat-form`)
+        navigate(`/admin/dashboard/cinema/${cinemaId}/theater/${theaterId}/seat-form`)
     }
 
   return (

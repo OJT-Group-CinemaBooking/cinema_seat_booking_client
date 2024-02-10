@@ -28,7 +28,8 @@ export const createNewShowTime = createAsyncThunk('createNewShowTime', async(dat
     data.showTime, 
     {
         headers : {
-            'Content-Type' : 'application/json'
+            'Content-Type' : 'application/json',
+            Authorization : localStorage.getItem('token')
         }
     })
 
@@ -39,7 +40,9 @@ export const createNewShowTime = createAsyncThunk('createNewShowTime', async(dat
 })
 
 export const deleteShowtTime = createAsyncThunk('deleteShowtTime', async(showTimeId) => {
-    const response = await axios.delete(`${SHOW_TIME_URL}/${showTimeId}/delete`)
+    const response = await axios.delete(`${SHOW_TIME_URL}/${showTimeId}/delete`,{
+        Authorization : localStorage.getItem('token')
+    })
 
     return {
         data : response.data,

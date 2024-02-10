@@ -13,6 +13,7 @@ import CheckOutSlice from "../slice/CheckOutSlice"
 import authSlice from "../features/auth/authSlice"
 import OtpSlice from "../slice/OtpSlice"
 import userSlice from "../slice/userSlice"
+import MailSlice from "../slice/MailSlice"
 
 export const store = configureStore({
     reducer : {
@@ -29,6 +30,7 @@ export const store = configureStore({
         checkout : CheckOutSlice,
         user : userSlice,
         auth : authSlice,
-        otp : OtpSlice
+        otp : OtpSlice,
+        mail : MailSlice
     }
 })
