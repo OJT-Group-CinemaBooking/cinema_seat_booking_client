@@ -81,6 +81,8 @@ export const deleteCinema = createAsyncThunk('deleteCinema', async(cinemaId) => 
 
 const initialState = {
     cinemas : [],
+    createCinema : {},
+    updateCinema : {},
     status : 'idle',
     error : null
 }
@@ -105,6 +107,7 @@ const CinemaSlice = createSlice({
                     console.log('fail to create cinema')
                 }
                 state.cinemas = [data, ...state.cinemas]
+                state.createCinema = data
                 state.status = 'create_success'
             }
         })
@@ -137,6 +140,7 @@ const CinemaSlice = createSlice({
                 }
                 const cinema = state.cinemas.filter(c => c.id !== data.id)
                 state.cinemas = [data, ...cinema]
+                state.updateCinema = data
                 state.status = 'update_success';
             }
         })
@@ -164,6 +168,8 @@ const CinemaSlice = createSlice({
 export default CinemaSlice.reducer
 export const getAllCinema = (state) => state.cinema.cinemas
 export const getCinemaStatus = (state) => state.cinema.status
+export const getCreatedCinema = (state) => state.cinema.createCinema
+export const getUpdatedCinema = (state) => state.cinema.updateCinema
 export const getError = (state) => state.cinema.error
 export const getCinemaById = (state,cinemaId) => state.cinema.cinemas.find((c) => c.id === Number(cinemaId))
 export const { setCinemaStatusToIdle } = CinemaSlice.actions

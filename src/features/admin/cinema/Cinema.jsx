@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Button,
   Col,
@@ -10,12 +10,24 @@ import {
 } from "react-bootstrap";
 import classes from "./Cinema.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import { createCinema, getCinemaStatus } from "../../../slice/CinemaSlice";
+import { createCinema ,getCinemaStatus,getCreatedCinema,getUpdatedCinema } from "../../../slice/CinemaSlice";
 import SingleCinema from "./SingleCinema";
 
 const NewCinemaForm = ({ allCinema }) => {
 
   const status = useSelector(getCinemaStatus)
+  const createdCinema = useSelector(getCreatedCinema)
+  const updatedCinema = useSelector(getUpdatedCinema)
+  const [newCinema, setNewCinema] = useState({})
+
+  useEffect(() => {
+    if(status === 'create_success') {
+      setNewCinema(createdCinema)
+    }
+    if(status === 'update_success') {
+      setNewCinema(updatedCinema)
+    }
+  },[status,createdCinema,updatedCinema])
 
   const dispatch = useDispatch();
 
@@ -64,7 +76,7 @@ const NewCinemaForm = ({ allCinema }) => {
     cinemaDetail = (
       <tbody>
         {allCinema.map((cinema) => (
-          <SingleCinema key={cinema.id} cinema={cinema} />
+          <SingleCinema key={cinema.id} cinema={cinema} newCinema={newCinema} />
         ))}
       </tbody>
     );

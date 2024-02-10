@@ -1,19 +1,31 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { CameraReels, FileEarmarkXFill, PencilSquare } from 'react-bootstrap-icons'
 import { IMAGE_URL } from '../../config/baseURL'
 import ConfirmModal from '../../../components/ui/ConfirmModal'
 import { deleteCinema, getCinemaStatus, setCinemaStatusToIdle } from '../../../slice/CinemaSlice'
-import { Image } from 'react-bootstrap'
+import { Image, Spinner } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 
-const SingleCinema = ({ cinema }) => {
+const SingleCinema = ({ cinema , newCinema }) => {
 
   const status = useSelector(getCinemaStatus)
 
+    const [showImg, setShowImg] = useState(cinema.id !== Number(newCinema?.id))
     const [ showModal, setShowModal ] = useState(false)
     const navigate = useNavigate()
     const dispatch = useDispatch()
+
+    useEffect(() => {
+      if(!showImg) {
+        const timeout = setTimeout(() => {
+          setShowImg(true)
+        }, 3500)
+  
+        return () => clearTimeout(timeout)
+      }
+    }, [showImg]);
+
     const onDelete = () => {
         setShowModal(true)
       }
@@ -39,6 +51,7 @@ const SingleCinema = ({ cinema }) => {
   return (
     <tr key={cinema.id}>
     <td className="ps-3">
+    { showImg?
       <Image
         src={`${IMAGE_URL}/cinema/${cinema.id}.jpg`}
         alt="cinema"
@@ -49,7 +62,9 @@ const SingleCinema = ({ cinema }) => {
             objectPosition: 'center',
             borderRadius: '.5rem'
         }}
-      />
+      />: 
+      <Spinner animation="border" variant="secondary" />
+    }
     </td>
     <td>{cinema.name}</td>
     <td>{cinema.location}</td>
