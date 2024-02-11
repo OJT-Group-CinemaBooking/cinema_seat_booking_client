@@ -1,12 +1,13 @@
 import React, { useEffect } from 'react'
 import Cinema from '../features/admin/cinema/Cinema'
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchAllCinema, getCinemaStatus, getError } from '../slice/CinemaSlice'
+import { fetchAllCinema, getAllCinema, getCinemaStatus, getError } from '../slice/CinemaSlice'
 import { Spinner } from 'react-bootstrap'
 
 const AdminNewCinemaPage = () => {
   const status = useSelector(getCinemaStatus)
   const error = useSelector(getError)
+  const allCinema = useSelector(getAllCinema)
 
   const dispatch = useDispatch()
 
@@ -18,8 +19,8 @@ const AdminNewCinemaPage = () => {
 
   let content = ''
 
-  if(status === 'success'){
-    content = <Cinema />
+  if(status.includes('_success')){
+    content = <Cinema allCinema={allCinema}/>
   }
 
   if(status === 'loading'){
