@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { CREW_URL, IMAGE_URL } from "../features/config/baseURL";
-import { token } from "../features/auth/getToken";
 
 const FETCH_URL = `${CREW_URL}/all`
 const CREATE_URL = `${CREW_URL}/create`

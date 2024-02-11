@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import axios from "axios"
 import { CINEMA_URL, IMAGE_URL } from "../features/config/baseURL"
-import { token } from "../features/auth/getToken"
 
 const FETCH_URL = `${CINEMA_URL}/all`
 const CREATE_URL = `${CINEMA_URL}/create`
