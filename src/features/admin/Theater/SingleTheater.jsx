@@ -29,11 +29,11 @@ const SingleTheater = ({ theater, cinemaId }) => {
     if(status === 'update_success') {
         dispatch(setTheaterStatusToIdle())
     }
-    navigate(`/admin/cinema/${cinemaId}/theater/${theater.id}/update`)
+    navigate(`/admin/dashboard/cinema/${cinemaId}/theater/${theater.id}/update`)
     }
 
     const onNavigateSeatTypePattern = () => {
-    navigate(`/admin/cinema/${cinemaId}/theater/${theater.id}/seat-pattern`)
+    navigate(`/admin/dashboard/cinema/${cinemaId}/theater/${theater.id}/seat-pattern`)
     }
   return (
     <tr key={theater.id}>

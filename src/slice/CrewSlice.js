@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { CREW_URL, IMAGE_URL } from "../features/config/baseURL";
+import { token } from "../features/auth/getToken";
 
 const FETCH_URL = `${CREW_URL}/all`
 const CREATE_URL = `${CREW_URL}/create`
@@ -19,7 +20,8 @@ export const fetchAllCrew = createAsyncThunk('fetchAllCrew', async() => {
 export const createNewCrew = createAsyncThunk('createNewCrew', async(data) => {
     const response = await axios.post(CREATE_URL, data.crew, {
         headers : {
-            "Content-Type" : "application/json"
+            "Content-Type" : "application/json",
+            Authorization : token
         }
     })
     if(response.status === 200) {

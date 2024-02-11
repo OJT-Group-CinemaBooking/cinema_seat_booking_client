@@ -11,7 +11,8 @@ const SingleCinema = ({ cinema , newCinema }) => {
 
   const status = useSelector(getCinemaStatus)
 
-    const [showImg, setShowImg] = useState(cinema.id !== Number(newCinema?.id))
+    const [showImg, setShowImg] = useState(cinema.id === newCinema.id)
+
     const [ showModal, setShowModal ] = useState(false)
     const navigate = useNavigate()
     const dispatch = useDispatch()
@@ -24,7 +25,7 @@ const SingleCinema = ({ cinema , newCinema }) => {
   
         return () => clearTimeout(timeout)
       }
-    }, [showImg]);
+    }, [showImg,cinema.id,newCinema.id]);
 
     const onDelete = () => {
         setShowModal(true)
@@ -42,11 +43,11 @@ const SingleCinema = ({ cinema , newCinema }) => {
         if(status === 'update_success') {
           dispatch(setCinemaStatusToIdle())
         }
-        navigate(`/admin/cinema/${cinema.id}/update`)
+        navigate(`/admin/dashboard/cinema/${cinema.id}/update`)
       }
       
     const navigateToTheater = () => {
-      navigate(`/admin/cinema/${cinema.id}/theater`)
+      navigate(`/admin/dashboard/cinema/${cinema.id}/theater`)
     }
   return (
     <tr key={cinema.id}>
@@ -62,8 +63,9 @@ const SingleCinema = ({ cinema , newCinema }) => {
             objectPosition: 'center',
             borderRadius: '.5rem'
         }}
-      />: 
+      /> :
       <Spinner animation="border" variant="secondary" />
+      
     }
     </td>
     <td>{cinema.name}</td>

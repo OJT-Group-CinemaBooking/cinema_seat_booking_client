@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import axios from "axios"
 import { CINEMA_URL, IMAGE_URL } from "../features/config/baseURL"
+import { token } from "../features/auth/getToken"
 
 const FETCH_URL = `${CINEMA_URL}/all`
 const CREATE_URL = `${CINEMA_URL}/create`
@@ -17,7 +18,8 @@ export const fetchAllCinema = createAsyncThunk('fetchAllCinema', async() => {
 export const createCinema = createAsyncThunk('createCinema', async(data) => {
     const response = await axios.post(CREATE_URL,data.cinema,{
         headers:{
-            'Content-Type' : 'application/json'
+            'Content-Type' : 'application/json',
+            Authorization : token
         }
     })
     if(response.status === 200){
@@ -42,11 +44,11 @@ export const createCinema = createAsyncThunk('createCinema', async(data) => {
 export const updateCinema = createAsyncThunk('updateCinema', async(data) => {
     const response = await axios.put(UPDATE_URL,data.cinema,{
         headers:{
-            'Content-Type' : 'application/json'
+            'Content-Type' : 'application/json',
+            Authorization : token
         }
     })
     if(response.status === 200){
-        console.log(data.formData)
         if(data.formData !== null && data.formData !== undefined){
             const uploadCinemaImage = await axios.post(`${IMAGE_URL}/upload/cinema/${response.data.id}`,data.formData,{
                 headers:{
@@ -70,7 +72,11 @@ export const updateCinema = createAsyncThunk('updateCinema', async(data) => {
 })
 
 export const deleteCinema = createAsyncThunk('deleteCinema', async(cinemaId) => {
-    const response = await axios.delete(`${CINEMA_URL}/${cinemaId}/delete`)
+    const response = await axios.delete(`${CINEMA_URL}/${cinemaId}/delete`,{
+        headers:{
+            Authorization : token
+        }
+    })
     return {
         data : response.data,
         status : response.status
@@ -97,9 +103,9 @@ const CinemaSlice = createSlice({
     },
     extraReducers(builder){
         builder
-        .addCase(createCinema.pending, (state) => {
-            state.status = 'loading'
-        })
+        // .addCase(createCinema.pending, (state) => {
+        //     state.status = 'loading'
+        // })
         .addCase(createCinema.fulfilled , (state,action) => {
             if(action.payload?.status){
                 const {data,status} = action.payload

@@ -82,6 +82,8 @@ const NewCinemaForm = ({ allCinema }) => {
     );
   }
 
+  
+
   return (
     <Container>
       <Row xs={1} md={2} className="d-flex justify-content-evenly">
