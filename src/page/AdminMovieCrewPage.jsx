@@ -1,11 +1,10 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchAllCrew, getAllCrews, getCrewStatus, getError } from '../slice/CrewSlice';
+import { fetchAllCrew, getCrewStatus, getError } from '../slice/CrewSlice';
 import { Spinner } from 'react-bootstrap';
 import MovieCrew from '../features/admin/crew/MovieCrew';
 
 const AdminMovieCrewPage = () => {
-  const allCrews = useSelector(getAllCrews);
   const status = useSelector(getCrewStatus);
   const error = useSelector(getError);
 
@@ -27,7 +26,7 @@ const AdminMovieCrewPage = () => {
   }
 
   if(status === ('success')) {
-    content = <MovieCrew crews={allCrews} />
+    content = <MovieCrew />
   }
 
   if(status === 'failed') {

@@ -19,7 +19,7 @@ const SingleMovie = ({ movie }) => {
         if(movieStatus === 'update_success') {
             dispatch(setMovieStatusToIdle())
         }
-        navigate(`/admin/movie/${movie.id}/update`)
+        navigate(`/admin/dashboard/movie/${movie.id}/update`)
     }
 
     const onDelete = () => {
@@ -28,7 +28,7 @@ const SingleMovie = ({ movie }) => {
 
     const handleSchedule = () => {
         dispatch(setShowTimeStatusToIdle())
-        navigate(`/admin/movie/${movie.id}/schedule`)
+        navigate(`/admin/dashboard/movie/${movie.id}/schedule`)
     }
 
     const onModalClose = () => {

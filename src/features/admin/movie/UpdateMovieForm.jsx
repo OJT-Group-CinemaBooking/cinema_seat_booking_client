@@ -57,9 +57,6 @@ const UpdateMovieForm = ({ existedGeneres, existedCrews, movie, generes, starrin
   const onReleaseDateInputChange = (e) => {
     setReleaseDate(e.target.value);
   };
-  // const onCountryInputChange = (e) => {
-  //   setCountry(e.target.value);
-  // };
   const onLanguageInputChange = (e) => {
     setLanguage(e.target.value);
   };
@@ -194,7 +191,7 @@ const UpdateMovieForm = ({ existedGeneres, existedCrews, movie, generes, starrin
     }
 
     const onHandleBackArrow = () => {
-      navigate('/admin/movie')
+      navigate('/admin/dashboard/movie')
     }
 
   return (

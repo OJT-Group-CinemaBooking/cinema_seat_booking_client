@@ -21,7 +21,7 @@ export const createNewCrew = createAsyncThunk('createNewCrew', async(data) => {
     const response = await axios.post(CREATE_URL, data.crew, {
         headers : {
             "Content-Type" : "application/json",
-            Authorization : token
+            Authorization : localStorage.getItem('token')
         }
     })
     if(response.status === 200) {
@@ -45,7 +45,8 @@ export const createNewCrew = createAsyncThunk('createNewCrew', async(data) => {
 export const updateCrew = createAsyncThunk('updateCrew', async(data) => {
     const response = await axios.put(UPDATE_URL, data.crew, {
         headers : {
-            "Content-Type" : "application/json"
+            "Content-Type" : "application/json",
+            Authorization : localStorage.getItem('token')
         }
     })
     if(response.status === 200) {
@@ -65,7 +66,11 @@ export const updateCrew = createAsyncThunk('updateCrew', async(data) => {
 })
 
 export const deleteCrew = createAsyncThunk('deleteCrew', async(crewId) => {
-    const response = await axios.delete(`${CREW_URL}/${crewId}/delete`)
+    const response = await axios.delete(`${CREW_URL}/${crewId}/delete`,{
+        headers : {
+            Authorization : localStorage.getItem('token')
+        }
+    })
 
     return {
         data : response.data,

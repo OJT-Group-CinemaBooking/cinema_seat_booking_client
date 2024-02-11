@@ -69,7 +69,7 @@ const SeatPatternAddForm = () => {
     }
 
     const onHandleBackArrow = () => {
-        navigate(`/admin/cinema/${cinemaId}/theater/${theaterId}/seat-pattern`)
+        navigate(`/admin/dashboard/cinema/${cinemaId}/theater/${theaterId}/seat-pattern`)
     }
   return (
     <Container className={classes.container}>

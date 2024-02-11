@@ -59,7 +59,7 @@ const MovieSchedule = () => {
                 color="#D4AF37" 
                 size={30} 
                 className={classes.back_arrow} 
-                onClick={() => navigate('/admin/movie')} 
+                onClick={() => navigate('/admin/dashboard/movie')} 
             />
             <h3 className='text-center text-white'>Schedule( {movie?.title} )</h3>
         </Row>

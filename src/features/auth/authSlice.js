@@ -2,7 +2,6 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { createSlice } from "@reduxjs/toolkit";
 import { USER_URL } from "../config/baseURL";
 import axios from "axios";
-import { token } from "./getToken";
 
 export const login = createAsyncThunk('login',async (loginRequest) => {
     const response = await axios.post(`${USER_URL}/login`,loginRequest,{
@@ -20,7 +19,7 @@ export const login = createAsyncThunk('login',async (loginRequest) => {
 export const getUserWithRoles = createAsyncThunk('getUserWithRoles',async (userId) => {
     const response = await axios.get(`${USER_URL}/${userId}/role`,{
         headers : {
-        Authorization : token
+        Authorization : localStorage.getItem('token')
         }
     })
 

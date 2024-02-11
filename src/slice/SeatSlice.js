@@ -8,7 +8,11 @@ const UPDATE_URL = `${SEAT_URL}/update`
 const DELETE_URL = `${SEAT_URL}/delete`
 
 export const deleteSeatTypePattern = createAsyncThunk('deleteSeatTypePattern', async(seatTypePatternId) => {
-    const response = await axios.delete(`${DELETE_URL}/${seatTypePatternId}`)
+    const response = await axios.delete(`${DELETE_URL}/${seatTypePatternId}`,{
+        headers : {
+            Authorization : localStorage.getItem('token')
+        }
+    })
     return {
         data : response.data,
         status : response.status
@@ -19,7 +23,8 @@ export const updateSeatTypePattern = createAsyncThunk('updateSeatTypePattern', a
     console.log(data.seatTypePattern)
     const response = await axios.put(`${UPDATE_URL}/${data.theaterId}`,data.seatTypePattern,{
         headers : {
-            'Content-Type' : 'application/json'
+            'Content-Type' : 'application/json',
+            Authorization : localStorage.getItem('token')
         }
     })
     return {
@@ -31,7 +36,8 @@ export const updateSeatTypePattern = createAsyncThunk('updateSeatTypePattern', a
 export const createSeatTypePattern = createAsyncThunk('createSeatTypePattern', async(data) => {
     const response = await axios.post(`${CREATE_URL}/${data.theaterId}`,data.seatTypePattern,{
         headers : {
-            'Content-Type' : 'application/json'
+            'Content-Type' : 'application/json',
+            Authorization : localStorage.getItem('token')
         }
     })
     return {

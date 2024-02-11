@@ -7,10 +7,9 @@ import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { store } from './store/store';
 import ScrollToTop from './components/layout/ScrollToTop';
-import { token } from './features/auth/getToken';
 import { getUserWithRoles } from './features/auth/authSlice';
 
-
+const token = localStorage.getItem('token')
 const userId = localStorage.getItem('userId')
 if(token && userId){
   store.dispatch(getUserWithRoles(userId))

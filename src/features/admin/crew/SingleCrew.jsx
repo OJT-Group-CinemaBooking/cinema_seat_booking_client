@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 const SingleCrew = ({ crew, newCrew }) => {
 
   const status = useSelector(getCrewUpdateStatus)
-  const [showImg, setShowImg] = useState(crew.id !== Number(newCrew?.id))
+  const [showImg, setShowImg] = useState(Number(crew.id) !== Number(newCrew?.id))
   const [ showModal, setShowModal ] = useState(false)
   const navigate = useNavigate()
   const dispatch = useDispatch()
@@ -19,7 +19,7 @@ const SingleCrew = ({ crew, newCrew }) => {
     if(!showImg) {
       const timeout = setTimeout(() => {
         setShowImg(true)
-      }, 3500)
+      }, 3600)
 
       return () => clearTimeout(timeout)
     }
@@ -29,7 +29,7 @@ const SingleCrew = ({ crew, newCrew }) => {
     if(status === 'success') {
       dispatch(setCrewUpdateStatusToIdle())
     }
-    navigate(`/admin/crew/${crew.id}/update`)
+    navigate(`/admin/dashboard/crew/${crew.id}/update`)
   }
 
   const onDelete = () => {

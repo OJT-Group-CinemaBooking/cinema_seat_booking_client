@@ -67,7 +67,7 @@ const MovieCrewDetail = ({ crew }) => {
     }
 
     const onHandleBackArrow = () => {
-      navigate('/admin/crew')
+      navigate('/admin/dashboard/crew')
     }
 
   return (
@@ -80,7 +80,7 @@ const MovieCrewDetail = ({ crew }) => {
         />
       }
       <Row className={classes.back_arrow}>
-            <ArrowLeft color="#D4AF37" size={30} onClick={onHandleBackArrow}/>
+        <ArrowLeft color="#D4AF37" size={30} onClick={onHandleBackArrow}/>
       </Row>
       <Row className='d-flex justify-content-evenly py-5'>
       <Form onSubmit={onSubmit} className={classes.form}>
