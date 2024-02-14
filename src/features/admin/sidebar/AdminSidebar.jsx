@@ -1,17 +1,24 @@
 import React, { useState } from 'react'
 import classes from './AdminSidebar.module.css'
 import { Col } from 'react-bootstrap'
-import { CameraReels, ClipboardPlus, Film, HouseGearFill, PersonVideo, TicketPerforated } from 'react-bootstrap-icons'
+import { BoxArrowLeft, CameraReels, ClipboardPlus, Film, HouseGearFill, PersonVideo, TicketPerforated } from 'react-bootstrap-icons'
 import { useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { logout } from '../../auth/authSlice'
 
 const AdminSidebar = () => {
 
   const [ page, setPage ] = useState(' ');
 const navigate = useNavigate()
+const dispatch = useDispatch()
   
 const onChangePage = (name) => {
   setPage(name)
   navigate(name)
+}
+
+const handleLogout = () => {
+  dispatch(logout())
 }
   return (
     <Col xs='2' className={classes.sidebar_col}>
@@ -42,6 +49,11 @@ const onChangePage = (name) => {
         className={`${classes.items} ${page === 'coupon' && classes.active}`} 
         onClick={() => {onChangePage('coupon')}}>
         <span className={classes.icons}><TicketPerforated/></span><p className={classes.content}>Coupon</p>
+      </div>
+      <div 
+        className={`${classes.items} ${classes.logout}`} 
+        onClick={handleLogout}>
+        <span className={classes.icons}><BoxArrowLeft/></span><p className={classes.content}>Logout</p>
       </div>
     </Col>
   )
