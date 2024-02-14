@@ -9,7 +9,7 @@ export const registerNewUser = createAsyncThunk(
     const response = await axios.post(`${USER_URL}/create`, user, {
       headers: {
         "Content-Type": "application/json",
-        Authorization : token
+        Authorization: token,
       },
     });
     return {
@@ -18,6 +18,19 @@ export const registerNewUser = createAsyncThunk(
     };
   }
 );
+
+export const updateUser = createAsyncThunk("updateUser", async (user) => {
+  const response = await axios.put(`${USER_URL}/update`, user, {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: token,
+    },
+  });
+  return {
+    data: response.data,
+    status: response.status,
+  };
+});
 
 export const fetchAllUsers = createAsyncThunk("fetchAllUsers", async () => {
   const response = await axios.get(`${USER_URL}/all`);
@@ -29,8 +42,9 @@ export const fetchAllUsers = createAsyncThunk("fetchAllUsers", async () => {
 
 const initialState = {
   users: [],
-  createdUser : {},
+  createdUser: {},
   createStatus: "idle",
+  updateStatus: "idle",
   status: "idle",
   error: null,
 };
@@ -41,6 +55,9 @@ const userSlice = createSlice({
   reducers: {
     setUserCreateStatusToIdle: (state) => {
       state.createStatus = "idle";
+    },
+    setUserUpdateStatusToIdle: (state) => {
+      state.updateStatus = "idle";
     },
   },
   extraReducers(builder) {
@@ -57,12 +74,36 @@ const userSlice = createSlice({
             );
             return;
           }
-          state.createdUser = data
+          state.createdUser = data;
           state.users = [data, ...state.users];
           state.createStatus = "success";
         }
       })
       .addCase(registerNewUser.rejected, (state, action) => {
+        state.createStatus = "failed";
+        state.error = action.error;
+      })
+      .addCase(updateUser.pending, (state) => {
+        state.createStatus = "loading";
+      })
+      .addCase(updateUser.fulfilled, (state, action) => {
+        if (action.payload?.status) {
+          const { data, status } = action.payload;
+          if (status !== 200) {
+            console.log(
+              `Failed to update user with status code = ${status}`
+            );
+            return;
+          }
+          const updatedUser = data;
+          const filteredUsers = state.users.filter(
+            us => us.id !== updateUser.id
+          )
+          state.users = [updatedUser, ...filteredUsers];
+          state.updateStatus = "success";
+        }
+      })
+      .addCase(updateUser.rejected, (state, action) => {
         state.createStatus = "failed";
         state.error = action.error;
       })
@@ -89,8 +130,8 @@ const userSlice = createSlice({
 
 export default userSlice.reducer;
 export const getAllUsers = (state) => state.user.users;
-export const getCreatedUser = (state) => state.user.createdUser
+export const getCreatedUser = (state) => state.user.createdUser;
 export const getStatus = (state) => state.user.status;
-export const getCreateStatus = (state) => state.user.createStatus
+export const getCreateStatus = (state) => state.user.createStatus;
 export const getUserError = (state) => state.user.error;
-export const { setUserCreateStatusToIdle } =  userSlice.actions
+export const { setUserCreateStatusToIdle, setUserUpdateStatusToIdle } = userSlice.actions;

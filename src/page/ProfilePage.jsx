@@ -14,6 +14,14 @@ const ProfilePage = () => {
     cvv: "338",
   };
 
+  const DUMMY_USER = {
+    id: 1,
+    username: "Hnin",
+    firstname: "Hnin",
+    lastname: "Hayman",
+    email: 'hayman@gmail.com'
+  }
+
   const DUMMY_TICKETS = [
     {
       id: 1,
@@ -129,7 +137,7 @@ const ProfilePage = () => {
   return (
     <Container>
       <Row>
-        <UserDetail />
+        <UserDetail key={DUMMY_USER.id} user={DUMMY_USER} />
         <UserPaymentDetail data={DUMMY_PAYMENT} />
       </Row>
       <UserTicketList tickets={DUMMY_TICKETS} />
