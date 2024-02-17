@@ -1,0 +1,16 @@
+.selectFlag{
+    display: inline-block;
+    width: 40%;
+    height: 2.5rem;
+}
+
+.input{
+    display: inline-block;
+    width: 30%;
+    height: 2rem;
+    background-color: transparent;
+    border-top: 0;
+    border-right: 0;
+    border-left: 0;
+    border-bottom: thin solid rgb(177, 177, 177);
+}

@@ -1,18 +1,24 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Container, Row } from "react-bootstrap";
 import UserDetail from "../features/user/UserDetail";
 import UserPaymentDetail from "../features/user/UserPaymentDetail";
 import UserTicketList from "../features/user/UserTicketList";
+import { useDispatch, useSelector } from "react-redux";
+import { getUser, getUserWithRoles } from "../features/auth/authSlice";
+import { getPaymentStatus, setPaymentStatusToIdle } from "../slice/PaymentSlice";
 
 const ProfilePage = () => {
-  const DUMMY_PAYMENT = {
-    holderName: "Hnin Hayman",
-    cardNumber: "1111-2222-3333-4444",
-    expiryMonth: "03",
-    expiryYear: "2026",
-    cardType: "VISA",
-    cvv: "338",
-  };
+  const paymentStatus = useSelector(getPaymentStatus)
+  const user = useSelector(getUser)
+
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    if(paymentStatus === 'create_success') {
+      dispatch(getUserWithRoles(localStorage.getItem('userId')))
+      dispatch(setPaymentStatusToIdle())
+    }
+  },[dispatch,paymentStatus])
 
   const DUMMY_TICKETS = [
     {
@@ -130,7 +136,7 @@ const ProfilePage = () => {
     <Container>
       <Row>
         <UserDetail />
-        <UserPaymentDetail data={DUMMY_PAYMENT} />
+        <UserPaymentDetail userPayment={user.userPayment} />
       </Row>
       <UserTicketList tickets={DUMMY_TICKETS} />
     </Container>
