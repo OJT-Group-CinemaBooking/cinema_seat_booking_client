@@ -1,6 +1,7 @@
 .sidebar_col{
     height: 100vh;
     background-color: #1B2631 ;
+    position: relative;
     /* box-shadow: 0 0 10px rgba(93, 109, 126,1);
     clip-path: inset(0px -15px 0px 0px); */
 }
@@ -41,4 +42,10 @@
 .active{
     border-radius: .5vw;
     background-color: #2E4053;
+}
+
+.logout{
+    position: absolute;
+    width: 90%;
+    bottom: 0;
 }
