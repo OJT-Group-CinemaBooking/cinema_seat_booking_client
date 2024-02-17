@@ -4,12 +4,13 @@ import { Button, Form, InputGroup } from 'react-bootstrap'
 import { Eye, EyeSlash, PersonCircle } from 'react-bootstrap-icons'
 import { Navigate, useLocation, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { getLoginStatus, login, setLoginStatusToIdle } from '../auth/authSlice'
+import { getLoginStatus, getUser, login, setLoginStatusToIdle } from '../auth/authSlice'
 
 const Login = () => {
 
   const status = useSelector(getLoginStatus)
   const token = localStorage.getItem('token')
+  const user = useSelector(getUser)
 
   const navigate = useNavigate()
   const dispatch = useDispatch()
@@ -45,13 +46,12 @@ const Login = () => {
     setUsername('')
     setPassword('')
     setCanRequest(true)
-
-    if(canLogin){
-      setCanRequest(false)
-    }
   }
 
-  if(status ==='success' && token){
+  if(status ==='success' && token && ((user.userRoles[0]).role.name) === 'ROLE_ADMIN'){
+    return (<Navigate to={'/admin/dashboard'} replace={true} />)
+  }
+  if(status ==='success' && token && ((user.userRoles[0]).role.name) === 'ROLE_USER'){
     return (<Navigate to={from} replace={true} />)
   }
 

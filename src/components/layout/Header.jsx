@@ -1,18 +1,39 @@
 import classes from "./Header.module.css";
 import { Container, Dropdown, Image, Nav, Navbar } from "react-bootstrap";
-import { PersonCircle } from "react-bootstrap-icons";
+import { PersonCheck, PersonCircle } from "react-bootstrap-icons";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { getLoginStatus, logout } from "../../features/auth/authSlice";
+import { useState } from "react";
+import InfoModal from "../ui/InfoModal";
 
 const Header = () => {
 
   const dispatch = useDispatch()
   const loginStatus = useSelector(getLoginStatus)
+
+  const [ showAlert, setShowAlert ] = useState(false)
+
+  
   const handleLogout = () => {
+    setShowAlert(true)
     dispatch(logout())
   }
+
+  const onHide = () => {
+    setShowAlert(false)
+  }
+
   return (
+    <>
+    {
+      showAlert && <InfoModal
+        show={showAlert} 
+        handleClose={onHide}
+        color={'black'}
+        information={'Logout Successful'}
+      />
+    }
     <Navbar
       collapseOnSelect
       expand="lg"
@@ -49,9 +70,10 @@ const Header = () => {
           </Nav>
           <Nav>
              { (loginStatus === 'success') ?
+             <>
             <Dropdown>
             <Dropdown.Toggle className={classes.person} variant="secondary" id="dropdown-basic">
-              <PersonCircle />
+              <PersonCheck fontSize={30}/>
             </Dropdown.Toggle>
 
             <Dropdown.Menu>
@@ -59,6 +81,7 @@ const Header = () => {
               <Dropdown.Item onClick={handleLogout}>Logout</Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown> 
+          </>
             :
             <Link className={classes.person} as={Link} to={"/login"}>
             <PersonCircle />
@@ -69,6 +92,7 @@ const Header = () => {
         </Navbar.Collapse>
       </Container>
     </Navbar>
+    </>
   );
 };
 
