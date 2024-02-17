@@ -47,9 +47,6 @@ const authSlice = createSlice({
         },
         setLoginStatusToIdle : (state) => {
             state.status = 'idle'
-        },
-        setAuthStatusToReload : (state) => {
-            state.status = 'reload'
         }
     },
     extraReducers(builder){
@@ -84,4 +81,4 @@ export default authSlice.reducer
 export const getRoles = state => state.auth.roles
 export const getLoginStatus = state => state.auth.status
 export const getUser = state => state.auth.user
-export const { logout, setLoginStatusToIdle, setAuthStatusToReload } = authSlice.actions
+export const { logout, setLoginStatusToIdle } = authSlice.actions
