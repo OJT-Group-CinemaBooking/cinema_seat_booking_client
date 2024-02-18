@@ -14,6 +14,14 @@
     background: rgba(86, 101, 115, 0.2);
 }
 
+.flags_select ul{
+    background-color: black;
+}
+
+.flags_select ul div{
+    background-color: black;
+}
+
 .form input,
 .form select{
     background-color: transparent;

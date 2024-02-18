@@ -14,15 +14,17 @@ const PaymentForm = () => {
   const user = useSelector(getUser)
   const currentYear = new Date().getFullYear()
 
-  const [ street, setStreet ] = useState(user.userPayment?.street)
-  const [ country, setCountry ] = useState(user.userPayment?.country)
-  const [ city, setCity ] = useState(user.userPayment?.city)
-  const [ zip, setZip ] = useState(user.userPayment?.zip)
-  const [ cardNumber, setCardNumber ] = useState(user.userPayment?.cardNumber)
-  const [ cardType, setCardType ] = useState(user.userPayment?.cardType)
-  const [ expiryMonth, setExpiryMonth ] = useState(user.userPayment?.expiryMonth)
-  const [ expiryYear, setExpiryYear ] = useState(user.userPayment?.expiryYear)
-  const [ cvv, setCVV ] = useState(user.userPayment?.cvv)
+  const userPayment = user.userPayment
+
+  const [ street, setStreet ] = useState(userPayment?userPayment.street:'')
+  const [ country, setCountry ] = useState(userPayment?userPayment.country:'MM')
+  const [ city, setCity ] = useState(userPayment?userPayment.city:'')
+  const [ zip, setZip ] = useState(userPayment?userPayment.zip:'')
+  const [ cardNumber, setCardNumber ] = useState(userPayment?userPayment.cardNumber:'')
+  const [ cardType, setCardType ] = useState(userPayment?userPayment.cardType:'VISA')
+  const [ expiryMonth, setExpiryMonth ] = useState(userPayment?userPayment.expiryMonth:'1')
+  const [ expiryYear, setExpiryYear ] = useState(userPayment?userPayment.expiryYear:currentYear)
+  const [ cvv, setCVV ] = useState(userPayment?userPayment.cvv:'')
   const [ canRequest, setCanRequest ] = useState(true)
 
   const handleStreetInputChange = (e) => {setStreet(e.target.value)}

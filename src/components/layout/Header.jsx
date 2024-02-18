@@ -2,15 +2,18 @@ import classes from "./Header.module.css";
 import { Container, Dropdown, Image, Nav, Navbar } from "react-bootstrap";
 import { PersonCheck, PersonCircle } from "react-bootstrap-icons";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
-import { getLoginStatus, logout } from "../../features/auth/authSlice";
+import { Link, useNavigate } from "react-router-dom";
+import { getLoginStatus, getUser, logout } from "../../features/auth/authSlice";
 import { useState } from "react";
 import InfoModal from "../ui/InfoModal";
+import { getUserById } from "../../slice/userSlice";
 
 const Header = () => {
 
   const dispatch = useDispatch()
+  const navigate = useNavigate()
   const loginStatus = useSelector(getLoginStatus)
+  const user = useSelector(getUser)
 
   const [ showAlert, setShowAlert ] = useState(false)
 
@@ -22,6 +25,11 @@ const Header = () => {
 
   const onHide = () => {
     setShowAlert(false)
+  }
+
+  const onProfileClick = () => {
+    dispatch(getUserById(user.id))
+    navigate('/user/profile')
   }
 
   return (
@@ -77,7 +85,7 @@ const Header = () => {
             </Dropdown.Toggle>
 
             <Dropdown.Menu>
-              <Dropdown.Item as={Link} to={"/user/profile"}>Profile</Dropdown.Item>
+              <Dropdown.Item onClick={onProfileClick}>Profile</Dropdown.Item>
               <Dropdown.Item onClick={handleLogout}>Logout</Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown> 

@@ -74,6 +74,7 @@ const authSlice = createSlice({
                     state.roles = data.roles
                 }
             })
+            
     }
 })
 

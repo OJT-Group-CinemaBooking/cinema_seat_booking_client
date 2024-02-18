@@ -1,17 +1,12 @@
 import React from "react";
 import { Card } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
 
-const TicketDetail = ({ ticketId, movieTitle, showTime, boughtSeats }) => {
+const TicketDetail = ({ movieTitle, showTime, boughtSeats,cinema,actualPrice,totalPrice }) => {
 
-    const navigate = useNavigate()
-    const onCardClick = () => {
-        navigate(`/ticket/${ticketId}`)
-    }
+    const dateTime = new Date(showTime)
 
   return (
       <Card
-       onClick={onCardClick}
         bg="dark"
         text="light"
         border="info"
@@ -22,13 +17,17 @@ const TicketDetail = ({ ticketId, movieTitle, showTime, boughtSeats }) => {
           {" "}
           <b> {movieTitle} </b>{" "}
         </Card.Header>
+        <Card.Header>
+          {" "}
+          <b> Cinema: </b> {cinema}
+        </Card.Header>
         <Card.Body className="d-inline-block">
           {" "}
-          <b> Date: </b> {showTime.showDate}
+          <b> Date: </b> {dateTime.toLocaleDateString()}
         </Card.Body>
         <Card.Body className="d-inline-block">
           {" "}
-          <b> ShowTime: </b> {showTime.showTime}
+          <b> ShowTime: </b> {dateTime.toLocaleTimeString()}
         </Card.Body>
         <Card.Body>
           {" "}
@@ -37,6 +36,14 @@ const TicketDetail = ({ ticketId, movieTitle, showTime, boughtSeats }) => {
             <b>{seat.name}, </b>
           ))}
         </Card.Body>
+        <Card.Header>
+          {" "}
+          <b> Discount: </b> {totalPrice-actualPrice} MMK
+        </Card.Header>
+        <Card.Header>
+          {" "}
+          <b> TotalPrcie: </b> {totalPrice} MMK
+        </Card.Header>
       </Card>
   );
 };
