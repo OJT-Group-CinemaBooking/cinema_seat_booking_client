@@ -1,13 +1,15 @@
 import React, { useEffect } from "react";
-import { Container, Row } from "react-bootstrap";
+import { Container, Row, Spinner } from "react-bootstrap";
 import UserDetail from "../features/user/UserDetail";
 import UserPaymentDetail from "../features/user/UserPaymentDetail";
 import UserTicketList from "../features/user/UserTicketList";
 import { useDispatch, useSelector } from "react-redux";
-import { getUser, getUserWithRoles } from "../features/auth/authSlice";
+import {  getUser, getUserWithRoles } from "../features/auth/authSlice";
 import { getPaymentStatus, setPaymentStatusToIdle } from "../slice/PaymentSlice";
+import { getStatus } from "../slice/userSlice";
 
 const ProfilePage = () => {
+  const status = useSelector(getStatus)
   const paymentStatus = useSelector(getPaymentStatus)
   const user = useSelector(getUser)
 
@@ -20,118 +22,6 @@ const ProfilePage = () => {
     }
   },[dispatch,paymentStatus])
 
-  const DUMMY_TICKETS = [
-    {
-      id: 1,
-      movieTitle: "The Life of Pi",
-      showTime: {
-        showDate: "14-2-2024",
-        showTime: "9:30",
-      },
-      boughtSeats: [
-        {
-          name: "E11",
-        },
-        {
-          name: "E12",
-        },
-      ],
-    },
-    {
-      movieTitle: "The Life of Pi",
-      showTime: {
-        showDate: "14-2-2024",
-        showTime: "9:30",
-      },
-      boughtSeats: [
-        {
-          name: "E11",
-        },
-        {
-          name: "E12",
-        },
-      ],
-    },
-    {
-      movieTitle: "The Life of Pi",
-      showTime: {
-        showDate: "14-2-2024",
-        showTime: "9:30",
-      },
-      boughtSeats: [
-        {
-          name: "E11",
-        },
-        {
-          name: "E12",
-        },
-      ],
-    },
-    {
-      movieTitle: "The Life of Pi",
-      showTime: {
-        showDate: "14-2-2024",
-        showTime: "9:30",
-      },
-      boughtSeats: [
-        {
-          name: "E11",
-        },
-        {
-          name: "E12",
-        },
-      ],
-    },
-    {
-      movieTitle: "The Life of Pi",
-      showTime: {
-        showDate: "14-2-2024",
-        showTime: "9:30",
-      },
-      boughtSeats: [
-        {
-          name: "E11",
-        },
-        {
-          name: "E12",
-        },
-      ],
-    },
-    {
-      movieTitle: "The Life of Pi",
-      showTime: {
-        showDate: "14-2-2024",
-        showTime: "9:30",
-      },
-      boughtSeats: [
-        {
-          name: "E11",
-        },
-        {
-          name: "E12",
-        },
-        {
-          name: "E12",
-        },
-        {
-          name: "E12",
-        },
-        {
-          name: "E12",
-        },
-        {
-          name: "E12",
-        },
-        {
-          name: "E12",
-        },
-        {
-          name: "E12",
-        },
-      ],
-    },
-  ];
-
   let contant = ''
 
   if(status === 'success'){
@@ -140,7 +30,7 @@ const ProfilePage = () => {
                   <UserDetail />
                   <UserPaymentDetail userPayment={user.userPayment} />
                 </Row>
-                <UserTicketList tickets={DUMMY_TICKETS} />
+                <UserTicketList tickets={user.tickets} />
               </Container>
   }
 

@@ -2,13 +2,12 @@ import React, { useState } from "react";
 import { Button, Card, Col, Form } from "react-bootstrap";
 import classes from "./UserDetail.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import { getUser, updateUser } from "../auth/authSlice";
+import { getUser, updateUser } from "../../slice/userSlice";
 
 const UserDetail = () => {
 
   const user = useSelector(getUser)
   const dispatch = useDispatch()
-  console.log(user)
 
   const [firstname,setFirstName] = useState(user.firstname)
   const [lastname,setLastName] = useState(user.lastname)

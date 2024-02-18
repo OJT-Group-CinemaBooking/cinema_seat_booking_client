@@ -26,8 +26,34 @@ export const fetchAllUsers = createAsyncThunk("fetchAllUsers", async () => {
   };
 });
 
+export const updateUser = createAsyncThunk('update',async (user) => {
+  const response = await axios.put(`${USER_URL}/update`,user,{
+      headers : {
+          'Content-Type' : 'application/json',
+      Authorization : localStorage.getItem('token')
+      }})
+
+  return {
+      data : response.data,
+      statusCode : response.status
+  }
+})
+
+export const getUserById = createAsyncThunk('getUserById',async (userId) => {
+  const response = await axios.get(`${USER_URL}/${userId}`,{
+    headers : {
+      Authorization : localStorage.getItem('token')
+    }
+  })
+  return {
+    data : response.data,
+    statusCode : response.status
+  }
+})
+
 const initialState = {
   users: [],
+  user:{},
   createdUser : {},
   createStatus: "idle",
   status: "idle",
@@ -82,12 +108,28 @@ const userSlice = createSlice({
       .addCase(fetchAllUsers.rejected, (state, action) => {
         state.status = "fetch_failed";
         state.error = action.error;
-      });
+      })
+      .addCase(updateUser.pending,(state) => {
+        state.status = 'loading'
+      })
+      .addCase(updateUser.fulfilled,(state,action)=>{
+          state.user = action.payload
+          state.status = 'success'
+      })
+      .addCase(getUserById.pending,(state) => {
+        state.status = 'loading'
+      })
+      .addCase(getUserById.fulfilled,(state,action) => {
+        state.user = action.payload.data
+        console.log(action.payload.data)
+        state.status = 'success'
+      })
   },
 });
 
 export default userSlice.reducer;
 export const getAllUsers = (state) => state.user.users;
+export const getUser = (state) => state.user.user;
 export const getCreatedUser = (state) => state.user.createdUser
 export const getStatus = (state) => state.user.status;
 export const getCreateStatus = (state) => state.user.createStatus
