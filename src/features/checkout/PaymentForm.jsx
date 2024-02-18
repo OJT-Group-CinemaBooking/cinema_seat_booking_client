@@ -11,10 +11,8 @@ import { getUser } from '../auth/authSlice'
 const PaymentForm = () => {
 
   const selectedSeatList = useSelector(getAllSelectedSeatList)
-  const currentYear = new Date().getFullYear()
   const user = useSelector(getUser)
-
-  console.log(user)
+  const currentYear = new Date().getFullYear()
 
   const userPayment = user.userPayment
 
@@ -46,6 +44,7 @@ const PaymentForm = () => {
     event.preventDefault()
     setCanRequest(false)
     const payment = {
+      id : user.userPayment?.id,
       street,
       country,
       city,
