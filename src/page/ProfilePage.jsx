@@ -1,10 +1,14 @@
 import React from "react";
-import { Container, Row } from "react-bootstrap";
+import { Container, Row, Spinner } from "react-bootstrap";
 import UserDetail from "../features/user/UserDetail";
 import UserPaymentDetail from "../features/user/UserPaymentDetail";
 import UserTicketList from "../features/user/UserTicketList";
+import { useSelector } from "react-redux";
+import { getLoginStatus } from "../features/auth/authSlice";
 
 const ProfilePage = () => {
+
+  const status = useSelector(getLoginStatus)
   const DUMMY_PAYMENT = {
     holderName: "Hnin Hayman",
     cardNumber: "1111-2222-3333-4444",
@@ -126,14 +130,30 @@ const ProfilePage = () => {
     },
   ];
 
+  let contant = ''
+
+  if(status === 'success'){
+    contant = <Container>
+                <Row>
+                  <UserDetail />
+                  <UserPaymentDetail data={DUMMY_PAYMENT} />
+                </Row>
+                <UserTicketList tickets={DUMMY_TICKETS} />
+              </Container>
+  }
+
+  if(status === 'loading'){
+    contant = (
+      <div className="w-100 mt-5 d-flex justify-content-center">
+          <Spinner animation="border" variant="secondary" />
+      </div>
+    )
+  }
+
   return (
-    <Container>
-      <Row>
-        <UserDetail />
-        <UserPaymentDetail data={DUMMY_PAYMENT} />
-      </Row>
-      <UserTicketList tickets={DUMMY_TICKETS} />
-    </Container>
+    <section>
+      {contant}
+    </section>
   );
 };
 

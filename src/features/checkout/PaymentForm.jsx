@@ -6,21 +6,27 @@ import { useDispatch, useSelector } from 'react-redux'
 import { createPayment } from '../../slice/PaymentSlice'
 import ReactFlagsSelect from 'react-flags-select'
 import { getAllSelectedSeatList } from '../../slice/BookSeatSlice'
+import { getUser } from '../auth/authSlice'
 
 const PaymentForm = () => {
 
   const selectedSeatList = useSelector(getAllSelectedSeatList)
   const currentYear = new Date().getFullYear()
+  const user = useSelector(getUser)
 
-  const [ street, setStreet ] = useState('')
-  const [ country, setCountry ] = useState('MM')
-  const [ city, setCity ] = useState('')
-  const [ zip, setZip ] = useState('')
-  const [ cardNumber, setCardNumber ] = useState('')
-  const [ cardType, setCardType ] = useState('VISA')
-  const [ expiryMonth, setExpiryMonth ] = useState('1')
-  const [ expiryYear, setExpiryYear ] = useState(currentYear)
-  const [ cvv, setCVV ] = useState('')
+  console.log(user)
+
+  const userPayment = user.userPayment
+
+  const [ street, setStreet ] = useState(userPayment?userPayment.street:'')
+  const [ country, setCountry ] = useState(userPayment?userPayment.country:'MM')
+  const [ city, setCity ] = useState(userPayment?userPayment.city:'')
+  const [ zip, setZip ] = useState(userPayment?userPayment.zip:'')
+  const [ cardNumber, setCardNumber ] = useState(userPayment?userPayment.cardNumber:'')
+  const [ cardType, setCardType ] = useState(userPayment?userPayment.cardType:'VISA')
+  const [ expiryMonth, setExpiryMonth ] = useState(userPayment?userPayment.expiryMonth:'1')
+  const [ expiryYear, setExpiryYear ] = useState(userPayment?userPayment.expiryYear:currentYear)
+  const [ cvv, setCVV ] = useState(userPayment?userPayment.cvv:'')
   const [ canRequest, setCanRequest ] = useState(true)
 
   const handleStreetInputChange = (e) => {setStreet(e.target.value)}

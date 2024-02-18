@@ -22,7 +22,7 @@ const ShowTimeMovie = () => {
     const seatBookingHandler = (showTimeId,movieId) => {
       dispatch(emptySelectedSeats())
       dispatch(setBookSeatStatusToIdle())
-      navigate(`/movie/${movieId}/theater/${Number(theaterId)}/show-time/${showTimeId}/seat`)
+      navigate(`/user/movie/${movieId}/theater/${Number(theaterId)}/show-time/${showTimeId}/seat`)
     }
 
     const filterMovies = showTimes.map((showtime) => allMovie.filter(m => m.id === showtime.connectMovie))

@@ -16,6 +16,20 @@ export const login = createAsyncThunk('login',async (loginRequest) => {
     }
 })
 
+export const updateUser = createAsyncThunk('update',async (user) => {
+    console.log(user)
+    const response = await axios.put(`${USER_URL}/update`,user,{
+        headers : {
+            'Content-Type' : 'application/json',
+        Authorization : localStorage.getItem('token')
+        }})
+
+    return {
+        data : response.data,
+        statusCode : response.status
+    }
+})
+
 export const getUserWithRoles = createAsyncThunk('getUserWithRoles',async (userId) => {
     const response = await axios.get(`${USER_URL}/${userId}/role`,{
         headers : {
@@ -73,6 +87,15 @@ const authSlice = createSlice({
                     state.user = data.user
                     state.roles = data.roles
                 }
+            })
+            .addCase(updateUser.pending,(state) => {
+                state.status = 'loading'
+            })
+            .addCase(updateUser.fulfilled,(state,action)=>{
+                const data = action.payload
+                state.user = data.payload
+                state.status = 'success'
+                console.log('successs')
             })
     }
 })
