@@ -7,7 +7,7 @@ import { Spinner } from 'react-bootstrap'
 const MoviePage = () => {
   const movieStatus = useSelector(getMovieStatus)
 
-  const allMovie = useSelector(getAllMovies)
+  const allMovie = useSelector(getAllMovies).filter(movie => movie.showing)
 
   const dispatch = useDispatch()
 

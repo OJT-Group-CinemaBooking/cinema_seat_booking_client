@@ -7,7 +7,7 @@ import { Spinner } from 'react-bootstrap'
 const HomePage = () => {
   const movieStatus = useSelector(getMovieStatus)
 
-  const allMovie = useSelector(getAllMovies)
+  const allMovie = useSelector(getAllMovies).filter(movie => movie.showing)
 
   const popularMoiveList = allMovie.filter(movie => movie.popularNow)
   const nowShowingMoiveList = allMovie.filter(movie => movie.nowShowing)

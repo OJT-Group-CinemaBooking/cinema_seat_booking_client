@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import classes from "./MovieCrew.module.css";
 import { Button, Col, Container, Form, Image, InputGroup, Row, Table } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { createNewCrew, fetchAllCrew, getAllCrews, getCreatedCrew, getCrewCreateStatus, getCrewDeleteStatus, getCrewUpdateStatus, getUpdatedCrew, setCrewCreateStatusToIdle, setCrewDeleteStatusToIdle, setCrewUpdateStatusToIdle } from "../../../slice/CrewSlice";
+import { createNewCrew, fetchAllCrew, getAllCrews, getCreatedCrew, getCrewCreateStatus, getCrewDeleteStatus, getCrewUpdateStatus, getUpdatedCrew, setCrewCreateStatusToIdle, setCrewDeleteStatusToIdle,setCrewUpdateStatusToIdle } from "../../../slice/CrewSlice";
 import SingleCrew from "./SingleCrew";
 
 const MovieCrew = () => {

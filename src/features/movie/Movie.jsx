@@ -30,7 +30,7 @@ const Movie = ({ movieId, title, duration, releaseDate, genere, language }) => {
               </div>
               <div>
                 <ul className={classes.hover_list}>
-                  <li><span className={classes.list_icon}><Tags/></span>{genere.map( (gen) => <span key={gen.id}>{gen.name+'/ '}</span>)}</li>
+                  <li><span className={classes.list_icon}><Tags/></span>{genere?.map( (gen) => <span key={gen.id}>{gen.name+'/ '}</span>)}</li>
                   <li><span className={classes.list_icon}><Clock/></span>{duration} mins</li>
                   <li><span className={classes.list_icon}><Mic/></span>{language}</li>
                 </ul>

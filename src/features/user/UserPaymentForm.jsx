@@ -54,8 +54,8 @@ const UserPaymentForm = ({ userPayment, handleEdit }) => {
   return (
     <>
     <Form onSubmit={onSubmit}>
-    <Card.Body>
-        <Card.Text>
+    <Card.Body className={classes.card_body}>
+        <Card.Text className={classes.input_statement}>
         <b>CardNumber:</b>{" "}
         <input 
         type='text' 
@@ -65,7 +65,7 @@ const UserPaymentForm = ({ userPayment, handleEdit }) => {
         required
         />
         </Card.Text>
-        <Card.Text>
+        <Card.Text className={classes.input_statement}>
         <b>Expiry Month:</b> 
         <input 
         type='text' 
@@ -75,7 +75,7 @@ const UserPaymentForm = ({ userPayment, handleEdit }) => {
         required
         /> 
         </Card.Text>
-        <Card.Text>
+        <Card.Text className={classes.input_statement}>
         <b>Expiry Year:</b> 
         <input 
         type='text' 
@@ -85,7 +85,7 @@ const UserPaymentForm = ({ userPayment, handleEdit }) => {
         required
         />
         </Card.Text>
-        <Card.Text>
+        <Card.Text className={classes.input_statement}>
         <b>CardType:</b> 
         <select 
         value={cardType} 
@@ -94,7 +94,9 @@ const UserPaymentForm = ({ userPayment, handleEdit }) => {
         >
             <option value='VISA'>VISA</option>
             <option value='MASTER'>MASTER</option>
-        </select> &nbsp; &nbsp; &nbsp;
+        </select> 
+        </Card.Text>
+        <Card.Text className={classes.input_statement}>
         <b>CVV:</b> 
         <input 
         type='text' 
@@ -106,18 +108,19 @@ const UserPaymentForm = ({ userPayment, handleEdit }) => {
         </Card.Text>
     </Card.Body>
 
-    <Card.Header>Billing Information</Card.Header>
-    <Card.Body>
-        <Card.Text>
-        <b>Country:</b>
-        <ReactFlagsSelect className={classes.selectFlag} 
-        selected={country}
-        onSelect={(code) => setCountry(code)}
-        placeholder="Select Country" 
-        searchable 
-        searchPlaceholder="Search countries"
-        />
-         &nbsp; &nbsp; &nbsp;
+    <Card.Header className='fw-bold'>BILLING INFORMATION</Card.Header>
+    <Card.Body className={classes.card_body}>
+        <div className={`${classes.input_statement} ${'mb-3'}`}>
+          <b>Country:</b>
+          <ReactFlagsSelect className={classes.selectFlag} 
+          selected={country}
+          onSelect={(code) => setCountry(code)}
+          placeholder="Select Country" 
+          searchable 
+          searchPlaceholder="Search countries"
+          />
+        </div>
+        <Card.Text className={classes.input_statement}>
         <b>City:</b> 
         <input 
         type='text' 
@@ -127,7 +130,7 @@ const UserPaymentForm = ({ userPayment, handleEdit }) => {
         required
         />
         </Card.Text>
-        <Card.Text>
+        <Card.Text className={classes.input_statement}>
         <b>Street:</b> 
         <input 
         type='text' 
@@ -135,7 +138,9 @@ const UserPaymentForm = ({ userPayment, handleEdit }) => {
         className={classes.input}
         onChange={handleStreetInputChange}
         required
-        /> &nbsp; &nbsp; &nbsp;
+        />
+        </Card.Text>
+        <Card.Text className={classes.input_statement}>
         <b>ZipCode:</b> 
         <input 
         type='text' 

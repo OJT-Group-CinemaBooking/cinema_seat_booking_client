@@ -4,13 +4,14 @@ import UserDetail from "../features/user/UserDetail";
 import UserPaymentDetail from "../features/user/UserPaymentDetail";
 import UserTicketList from "../features/user/UserTicketList";
 import { useDispatch, useSelector } from "react-redux";
-import {  getUser, getUserWithRoles } from "../features/auth/authSlice";
+import {  getLoginStatus, getUser, getUserWithRoles } from "../features/auth/authSlice";
 import { getPaymentStatus, setPaymentStatusToIdle } from "../slice/PaymentSlice";
-import { getStatus } from "../slice/userSlice";
+import { getTicketStatus, setTicketStatusToIdle } from "../slice/TicketSlice";
 
 const ProfilePage = () => {
-  const status = useSelector(getStatus)
+  const status = useSelector(getLoginStatus)
   const paymentStatus = useSelector(getPaymentStatus)
+  const ticketStatus = useSelector(getTicketStatus)
   const user = useSelector(getUser)
 
   const dispatch = useDispatch()
@@ -20,18 +21,24 @@ const ProfilePage = () => {
       dispatch(getUserWithRoles(localStorage.getItem('userId')))
       dispatch(setPaymentStatusToIdle())
     }
-  },[dispatch,paymentStatus])
+    if(ticketStatus === 'fetch_success') {
+      dispatch(getUserWithRoles(localStorage.getItem('userId')))
+      dispatch(setTicketStatusToIdle())
+    }
+  },[dispatch,paymentStatus,ticketStatus])
 
   let contant = ''
 
   if(status === 'success'){
-    contant = <Container>
-                <Row>
-                  <UserDetail />
-                  <UserPaymentDetail userPayment={user.userPayment} />
-                </Row>
-                <UserTicketList tickets={user.tickets} />
-              </Container>
+    contant = (
+      <Container>
+        <Row>
+          <UserDetail />
+          <UserPaymentDetail userPayment={user.userPayment} />
+        </Row>
+        <UserTicketList tickets={user.tickets} />
+      </Container>
+    )
   }
 
   if(status === 'loading'){

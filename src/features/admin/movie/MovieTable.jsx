@@ -64,7 +64,7 @@ const MovieTable = ({ movies }) => {
             </Col>
         </Row>
         <Row xs={1}>
-            <Col xs='12'>
+            <Col xs='12' className={classes.table_col}>
                 <Table striped bordered hover className='text-white'>
                 <thead className={classes.table_header}>
                     <tr>

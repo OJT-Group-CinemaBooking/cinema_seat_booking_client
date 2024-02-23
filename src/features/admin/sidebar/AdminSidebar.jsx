@@ -8,7 +8,7 @@ import { logout } from '../../auth/authSlice'
 
 const AdminSidebar = () => {
 
-  const [ page, setPage ] = useState(' ');
+  const [ page, setPage ] = useState('movie');
 const navigate = useNavigate()
 const dispatch = useDispatch()
   

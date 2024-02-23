@@ -33,7 +33,7 @@ const TicketDetail = ({ movieTitle, showTime, boughtSeats,cinema,actualPrice,tot
           {" "}
           <b> SeatNumbers: </b>
           {boughtSeats.map((seat) => (
-            <b>{seat.name}, </b>
+            <b key={seat.name}>{seat.name}, </b>
           ))}
         </Card.Body>
         <Card.Header>

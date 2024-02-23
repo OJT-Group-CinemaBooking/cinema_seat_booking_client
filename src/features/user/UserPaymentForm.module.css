@@ -1,16 +1,27 @@
 .selectFlag{
     display: inline-block;
-    width: 40%;
-    height: 2.5rem;
+    width: 50%;
+    height: 2.3rem;
 }
 
 .input{
     display: inline-block;
-    width: 30%;
+    width: 50%;
     height: 2rem;
     background-color: transparent;
     border-top: 0;
     border-right: 0;
     border-left: 0;
     border-bottom: thin solid rgb(177, 177, 177);
+}
+
+.card_body{
+    padding-left: 5vw;
+    padding-right: 5vw;
+}
+
+.input_statement{
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
 }

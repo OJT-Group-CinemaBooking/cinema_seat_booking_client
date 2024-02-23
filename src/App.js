@@ -63,7 +63,7 @@ function App() {
       {/* admin pannel */}
       <Route path="/admin" element={<ProtectedRoute allowedRoles={['ROLE_ADMIN']}/>} >
       <Route path="dashboard" element={<AdminLayout/>}>
-
+      <Route index element={<AdminMovieTablePage />} />
         {/* for movie */}
         <Route path="movie">
           <Route index element={<AdminMovieTablePage/>}/>

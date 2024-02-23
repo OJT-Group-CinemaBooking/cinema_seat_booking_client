@@ -38,7 +38,7 @@ const MovieSlide = ({ movieList }) => {
                     title={movie.title} 
                     releaseDate={movie.releaseDate} 
                     duration={movie.duration} 
-                    genere={movie.movieGenere.map(mg => mg.genere)} 
+                    genere={movie.movieGenere?.map(mg => mg.genere)} 
                     language={movie.language}
                     />    
                     )

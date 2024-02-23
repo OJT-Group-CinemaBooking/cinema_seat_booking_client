@@ -19,7 +19,7 @@ const AdminUpdateMovieFormPage = () => {
         if(crewStatus === 'idle') {
             dispatch(fetchAllCrew())
         }
-    })
+    },[crewStatus,dispatch])
     const generes =[
     { id: 1, name: 'Action' },
     { id: 2, name: 'Adventure' },

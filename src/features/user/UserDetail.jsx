@@ -3,6 +3,7 @@ import { Button, Card, Col, Form } from "react-bootstrap";
 import classes from "./UserDetail.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { getUser, updateUser } from "../../slice/userSlice";
+import { PencilSquare } from "react-bootstrap-icons";
 
 const UserDetail = () => {
 
@@ -59,7 +60,8 @@ const UserDetail = () => {
         <div className={classes.info}>
           <p className={classes.username}>{user.username}</p>
           <Button variant="light" className={classes.btn} onClick={onEditHandle} >
-            <svg
+            <PencilSquare />
+            {/* <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
               height="16"
@@ -72,7 +74,7 @@ const UserDetail = () => {
                 fill-rule="evenodd"
                 d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"
               />
-            </svg>
+            </svg> */}
           </Button>
 
           { edit?

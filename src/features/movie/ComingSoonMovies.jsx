@@ -50,13 +50,18 @@ const ComingSoonMovies = ({ comingSoonMoiveList }) => {
         </div>
         <div className={classes.slide_list} ref={scrollRef}>
           {
-            Array.from(releaseYears).map(year => 
+            Array.from(releaseYears)
+            .sort((y1,y2) => y1 - y2)
+            .map(year => 
                 {
-                  return releaseDates.filter(date => new Date(date).getFullYear() === year)
-                  .map(releaseDate => {
-                    const date = new Date(releaseDate)
-                    const month = monthNames[date.getMonth()]
-                    return <div key={date}>
+                  const releaseDatesOfYear = releaseDates
+                  .filter(date => new Date(date).getFullYear() === year)
+                  const uniqueMonths = new Set(releaseDatesOfYear.map(date => new Date(date).getMonth()))
+                  return Array.from(uniqueMonths)
+                  .sort((m1,m2) => m1 - m2)
+                  .map(uniqueMonth => {
+                    const month = monthNames[uniqueMonth]
+                    return <div key={`${month} ${year}`}>
                     <span className={classes.year}>{year}</span>
                     <div 
                     className={
@@ -83,14 +88,17 @@ const ComingSoonMovies = ({ comingSoonMoiveList }) => {
     {/* slide */}
     <Container fluid>
       {
-        Array.from(releaseYears).map( 
+        Array.from(releaseYears)
+        .sort((y1,y2) => y1 - y2)
+        .map( 
           year => {
           const dates = releaseDates.filter(date => new Date(date).getFullYear() === year)
-          const months = new Set(dates.map(date => new Date(date).getMonth()))
+          const months = new Set(dates.sort((d1,d2) => new Date(d1) - new Date(d2)).map(date => new Date(date).getMonth()))
           return Array.from(months).map(
             monthIndex => 
             {
-              const movies = comingSoonMoiveList.filter(
+              const movies = comingSoonMoiveList
+              .filter(
                 movie => 
                 new Date(movie.releaseDate).getFullYear() === year && 
                 new Date(movie.releaseDate).getMonth() === monthIndex

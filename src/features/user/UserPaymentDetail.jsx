@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Card, Col } from "react-bootstrap";
+import { Button, ButtonGroup, Card, Col } from "react-bootstrap";
 import UserPaymentDetailInfo from "./UserPaymentDetailInfo";
 import { PencilSquare } from "react-bootstrap-icons";
 import UserPaymentForm from "./UserPaymentForm";
@@ -24,18 +24,15 @@ const UserPaymentDetail = ({ userPayment }) => {
         text="white"
         style={{ width: "30rem" }}
       >
-        <Card.Header>
-          Credit Information{" "}
-          <Button 
-          variant="secondary"
-          style={{ float: "right" }}
-          onClick={handleEdit}
-          >
-            <PencilSquare/>
-          </Button>
+        <Card.Header style={{
+          display : 'flex',
+          justifyContent : 'space-between',
+          alignItems : 'baseline'
+        }}>
+          CREDIT INFORMATION
+          <ButtonGroup>
           <Button
             variant="secondary"
-            style={{ float: "right" }}
             onClick={toggleHandler}
           >
             {toggle ? (
@@ -65,6 +62,13 @@ const UserPaymentDetail = ({ userPayment }) => {
               </svg>
             )}
           </Button>
+          <Button 
+          variant="secondary"
+          onClick={handleEdit}
+          >
+            <PencilSquare/>
+          </Button>
+          </ButtonGroup>
         </Card.Header>
 
         {

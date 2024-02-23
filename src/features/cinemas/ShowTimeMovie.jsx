@@ -17,7 +17,7 @@ const ShowTimeMovie = () => {
     const showTimes = useSelector(getAllShowTime)
     const showTimeStatus = useSelector(getShowTimeStatusByTheater)
     const { theaterId } = useParams()
-    const allMovie = useSelector(getAllMovies)
+    const allMovie = useSelector(getAllMovies).filter(movie => movie.showing)
 
     const seatBookingHandler = (showTimeId,movieId) => {
       dispatch(emptySelectedSeats())

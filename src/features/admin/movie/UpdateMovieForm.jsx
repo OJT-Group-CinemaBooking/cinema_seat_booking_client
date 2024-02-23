@@ -122,17 +122,6 @@ const UpdateMovieForm = ({ existedGeneres, existedCrews, movie, generes, starrin
   };
 
   const canCreate = [
-    title,
-    releaseDate,
-    country,
-    language,
-    duration,
-    rating,
-    genere,
-    synopsis,
-    trailer,
-    director,
-    starring,
     canRequest,
   ].every(Boolean);
 
@@ -500,7 +489,6 @@ const UpdateMovieForm = ({ existedGeneres, existedCrews, movie, generes, starrin
             <Button 
               className={classes.create_btn} 
               type="submit" 
-              disabled={!canCreate}
             >
               SAVE
             </Button>

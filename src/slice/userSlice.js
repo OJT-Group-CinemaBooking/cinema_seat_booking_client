@@ -121,7 +121,6 @@ const userSlice = createSlice({
       })
       .addCase(getUserById.fulfilled,(state,action) => {
         state.user = action.payload.data
-        console.log(action.payload.data)
         state.status = 'success'
       })
   },
